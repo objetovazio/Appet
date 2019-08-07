@@ -27,3 +27,35 @@ Disponivel no [link](https://docs.google.com/document/d/1MVYH5-1b3fXK6fe7tgVpnsW
 
 ### PMC
 Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFrAiOKe6TqR2X25asrLdR7QSQ8/edit?usp=sharing).
+
+### Requisitos do Sistema
+
+| ID:RF 01        |  Tipo Requisito: Requisito Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve ser capaz de controlar os horarios disponiveis de um prestador de serviços. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RF 02        |  Tipo Requisito: Requisito Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve ser capaz de exibir feedbacks que um prestador recebeu através de seus serivços. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RF 03        |  Tipo Requisito: Requisito Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve ser capaz de filtrar os serviços nele cadastrados. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RF 04        |  Tipo Requisito: Requisito Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve possibilitar pelo menos um meio de pagamento ao usuário. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RF 05        |  Tipo Requisito: Requisito Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve basear seus resultados de busca com base na localização do usuário. |
+| Dependência     | -      |
+| Conflito      | -      |
