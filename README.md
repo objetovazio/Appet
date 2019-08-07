@@ -3,10 +3,10 @@
 ### Membros
 [André Felipe](https://github.com/objetovazio)<br>
 [Elimar Macena](https://github.com/elimarmacena)<br>
-Jackson Willian<br>
+[Jackson Willian](https://github.com/jacksonwillian)<br>
 [Jennifer Gonçalves](https://github.com/jennicg)<br>
-Lavínia Corteletti<br>
-Vinicius Freitas<br>
+[Lavínia Corteletti](https://github.com/lvnc)<br>
+[Vinicius Freitas](https://github.com/Viniciusfr123)<br>
 
 ### Tecnologias
 A aplicação faz uso das seguintes tecnologias:
