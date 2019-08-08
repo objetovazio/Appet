@@ -30,6 +30,8 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 
 ### Requisitos do Sistema
 
+#### Requisito Funcional
+
 | ID:RF 01        |  Tipo Requisito: Requisito Funcional |
 | ------------- |:-------------:|
 | Descrição      | O sistema deve ser capaz de controlar os horarios disponiveis de um prestador de serviços. |
@@ -39,7 +41,7 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 | ID:RF 02        |  Tipo Requisito: Requisito Funcional |
 | ------------- |:-------------:|
 | Descrição      | O sistema deve ser capaz de exibir feedbacks que um prestador recebeu através de seus serivços. |
-| Dependência     | -      |
+| Dependência     | RN 01      |
 | Conflito      | -      |
 
 | ID:RF 03        |  Tipo Requisito: Requisito Funcional |
@@ -57,5 +59,63 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 | ID:RF 05        |  Tipo Requisito: Requisito Funcional |
 | ------------- |:-------------:|
 | Descrição      | O sistema deve basear seus resultados de busca com base na localização do usuário. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+#### Requisito Não Funcional
+
+| ID:RNF 01        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | Os serviços disponibilizados no sistema devem ser cadastrados pelos prórprios usuarios. |
+| Dependência     | RNF02      |
+| Conflito      | -      |
+
+| ID:RNF 02        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | Para cadastrar um serviço no sistema é necessario que o prestador informe : dia da semana referente a disponibilidade, o intervalo de tempo que a prestação de serviço dura, o valor referente a este período somado a periodicidade que o profissional está disposto a ceder no dia em questão.. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RNF 03        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | Ao se cadastrar no sistema, o usuario deve informar os seguintes dados: nome, e-mail, endereço e telefone. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RNF 04        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | O usuario que deseja cadastrar um serviço no sistema deve informar os meios de pagamentos que serão aceitos para a contratação do serviço prestado. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RNF 05        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve rodar na plataforma Web, sendo possível acessá-lo através dos principais navegadores disponíveis no mercado. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RNF 06        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve ser responsivo. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RNF 07        |  Tipo Requisito: Requisito Não Funcional |
+| ------------- |:-------------:|
+| Descrição      | O sistema deve realizar o tratamento de dados, evitando possíveis falhas. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+#### Regras de Negócio
+
+| ID:RN 01        |  Tipo Requisito: Regra de Negocio |
+| ------------- |:-------------:|
+| Descrição      | O cadastro de feedback só sera realizado pelo usuario após o prestador contratado realizar o serviço em questão. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RN 02        |  Tipo Requisito: Regra de Negocio |
+| ------------- |:-------------:|
+| Descrição      | Só é possivel a contratação e prestação de serviço por usuarios cadastrados no sistema. |
 | Dependência     | -      |
 | Conflito      | -      |
