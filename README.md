@@ -119,3 +119,9 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 | Descrição      | Só é possivel a contratação e prestação de serviço por usuarios cadastrados no sistema. |
 | Dependência     | -      |
 | Conflito      | -      |
+
+### Modelagem do Sistema
+#### Diagrama de Classes
+<p align="center">
+  <img src="https://github.com/objetovazio/Appet/blob/master/Documenta%C3%A7%C3%A3o/Diagramas/diag_classe.svg">
+</p><br>
