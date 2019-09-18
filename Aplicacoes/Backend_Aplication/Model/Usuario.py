@@ -6,5 +6,7 @@ class Pessoa(Model):
     pessoa_id = AutoField() 
     nome = CharField()
     email = CharField()
+    senha = CharField()
+    sobre = CharField()
     class Meta:
         database = db
