@@ -127,4 +127,5 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 </p><br>
 
 #### Protótipo de telas
-Disponivel no [link](https://github.com/objetovazio/Appet/blob/master/Documenta%C3%A7%C3%A3o/Appet.pdf).
+[Protótipo estático](https://github.com/objetovazio/Appet/blob/master/Documenta%C3%A7%C3%A3o/Appet.pdf)<br>
+[Protótipo navegável](https://www.figma.com/proto/iOUFdv7tBXAr7cgyb22xPp/Appet?node-id=1%3A2&scaling=contain)
