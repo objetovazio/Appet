@@ -1,6 +1,6 @@
 from peewee import *
 from DatabaseCon import database as db
-import Pessoa
+import Usuario
 
 class Cartao(Model):
     ##ORM reconhece automaticamente como PK
@@ -10,6 +10,6 @@ class Cartao(Model):
     cpf_titular = IntegerField()
     numero_cartao = IntegerField()
     ## FK relacional com o usuario dono de tal contato
-    id_pessoa = ForeignKeyField(Pessoa)
+    id_usuario = ForeignKeyField(Usuario)
     class Meta:
         database = db

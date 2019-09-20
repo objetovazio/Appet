@@ -3,7 +3,7 @@ from DatabaseCon import database as db
 
 class Pessoa(Model):
     ##ORM reconhece automaticamente como PK
-    pessoa_id = AutoField() 
+    usuario_id = AutoField() 
     nome = CharField()
     email = CharField()
     senha = CharField()

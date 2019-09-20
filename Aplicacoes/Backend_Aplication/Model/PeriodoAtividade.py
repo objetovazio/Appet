@@ -2,14 +2,12 @@ from peewee import *
 from DatabaseCon import database as db
 import Usuario
 
-class Contato(Model):
+class PeriodoAtividade(Model):
     ##ORM reconhece automaticamente como PK
-    id_contato = AutoField()
-    ## Enum representante do tipo de contato
-    tipo = IntegerField() 
-    ## Valor do contato em questao
-    descricao = CharField() 
+    id_periodo_atividde = AutoField()
     ## FK relacional com o usuario dono de tal contato
     id_usuario = ForeignKeyField(Usuario)
+    inicioDate = DateField()
+    fimDate = DateField()
     class Meta:
         database = db

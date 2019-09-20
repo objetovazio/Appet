@@ -1,6 +1,6 @@
 from peewee import *
 from DatabaseCon import database as db
-import Pessoa
+import Usuario
 import TIpoServico
 
 class Servico(Model):
@@ -11,7 +11,7 @@ class Servico(Model):
     preco = FloatField()
     ## FK relacional com o usuario dono de tal contato
     ## Referencia a pessoa que criou o serviço
-    id_pessoa = ForeignKeyField(Pessoa)
+    id_usuario = ForeignKeyField(Usuario)
     ## FK relacional com o usuario dono de tal contato
     id_tipo = ForeignKeyField(TIpoServico)
     class Meta:
