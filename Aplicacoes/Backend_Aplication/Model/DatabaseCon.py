@@ -1,5 +1,5 @@
-from peewee import *
+from peewee import PostgresqlDatabase
 database = PostgresqlDatabase('eqvhegcr',
                               user='eqvhegcr',
-                              password='-----------------',
-                              host='postgres://eqvhegcr:uOr1Rv...@motty.db.elephantsql.com:5432/eqvhegcr ', port=5432)
+                              password='------',
+                              host='motty.db.elephantsql.com', port=5432)
