@@ -5,5 +5,5 @@ class BaseCon(Model):
     class Meta:
         database = PostgresqlDatabase('eqvhegcr',
                                       user='eqvhegcr',
-                                      password='----',
+                                      password='XxX',
                                       host='motty.db.elephantsql.com', port=5432)

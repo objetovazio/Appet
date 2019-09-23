@@ -1,4 +1,7 @@
-## Utilização local
+## Estrutura de Rotas
+As rotas utilizadas no sistema seguem o padrão Rest, onde requisições GET são referente a busca e POST referentes à atualização e criação.
+
+## Utilização Local
 
 * iniciar o serviço flask (necessario estar na pasta do repositorio)
  ```bash
