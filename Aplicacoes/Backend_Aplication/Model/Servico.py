@@ -1,9 +1,16 @@
 from peewee import *
-from DatabaseCon import database as db
-import Usuario
-import TIpoServico
+# used to resolve the path problem
+import sys
+from os.path import dirname, abspath
+diretorio = dirname(dirname(abspath(__file__)))
+sys.path.append(diretorio)
+# ---------------------------------
 
-class Servico(Model):
+from Model.BaseCon import BaseCon
+from Model.Usuario import Usuario
+from Model.TipoServico import TipoServico
+
+class Servico(BaseCon):
     ##ORM reconhece automaticamente como PK
     id_servico = AutoField()
     titulo = CharField()
@@ -13,6 +20,4 @@ class Servico(Model):
     ## Referencia a pessoa que criou o serviço
     id_usuario = ForeignKeyField(Usuario)
     ## FK relacional com o usuario dono de tal contato
-    id_tipo = ForeignKeyField(TIpoServico)
-    class Meta:
-        database = db
+    id_tipo = ForeignKeyField(TipoServico)

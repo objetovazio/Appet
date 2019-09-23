@@ -1,8 +1,15 @@
 from peewee import *
-from DatabaseCon import database as db
-import PeriodoAtividade
+# used to resolve the path problem
+import sys
+from os.path import dirname, abspath
+diretorio = dirname(dirname(abspath(__file__)))
+sys.path.append(diretorio)
+# ---------------------------------
 
-class HorarioServico(Model):
+from Model.BaseCon import BaseCon
+from Model.PeriodoAtividade import PeriodoAtividade
+
+class HorarioServico(BaseCon):
     ##ORM reconhece automaticamente como PK
     id_horario_servico = AutoField()
     ## FK relacional com o usuario dono de tal contato
@@ -10,6 +17,3 @@ class HorarioServico(Model):
     dia_semana = IntegerField()
     horario_inicio = TimeField()
     horario_fim = TimeField()
-
-    class Meta:
-        database = db

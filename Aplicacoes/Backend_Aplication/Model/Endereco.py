@@ -1,8 +1,15 @@
 from peewee import *
-from DatabaseCon import database as db
-import Usuario
+# used to resolve the path problem
+import sys
+from os.path import dirname, abspath
+diretorio = dirname(dirname(abspath(__file__)))
+sys.path.append(diretorio)
+# ---------------------------------
 
-class Endereco(Model):
+from Model.BaseCon import BaseCon
+from Model.Usuario import Usuario
+
+class Endereco(BaseCon):
     ##ORM reconhece automaticamente como PK
     id_endereco = AutoField()
     cep = IntegerField()
@@ -11,5 +18,3 @@ class Endereco(Model):
     nome_estado = CharField()
     ## FK relacional com o usuario dono de tal contato
     id_usuario = ForeignKeyField(Usuario)
-    class Meta:
-        database = db

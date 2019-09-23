@@ -1,5 +1,4 @@
 from peewee import *
-
 # used to resolve the path problem
 import sys
 from os.path import dirname, abspath
@@ -9,10 +8,7 @@ sys.path.append(diretorio)
 
 from Model.BaseCon import BaseCon
 
-class Usuario(BaseCon):
+class TipoServico(BaseCon):
     ##ORM reconhece automaticamente como PK
-    usuario_id = PrimaryKeyField() 
-    nome = CharField()
-    email = CharField()
-    senha = CharField()
-    sobre = CharField(null = True)
+    id_tipo = AutoField()
+    nome_tipo = CharField()

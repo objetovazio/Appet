@@ -1,3 +1,4 @@
+from Model.Usuario import *
 import os
 from flask import Flask
 from flask import json
@@ -9,21 +10,22 @@ from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
-from Model.Usuario import *
 
 app = Flask(__name__)
 app.run(debug=True)
+
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/createUser', methods=['POST'])
+
+@app.route('/createUser', methods=['GET'])
 def createUser():
-     name_user = request.args.post('nomeUser')
-    email_user = request.args.post('emailUser')
-    password = request.args.post('senha')
-    about_user = request.args.post('sobre')
+    name_user   = request.args.get('nomeUser')
+    email_user  = request.args.get('emailUser')
+    password    = request.args.get('senha')
+    about_user  = request.args.get('sobre')
     if(name_user == '' or email_user == '' or password == ''):
         return handle_invalid('Empty parameters')
     else:

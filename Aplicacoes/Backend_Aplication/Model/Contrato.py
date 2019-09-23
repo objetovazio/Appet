@@ -1,9 +1,16 @@
 from peewee import *
-from DatabaseCon import database as db
-import Usuario
-import Servico
+# used to resolve the path problem
+import sys
+from os.path import dirname, abspath
+diretorio = dirname(dirname(abspath(__file__)))
+sys.path.append(diretorio)
+# ---------------------------------
 
-class Contrato(Model):
+from Model.BaseCon import BaseCon
+from Model.Usuario import Usuario
+from Model.Servico import Servico
+
+class Contrato(BaseCon):
     ##ORM reconhece automaticamente como PK
     id_contrato = AutoField()
     data_contratacao = DateField()
@@ -13,6 +20,4 @@ class Contrato(Model):
     id_usuario = ForeignKeyField(Usuario)
     ## FK relacional com contrato com o servico contratado.
     id_servico = ForeignKeyField(Servico)
-    class Meta:
-        database = db
     
