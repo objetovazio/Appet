@@ -132,5 +132,12 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 
 
 ### Modelo de Negócio
+<p align="center">
+  <img src="https://github.com/objetovazio/Appet/blob/master/Documenta%C3%A7%C3%A3o/Diagramas/Cópia de BMC - Template.png">
+</p><br>
 
 ### Proposta de valor
+
+<p align="center">
+  <img src="https://github.com/objetovazio/Appet/blob/master/Documenta%C3%A7%C3%A3o/Diagramas/proposta de valor.png">
+</p><br>
