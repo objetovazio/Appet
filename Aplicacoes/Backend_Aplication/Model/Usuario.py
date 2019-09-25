@@ -11,8 +11,8 @@ from Model.BaseCon import BaseCon
 
 class Usuario(BaseCon):
     ##ORM reconhece automaticamente como PK
-    usuario_id = PrimaryKeyField() 
-    nome = CharField()
-    email = CharField()
-    senha = CharField()
-    sobre = CharField(null = True)
+    usuario_id  = PrimaryKeyField() 
+    nome        = CharField()
+    email       = CharField(unique = True)
+    senha       = CharField()
+    sobre       = CharField(null = True)

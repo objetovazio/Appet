@@ -20,6 +20,99 @@ app.run(debug=True)
 def hello_world():
     return 'Hello, World!'
 
+@app.route('/Rate', methods=['POST'])
+def postRate():
+	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Rate',methods=['GET'])
+def getRate():
+	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/CrediCard', methods=['POST'])
+def postCrediCard():
+	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/CrediCard', methods=['GET'])
+def getCrediCard():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Comment', methods=['POST'])
+def postComment():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Comment', methods=['GET'])
+def getComment():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Contact', methods=['POST'])
+def postContact():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Contact', methods=['GET'])
+def getContact():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Address', methods=['POST'])
+def postAddress():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Address', methods=['GET'])
+def getAddress():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/ServiceHour', methods=['POST'])
+def postServiceHour():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/ServiceHour', methods=['GET'])
+def getServiceHour():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/AtivityTime', methods=['POST'])
+def postAtivityTime():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/AtivityTime', methods=['GET'])
+def getAtivityTime():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Service', methods=['POST'])
+def postService():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@app.route('/Service', methods=['GET'])
+def getService():
+    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+# Rota para criacao e atualizacao de Tipo de Serviço
+@app.route('/TypeService', methods=['POST'])
+def postTypeService():
+	name_service_type = request.args.get('nomeTipoServico')
+	print(name_service_type)
+	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+# Rota para busca de Tipo de Serviço
+@app.route('/TypeService', methods=['GET'])
+def getTypeService():
+	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 # Rota para criacao e atualizacao de usuario
 @app.route('/user', methods=['POST'])
@@ -51,20 +144,8 @@ def getUser():
     # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
-# Rota para criacao e atualizacao de Tipo de Serviço
-@app.route('/TypeService', methods=['POST'])
-def postTypeService():
-	name_service_type = request.args.get('nomeTipoServico')
-	print(name_service_type)
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
-# Rota para busca de Tipo de Serviço
-@app.route('/TypeService', methods=['GET'])
-def getTypeService():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
-
+        
 
 def handle_invalid(erroType):
     response = jsonify(erroType)
