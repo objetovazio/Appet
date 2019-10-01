@@ -17,7 +17,7 @@ $theme-colors: (
   primary: #12bbad,
   secondary: #4f70ce,
   light: #f3f3f3,
-  dark: #151515,
+  dark: #112329,
   info: #ccc,
   success: #28a745,
   warning: #ffc107,
@@ -35,10 +35,14 @@ $link-color: #12bbad;
 $font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 $headings-font-family: $font-family-base;
 $display-font-family: $font-family-base;
-$font-weight-normal: 200;
+
 $headings-font-weight: 200;
 $lead-font-size:   1.30rem;
 
 $spacer: 1.5rem;
+
+
+
+
 
 @import 'bootstrap-4.3.1';
