@@ -120,6 +120,25 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 | Dependência     | -      |
 | Conflito      | -      |
 
+| ID:RN 03        |  Tipo Requisito: Regra de Negocio |
+| ------------- |:-------------:|
+| Descrição      | Um serviço só deve ser contratado caso exista horário disponivel na agenda do prestador. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RN 04        |  Tipo Requisito: Regra de Negocio |
+| ------------- |:-------------:|
+| Descrição      | As áreas de serviço dispostas são predefinidas, assim não sendo possível que o usuario crie novas. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+| ID:RN 05        |  Tipo Requisito: Regra de Negocio |
+| ------------- |:-------------:|
+| Descrição      | Cancelamentos só podem ser realizados caso falte 3 dias para prestação. |
+| Dependência     | -      |
+| Conflito      | -      |
+
+
 ### Modelagem do Sistema
 #### Diagrama de Classes
 <p align="center">
