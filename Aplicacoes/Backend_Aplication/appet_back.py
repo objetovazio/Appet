@@ -1,5 +1,3 @@
-from Model.Usuario import *
-from Model.TipoServico import *
 import os
 from flask import Flask
 from flask import json
@@ -11,6 +9,7 @@ from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
+from Business.Business_user import *
 
 app = Flask(__name__)
 app.run(debug=True)
@@ -117,22 +116,35 @@ def getTypeService():
 # Rota para criacao e atualizacao de usuario
 @app.route('/user', methods=['POST'])
 def postUser():
-    name_user = request.args.post('nomeUser')
-    email_user = request.args.post('emailUser')
-    password = request.args.post('senha')
-    about_user = request.args.post('sobre')
-    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-    # if(name_user == '' or email_user == '' or password == ''):
-    #     return handle_invalid('Empty parameters')
-    # else:
-    #     new_user = None
-    #     if(about_user != None and about_user != ''):
-    #         new_user = Usuario(nome = name_user, email = name_user, senha = password, sobre = about_user)
-    #     else:
-    #         new_user = Usuario(nome = name_user, email = name_user, senha = password)
-    #     print(new_user.nome)
-    #     new_user.save()
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    try:
+        is_name_empty = request.form['nomeUser'] == '' or request.form['nomeUser'] == None
+        name_user = request.form['nomeUser'] if not is_name_empty else None
+
+        is_email_empty = request.form['emailUser'] == '' or request.form['emailUser'] == None
+        email_user = request.form['emailUser'] if not is_email_empty else None
+        
+        is_password_empty = request.form['senha'] == '' or request.form['senha'] == None
+        password = request.form['senha'] if not is_password_empty else None
+
+        is_about_empty = request.form['sobre'] == '' or request.form['sobre'] == None
+        about_user = request.form['sobre'] if not is_about_empty else None
+        
+        is_user_update = request.form['userId'] != '' and request.form['userId']
+        if (is_name_empty or is_email_empty or is_password_empty):
+            raise Exception('empty required parameter')
+    except Exception as err:
+        return handle_invalid(err)
+    user_data = {'name': name_user,
+                'email': email_user,
+                'password': password,
+                'about':about_user}
+    request_result = None
+    if(is_user_update):
+        request_result = updateUser(user_data, request.form['userId'])
+    else:
+        request_result = createUser(user_data)
+
+    return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
 
 # Rota para busca de usuario
 @app.route('/user', methods=['GET'])
@@ -148,6 +160,6 @@ def getUser():
         
 
 def handle_invalid(erroType):
-    response = jsonify(erroType)
+    response = jsonify(str(erroType))
     response.status_code = 400
     return response
