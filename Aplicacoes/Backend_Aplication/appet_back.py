@@ -9,7 +9,7 @@ from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
-from Business.Business_user import *
+import Business.Business_user as b_user
 
 app = Flask(__name__)
 app.run(debug=True)
@@ -140,21 +140,38 @@ def postUser():
                 'about':about_user}
     request_result = None
     if(is_user_update):
-        request_result = updateUser(user_data, request.form['userId'])
+        print("here")
+        request_result = b_user.updateUser(user_data, request.form['userId'])
     else:
-        request_result = createUser(user_data)
+        request_result = b_user.createUser(user_data)
 
     return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
 
 # Rota para busca de usuario
 @app.route('/user', methods=['GET'])
-def getUser():
-    name_user = request.args.get('nomeUser')
-    email_user = request.args.get('emailUser')
-    password = request.args.get('senha')
-    about_user = request.args.get('sobre')
-    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+def getUser():    
+    is_name_empty =  request.args.get('nomeUser') == '' or request.args.get('nomeUser') == None
+    name_user = request.args.get('nomeUser') if not is_name_empty else None    
+
+    is_email_empty = request.args.get('emailUser') == '' or request.args.get('emailUser') == None
+    email_user = request.args.get('emailUser') if not is_email_empty else None
+
+    is_about_empty = request.args.get('sobre') == '' or request.args.get('sobre') == None
+    about_user = request.args.get('sobre') if not is_about_empty else None
+
+    if( is_name_empty and is_email_empty and is_about_empty):
+        print('empty')
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    else:
+        user_query = {
+            'user_name': name_user,
+            'email_user': email_user,
+            'about_user': about_user
+        }
+        data_result = b_user.findUsers(user_query)
+        return json.dumps({'success': True,
+        'data':data_result}), 200, {'ContentType': 'application/json'}
+    
 
 
         
