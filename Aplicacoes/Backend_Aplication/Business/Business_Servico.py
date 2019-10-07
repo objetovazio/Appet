@@ -2,6 +2,8 @@
 import Model.TipoServico as TS
 import Model.Usuario as User
 import Model.Servico as Serv
+import Model.ServicoHorario as SH
+import Model.HorarioServico as HS
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
@@ -16,6 +18,11 @@ def createService(serv_data, owner_id, type_id):
                             preco=serv_data['price'], id_usuario=new_owner, id_tipo=new_type)
     try:
         new_serv.create_table()
+        for horario_prestacao in serv_data['hour']:
+            new_horario = HS.HorarioServico.get_by_id(horario_prestacao)
+            new_link = SH.ServicoHorario(id_usuario = new_owner, id_horarioservico = new_horario)
+            new_link.create_table()
+            new_link.save()
         new_serv.save()
     except Exception as err:
         print(err)

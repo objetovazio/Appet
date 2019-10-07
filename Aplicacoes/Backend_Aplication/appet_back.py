@@ -133,6 +133,40 @@ def getAtivityTime():
 
 @app.route('/Service', methods=['POST'])
 def postService():
+    try:
+        is_title_empty = request.form['title'] == '' or request.form['title'] == None
+        title_service = request.form['title'] if not is_title_empty else None
+
+        is_about_empty = request.form['about'] == '' or request.form['about'] == None
+        about_service = request.form['about'] if not is_about_empty else None
+
+        is_price_empty = request.form['price'] == '' or request.form['price'] == None
+        price_service = request.form['price'] if not is_price_empty else None
+
+        is_owner_empty = request.form['ownerId'] == '' or request.form['ownerId'] == None
+        owner_service = request.form['ownerId'] if not is_owner_empty else None
+
+        is_type_empty = request.form['typeService'] == '' or request.form['typeService'] == None
+        type_service = request.form['typeService']  if not is_type_empty else None
+
+        is_hours_empty = request.form['hourService'] == '' or request.form['hourService'] == None
+        hours_service = request.form['hourService'] if not is_hours_empty else None
+        
+        if(is_title_empty and is_about_empty and is_price_empty and is_owner_empty and is_type_empty and is_hours_empty):
+            raise Exception ('empty requeired parameters for creation')
+
+    except Exception as err:
+        print (err)
+        handle_invalid(err)
+
+    service_request = {
+        'title':title_service,
+        'about':about_service,
+        'price':price_service,
+        'owner':owner_service,
+        'type':type_service
+        'hour':hours_service
+    }
     # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
