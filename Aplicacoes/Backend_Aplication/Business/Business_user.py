@@ -1,14 +1,14 @@
 # used to resolve the path problem
-import Model.Usuario as User
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
+import Model.Usuario as User
 
 #POST METHOD ZONE
 
-# user_data = (DIC) new user to be insert
+# user_data = (DIC) novo usuario para ser inserido na base
 def createUser(user_data):
     new_user = User.Usuario(nome=user_data['name'], email=user_data['email'],
                             senha=user_data['password'], sobre=user_data['about'])
@@ -20,8 +20,8 @@ def createUser(user_data):
     return True
 
 
-# user_data = (DIC) new informations about the user
-# user_id = (STR) id user
+# user_data = (DIC) novas informacoes sobre o usuario
+# user_id = (STR) id do usuario a ser atualizado
 def updateUser(user_data, user_id):
     old_user = User.Usuario.get((User.Usuario.usuario_id == user_id))
     try:
@@ -39,7 +39,7 @@ def updateUser(user_data, user_id):
 
 #GET METHOD ZONE
 
-#user_query = (DIC) parameters to search.
+#user_query = (DIC) paramerto de busca.
 def findUsers(user_query):
     query_result = None
     if(user_query['user_name'] != None):
@@ -70,9 +70,7 @@ def findUsers(user_query):
             (User.Usuario.sobre.contains(user_query['about_user'])) )
     
     final_result = []
-    print(query_result)
     for find_user in query_result:
-        print(find_user.nome)
         final_result.append(_makeResultDic(find_user))
     return final_result
 

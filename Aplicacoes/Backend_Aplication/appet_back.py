@@ -10,6 +10,7 @@ diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
 import Business.Business_user as b_user
+import Business.Business_periodoAtividade as b_periodoAtividade
 
 app = Flask(__name__)
 app.run(debug=True)
@@ -79,15 +80,56 @@ def getServiceHour():
     # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
+#datas sao recebidas no formado yyyyMMdd
 @app.route('/AtivityTime', methods=['POST'])
 def postAtivityTime():
+    try:
+        is_begin_empty = request.form['beginDate'] == '' or request.form['beginDate'] == None
+        begin_date = request.form['beginDate'] if not is_begin_empty else None
+
+        is_end_empty = request.form['endDate'] == '' or request.form['endDate'] == None
+        end_date = request.form['endDate'] if not is_end_empty else None
+
+        is_owner_empty = request.form['ownerId'] == '' or request.form['ownerId'] == None
+        owner_id = request.form['ownerId'] if not is_owner_empty else None
+
+        if(is_begin_empty or is_end_empty or is_owner_empty):
+            raise Exception('empty required parameter')
+    except Exception as err:
+        return handle_invalid(err)
+    ativity_time = {
+        'begin':begin_date,
+        'end':end_date
+    }
+    response_request = None
+    if(request.form['periodoAtvidadeId']!= '' or request.form['periodoAtvidadeId']!= None):
+        response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time,request.form['periodoAtvidadeId'])
+    else:
+        response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time,owner_id)
     # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/AtivityTime', methods=['GET'])
 def getAtivityTime():
-    # ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    is_begin_empty = request.args.get('beginDate') == '' or request.args.get('beginDate') == None
+    begin_date = request.args.get('beginDate') if not is_begin_empty else None
+
+    is_end_empty = request.args.get('endDate') == '' or request.args.get('endDate') == None
+    end_date = request.args.get('endDate') if not is_end_empty else None
+
+    is_owner_empty = request.args.get('ownerId') == '' or request.args.get('ownerId') == None
+    owner_id = request.args.get('ownerId') if not is_owner_empty else None
+
+    if(is_begin_empty and is_end_empty and is_owner_empty):
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}        
+    ativity_time = {
+        'begin':begin_date,
+        'end':end_date,
+        'owner_id':owner_id
+    }
+    data_result = b_periodoAtividade.findPeriodoAtividade(ativity_time)
+    return json.dumps({'success': True,
+        'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Service', methods=['POST'])
 def postService():
