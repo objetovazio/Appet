@@ -12,6 +12,7 @@ sys.path.append(diretorio)
 import Business.Business_user as b_user
 import Business.Business_periodoAtividade as b_periodoAtividade
 import Business.Business_HorarioServico as b_horarioServico
+import Business.Business_Servico as b_servico
 import logging
 
 app = Flask(__name__)
@@ -223,13 +224,44 @@ def postService():
 		'type':type_service,
 		'hour':hours_service
 	}
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	response_request = None
+	try:
+		service_request['service_id'] = request.form['serviceId']
+		response_request = b_servico.updateService(service_request)
+	except Exception as err:
+		if (response_request == None):
+			response_request = b_servico.createService(service_request)
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Service', methods=['GET'])
 def getService():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	is_title_empty	=	request.args.get('title') == '' or request.args.get('title') == None
+	title_service	=	request.args.get('title') if not is_title_empty else None
+
+	is_about_empty	=	request.args.get('about') == '' or request.args.get('about') == None
+	about_service	=	request.args.get('about') if not is_about_empty else None
+
+	is_price_empty	=	request.args.get('price') == '' or request.args.get('price') == None
+	price_service	=	request.args.get('price') if not is_price_empty else None
+
+	is_owner_empty	=	request.args.get('ownerId') == '' or request.args.get('ownerId') == None
+	owner_service	=	request.args.get('ownerId') if not is_owner_empty else None
+
+	is_type_empty	=	request.args.get('typeService') == '' or request.args.get('typeService') == None
+	type_service	=	request.args.get('typeService')  if not is_type_empty else None	
+	if(is_title_empty and is_about_empty and is_price_empty and is_owner_empty and is_type_empty):
+		print('empty')
+		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+	request_query = {
+		'title':title_service,
+		'about':about_service,
+		'price':price_service,
+		'owner':owner_service,
+		'type':type_service
+	}
+	data_result = b_servico.searchService(request_query)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 # Rota para criacao e atualizacao de Tipo de Serviço
 @app.route('/TypeService', methods=['POST'])

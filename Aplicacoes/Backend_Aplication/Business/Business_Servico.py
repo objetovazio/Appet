@@ -1,4 +1,5 @@
 # used to resolve the path problem
+import json
 import Model.TipoServico as TS
 import Model.Usuario as User
 import Model.Servico as Serv
@@ -11,79 +12,120 @@ sys.path.append(diretorio)
 # ---------------------------------
 
 
-def createService(serv_data, owner_id, type_id):
-    new_type = TS.TipoServico.get_by_id(type_id)
-    new_owner = User.Usuario.get_by_id(owner_id)
-    new_serv = Serv.Servico(titulo=serv_data['title'], descricao=serv_data['about'],
-                            preco=serv_data['price'], id_usuario=new_owner, id_tipo=new_type)
-    try:
-        new_serv.create_table()
-        for horario_prestacao in serv_data['hour']:
-            new_horario = HS.HorarioServico.get_by_id(horario_prestacao)
-            new_link = SH.ServicoHorario(id_usuario = new_owner, id_horarioservico = new_horario)
-            new_link.create_table()
-            new_link.save()
-        new_serv.save()
-    except Exception as err:
-        print(err)
-        return False
-    return True
+def createService(serv_data: dict):
+	convert_data = {
+		'title': serv_data['title'],
+		'about': serv_data['about'],
+		'price': json.loads(serv_data['price']),
+		'owner': serv_data['owner'],
+		'type': json.loads(serv_data['type']),
+		'hour': json.loads(serv_data['hour'])
+	}
+	new_type = TS.TipoServico.get_by_id(convert_data['type'])
+	new_owner = User.Usuario.get_by_id(convert_data['owner'])
+	new_serv = Serv.Servico(titulo=convert_data['title'], descricao=convert_data['about'],
+							preco=convert_data['price'], id_usuario=new_owner, id_tipo=new_type)
+	try:
+		new_serv.save()
+		for horario_prestacao in convert_data['hour']:
+			new_horario = HS.HorarioServico.get_by_id(horario_prestacao)
+			new_link = SH.ServicoHorario(
+				id_servico=new_serv, id_horarioservico=new_horario)
+			new_link.save()
+	except Exception as err:
+		print(err)
+		return False
+	return True
 
 
-def updateService(serv_data, owner_id, type_id):
-    old_serv = Serv.Servico.get_by_id(serv_data['serv_id'])
-    old_serv.titulo = serv_data['title']
-    old_serv.descricao = serv_data['about']
-    old_serv.preco = serv_data['price']
-    new_type = TS.TipoServico.get_by_id(type_id)
-    old_serv.id_tipo = new_type
-    try:
-        old_serv.save
-    except Exception as err:
-        print(err)
-        return False
-    return True
+# caso seja passado horarios novos, todos os antigos ligados ao servico sao apagados e colocado os novos
+def updateService(serv_data: dict):
 
+	old_serv = Serv.Servico.get_by_id(int(serv_data['service_id']))
+	is_title_empty = serv_data['title'] == None or serv_data['title'] == ''
+	is_about_empty = serv_data['about'] == None or serv_data['about'] == ''
+	is_price_empty = serv_data['price'] == None or serv_data['price'] == ''
+	is_owner_empty = serv_data['owner'] == None or serv_data['owner'] == ''
+	is_type_empty = serv_data['type'] == None or serv_data['type'] == ''
+	is_hour_empty = serv_data['hour'] == None or serv_data['hour'] == ''
 
+	convert_data = {
+		'title': serv_data['title'] if not is_title_empty else old_serv.titulo,
+		'about': serv_data['about'] if not is_about_empty else old_serv.descricao,
+		'price': json.loads(serv_data['price']) if not is_price_empty else old_serv.preco,
+		'owner': User.Usuario.get_by_id(int(serv_data['owner'])) if not is_owner_empty else old_serv.usuario_id,
+		'type': TS.TipoServico.get_by_id(int(serv_data['type'])) if not is_type_empty else old_serv.id_tipo,
+		'hour': json.loads(serv_data['hour']) if not is_hour_empty else None
+	}
+
+	old_serv.titulo = convert_data['title']
+	old_serv.descricao = convert_data['about']
+	old_serv.preco = convert_data['price']
+	old_serv.id_tipo = convert_data['type']
+	try:
+		if(convert_data['hour'] != None):
+
+			old_collector = SH.ServicoHorario.delete().where((SH.ServicoHorario.id_servico == old_serv)).execute()
+			print(old_collector)
+			for new_schedules in convert_data['hour']:
+				schedule_obj = HS.HorarioServico.get_by_id(new_schedules)
+				schedule_link = SH.ServicoHorario(
+					id_servico=old_serv, id_horarioservico=schedule_obj)
+				schedule_link.save()
+
+		old_serv.save
+	except Exception as err:
+		print(err)
+		return False
+	return True
+
+#adicionar tipo e dono do servico nos parametros de busca
 def searchService(serv_query):
-    result_query = None
-    if(serv_query('title') != None):
-        if(serv_query('about') != None and serv_query('price') != None):
-            result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query('titulo'))) &
-                                                       (Serv.Servico.descricao.contains(serv_query('about'))) &
-                                                       (Serv.Servico.preco == serv_query('price')))
-        else:
-            if(serv_query('about') != None):
-                result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query('titulo'))) &
-                                                           (Serv.Servico.descricao.contains(serv_query('about'))))
-            elif(serv_query('price') != None):
-                result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query('titulo'))) &
-                                                           (Serv.Servico.preco == serv_query('price')))
-            else:
-                result_query = Serv.Servico.select().where(
-                    (Serv.Servico.titulo.contains(serv_query('titulo'))))
-    elif(serv_query('about') != None):
-        if(serv_query('price') != None):
-            result_query = Serv.Servico.select().where(((Serv.Servico.descricao.contains(serv_query('about'))) &
-                                                        (Serv.Servico.preco == serv_query('price'))))
-        else:
-            result_query = Serv.Servico.select().where(
-                ((Serv.Servico.descricao.contains(serv_query('about')))))
-    else:
-        result_query = Serv.Servico.select().where(
-            ((Serv.Servico.preco == serv_query('price'))))
-    final_resul = []
-    for ser_find in result_query:
-        final_resul.append(_makeDic(ser_find))
-    return final_resul
+	result_query = None
+	print(serv_query['price'])
+	if(serv_query['title'] != None):
+		if(serv_query['about'] != None and serv_query['price'] != None):
+			result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query['titulo'])) &
+                                              (Serv.Servico.descricao.contains(serv_query['about'])) &
+                                              (Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
+                                              (Serv.Servico.preco > (-0.5)+float(serv_query['price'])))
+		else:
+			if(serv_query['about'] != None):
+				result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query['titulo'])) &
+                                               (Serv.Servico.descricao.contains(serv_query['about'])))
+			elif(serv_query['price'] != None):
+				result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query['titulo'])) &
+                                               (Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
+                                               (Serv.Servico.preco > (-0.5)+float(serv_query['price'])))
+			else:
+				result_query = Serv.Servico.select().where(
+					(Serv.Servico.titulo.contains(serv_query['titulo'])))
+	elif(serv_query['about'] != None):
+		if(serv_query['price'] != None):
+			result_query = Serv.Servico.select().where(((Serv.Servico.descricao.contains(serv_query['about'])) &
+                                               (Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
+                                               (Serv.Servico.preco > (-0.5)+float(serv_query['price']))))
+		else:
+			result_query = Serv.Servico.select().where(
+				((Serv.Servico.descricao.contains(serv_query['about']))))
+	else:
+		result_query = Serv.Servico.select().where(
+			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
+			(Serv.Servico.preco > (-0.5)+float(serv_query['price'])))
+	final_resul = []
+	print(result_query)
+	for ser_find in result_query:
+		final_resul.append(_makeDic(ser_find))
+	return final_resul
+
 
 def _makeDic(serv_data):
-    result = {
-        'id_service': serv_data.id_servico,
-        'title': serv_data.titulo,
-        'about': serv_data.descricao,
-        'price': serv_data.preco,
-        'id_user': serv_data.id_usuario.usuario_id,
-        'id_type': serv_data.id_tipo.id_tipo
-    }
-    return result
+	result = {
+		'id_service': serv_data.id_servico,
+		'title': serv_data.titulo,
+		'about': serv_data.descricao,
+		'price': serv_data.preco,
+		'id_user': serv_data.id_usuario.usuario_id,
+		'id_type': serv_data.id_tipo.id_tipo
+	}
+	return result
