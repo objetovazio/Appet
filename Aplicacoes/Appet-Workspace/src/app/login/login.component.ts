@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ContentChildDecorator } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+import { Login } from '../model/Login';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  login:Login;
+
   constructor() { }
 
   ngOnInit() {
+    this.login = new Login();
+  }
+
+  onSubmit(form: NgForm){
+    console.log(form.value)
   }
 
 }

@@ -9,6 +9,7 @@ import { RodapeComponent } from './rodape/rodape.component';
 import { LoginComponent } from './login/login.component';
 import { NovoUsuarioComponent } from './novo-usuario/novo-usuario.component';
 import { BuscarServicoComponent } from './buscar-servico/buscar-servico.component';
+import { FormsModule } from '@angular/forms' 
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BuscarServicoComponent } from './buscar-servico/buscar-servico.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
