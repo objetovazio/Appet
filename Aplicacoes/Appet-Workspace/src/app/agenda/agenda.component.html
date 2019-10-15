@@ -1,0 +1,170 @@
+<div class="pt-5" style="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="" contenteditable="true"><b>Agenda de Serviço</b><br></h4>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="py-2" style="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12"><label for="form16" class="mt-0"><br></label></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="">
+          <div class="card">
+            <div class="card-header"> Legenda</div>
+            <div class="card-body mb-3">
+              <p class="text-success"><i class="fa fa-circle"></i> Horário Livre</p>
+              <p class="text-muted"><i class="fa fa-circle"></i> Horário Agendado</p>
+            </div>
+          </div>
+          <div class="row my-2"></div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"> 
+                <a class="btn btn-secondary"   href="/agenda/#titlecontrolehorario" >Controle Horário</a></div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="my-3">
+                <div style="text-align: center;">
+                  <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>AGENDA</b></span></font>
+                </div>
+              </h3>
+              <div class="col-md-12 text-center my-2">
+                <a class="btn btn-light text-right mr-5" href="#"> <mat-icon >chevron_left</mat-icon> </a>
+                <a class="btn btn-light text-dark ml-5" href="#"> <mat-icon >chevron_right</mat-icon></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered ">
+          <thead class="thead-dark">
+            <tr>
+              <th class="text-center">Seg<br> 30/09</th>
+              <th class="text-center">Ter<br> 01/10</th>
+              <th class="text-center">Qua<br> 02/10</th>
+              <th class="text-center">Qui<br> 03/10</th>
+              <th class="text-center">Sex<br> 04/10</th>
+              <th class="text-center">Sab<br> 05/10</th>
+              <th class="text-center">Dom<br> 06/10</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="py-3"></th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td style="" class="py-3"></td>
+            </tr>
+            <tr>
+              <th class="table-success text-center py-3">7:00</th>
+              <td></td>
+              <td style=""></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="text-center py-2">
+    <div class="container">
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="col-md-12 my-2">
+          <h3 class="mt-4">Controle Horário<br></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-2" id="titlecontrolehorario">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-12 my-2"></div>
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-2"><a class="btn btn-secondary my-2" href="#">Adicionar</a></div>
+            <div class="col-md-2"><a class="btn btn-secondary my-2" href="#">Deletar</a></div>
+          </div>
+          <div class="form-group" id="controlehorario"><label>Dia da Semana</label><select class="form-control border-0 my-2" id="diasemana">
+              <option>Todos os dias</option>
+              <option>Seg</option>
+              <option>Ter</option>
+              <option>Qua</option>
+              <option>...</option>
+            </select>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group"><label>Horário de Inicio</label><select class="form-control border-0 my-2" id="horarioinicio">
+                    <option>00:00</option>
+                    <option>00:30</option>
+                    <option>01:00</option>
+                    <option>01:30</option>
+                    <option>...</option>
+                  </select></div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-4">
+                <div class="form-group"><label>Horário de Fim</label><select class="form-control border-0 my-2" id="horariofim">
+                    <option>00:00</option>
+                    <option>00:30</option>
+                    <option>01:00</option>
+                    <option>01:30</option>
+                    <option>...</option>
+                  </select></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group"><label>Repetir</label><select class="form-control border-0 my-2 mb-2" id="repetir">
+                    <option>Todos os dias</option>
+                    <option>Semanalmente</option>
+                    <option>Mensamalmente</option>
+                  </select>
+                  <div class="row">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { MatIconModule } from '@angular/material/icon'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
@@ -9,6 +10,10 @@ import { RodapeComponent } from './rodape/rodape.component';
 import { LoginComponent } from './login/login.component';
 import { NovoUsuarioComponent } from './novo-usuario/novo-usuario.component';
 import { BuscarServicoComponent } from './buscar-servico/buscar-servico.component';
+import { MeuPerfilComponent } from './meu-perfil/meu-perfil.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
+import { AgendaComponent } from './agenda/agenda.component';
 
 @NgModule({
   declarations: [
@@ -19,10 +24,15 @@ import { BuscarServicoComponent } from './buscar-servico/buscar-servico.componen
     LoginComponent,
     NovoUsuarioComponent,
     BuscarServicoComponent,
+    MeuPerfilComponent,
+    EditarPerfilComponent,
+    AgendaComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
