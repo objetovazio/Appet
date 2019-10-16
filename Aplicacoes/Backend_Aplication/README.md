@@ -13,7 +13,7 @@ pip3 install peewee
 ### Linux
 * iniciar o serviço flask (necessario estar na pasta do repositorio)
  ```bash
-source back_env/bin/active
+source back_env/bin/activate
 export FLASK_APP=appet_back.py
 export FLASK_ENV=development
 flask run
