@@ -149,7 +149,7 @@ def postAtivityTime():
 
 		is_owner_empty = request.form['ownerId'] == '' or request.form['ownerId'] == None
 		owner_id = request.form['ownerId'] if not is_owner_empty else None
-
+		is_pa_update = request.form['periodoAtvidadeId'] != '' and request.form['periodoAtvidadeId']
 		if(is_begin_empty or is_end_empty or is_owner_empty):
 			raise Exception('empty required parameter')
 	except Exception as err:
@@ -159,7 +159,7 @@ def postAtivityTime():
 		'end':end_date
 	}
 	response_request = None
-	if(request.form['periodoAtvidadeId']!= '' or request.form['periodoAtvidadeId']!= None):
+	if(is_pa_update):
 		response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time,request.form['periodoAtvidadeId'])
 	else:
 		response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time,owner_id)
