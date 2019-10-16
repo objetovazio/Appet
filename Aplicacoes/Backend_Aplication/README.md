@@ -10,6 +10,7 @@ pip3 install peewee
 
 ## Utilização Local
 
+### Linux
 * iniciar o serviço flask (necessario estar na pasta do repositorio)
  ```bash
 source back_env/bin/active
@@ -17,6 +18,17 @@ export FLASK_APP=appet_back.py
 export FLASK_ENV=development
 flask run
 ```
+
+
+### Windows
+* iniciar o serviço flask (necessario estar na pasta do repositorio)
+```bash
+windows_env\Scripts\activate.bat
+set FLASK_APP=appet_back.py
+set FLASK_ENV=development
+flask run
+```
+
 
 ## Rotas
 ### /ServiceSchedule
