@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IndexComponent } from './index/index.component';
+
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { RodapeComponent } from './rodape/rodape.component';
 import { LoginComponent } from './login/login.component';
@@ -15,11 +15,11 @@ import { MeuPerfilComponent } from './meu-perfil/meu-perfil.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 import { AgendaComponent } from './agenda/agenda.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IndexComponent,
     MenuPrincipalComponent,
     RodapeComponent,
     LoginComponent,
@@ -28,6 +28,7 @@ import { AgendaComponent } from './agenda/agenda.component';
     MeuPerfilComponent,
     EditarPerfilComponent,
     AgendaComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
