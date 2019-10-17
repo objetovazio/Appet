@@ -3,6 +3,7 @@ from flask import Flask
 from flask import json
 from flask import jsonify
 from flask import request
+from flask_cors import CORS
 # used to resolve the path problem
 import sys
 from os.path import dirname, abspath
