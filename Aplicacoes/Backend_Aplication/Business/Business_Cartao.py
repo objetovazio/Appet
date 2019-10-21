@@ -65,36 +65,50 @@ def findCard(queryData: dict):
 													  (Card.Cartao.validade == queryData('expiration')))
 		elif(have_cpf):
 			if(have_numero):
-				return 0
+				result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))) &
+													  (Card.Cartao.cpf_titular == queryData('cpf')) &
+													  (Card.Cartao.numero_cartao == queryData('number')))
 			elif(have_validade):
-				return 0
+				result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))) &
+													  (Card.Cartao.cpf_titular == queryData('cpf')) &
+													  (Card.Cartao.validade == queryData('expiration')))
 			else:
-				return 0
+				result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))) &
+													  (Card.Cartao.cpf_titular == queryData('cpf')))
 		elif(have_numero):
 			if(have_validade):
-				return 0
+				result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))) &
+													  (Card.Cartao.numero_cartao == queryData('number')) &
+													  (Card.Cartao.validade == queryData('expiration')))
 			else:
-				return 0
+				result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))) &
+													  (Card.Cartao.numero_cartao == queryData('number')))
 		elif(have_validade):
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))) &
+													  (Card.Cartao.validade == queryData('expiration')))
 		else:
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.nome_titular.contains(queryData('owner_name'))))
 	elif(have_cpf):
 		if(have_numero and have_validade):
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.cpf_titular == queryData('cpf')) &
+													  (Card.Cartao.numero_cartao == queryData('number')) &
+													  (Card.Cartao.validade == queryData('expiration')))
 		elif(have_numero):
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.cpf_titular == queryData('cpf')) &
+													  (Card.Cartao.numero_cartao == queryData('number')))
 		elif(have_validade):
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.cpf_titular == queryData('cpf')) &
+													  (Card.Cartao.validade == queryData('expiration')))
 		else:
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.cpf_titular == queryData('cpf')))
 	elif(have_numero):
 		if(have_validade):
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.numero_cartao == queryData('number')) &
+													  (Card.Cartao.validade == queryData('expiration')))
 		else:
-			return 0
+			result_query = Card.Cartao.select().where((Card.Cartao.numero_cartao == queryData('number')))
 	elif(have_validade):
-		return 0
+		result_query = Card.Cartao.select().where((Card.Cartao.validade == queryData('expiration')))
 	else:
 		return 0
 	final_result = []
