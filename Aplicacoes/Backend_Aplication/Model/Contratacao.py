@@ -10,12 +10,14 @@ from Model.BaseCon import BaseCon
 from Model.Usuario import Usuario
 from Model.Servico import Servico
 
-class Contrato(BaseCon):
+class Contratacao(BaseCon):
     ##ORM reconhece automaticamente como PK
-    id_contrato = AutoField()
-    data_contratacao = DateField()
-    data_prestacao = DateTimeField()
-    descricao = CharField()
+    id_contratacao = AutoField()
+    data_solicitacao = DateField()
+    data_agendamento = DateTimeField()
+    forma_pagamento = CharField()
+    valor = IntegerField()
+    status_contratacao = IntegerField()
     ## FK relacional com contrato com o usuario que contratou o servico
     id_usuario = ForeignKeyField(Usuario)
     ## FK relacional com contrato com o servico contratado.
