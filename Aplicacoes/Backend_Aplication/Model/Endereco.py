@@ -16,5 +16,6 @@ class Endereco(BaseCon):
     nome_bairro = CharField()
     nome_cidade = CharField()
     nome_estado = CharField()
+    num_endereco = IntegerField()
     ## FK relacional com o usuario dono de tal contato
     id_usuario = ForeignKeyField(Usuario)
