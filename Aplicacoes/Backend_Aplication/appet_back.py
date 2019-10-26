@@ -18,7 +18,7 @@ import logging
 
 app = Flask(__name__)
 #app.run(debug=True)
-
+CORS(app)
 
 @app.route('/')
 def hello_world():
