@@ -1,10 +1,10 @@
 # used to resolve the path problem
-import Model.Usuario as User
-import Model.Endereco as Address
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+import Model.Usuario as User
+import Model.Endereco as Address
 # ---------------------------------
 
 

@@ -1,11 +1,12 @@
 # used to resolve the path problem
 from datetime import date
-import Model.Usuario as User
-import Model.PeriodoAtividade as PA
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+
+import Model.Usuario as User
+import Model.PeriodoAtividade as PA
 # ---------------------------------
 
 # POST METHOD ZONE

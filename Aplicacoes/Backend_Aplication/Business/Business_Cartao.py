@@ -1,10 +1,10 @@
 # used to resolve the path problem
-import Model.Cartao as Card
-import Model.Usuario as User
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+import Model.Cartao as Card
+import Model.Usuario as User
 # ---------------------------------
 
 

@@ -1,14 +1,15 @@
 # used to resolve the path problem
+import sys
+from os.path import dirname, abspath
+diretorio = dirname(dirname(abspath(__file__)))
+sys.path.append(diretorio)
 import json
 import Model.TipoServico as TS
 import Model.Usuario as User
 import Model.Servico as Serv
 import Model.ServicoHorario as SH
 import Model.HorarioServico as HS
-import sys
-from os.path import dirname, abspath
-diretorio = dirname(dirname(abspath(__file__)))
-sys.path.append(diretorio)
+from peewee import fn
 # ---------------------------------
 
 
@@ -117,6 +118,16 @@ def searchService(serv_query):
 	for ser_find in result_query:
 		final_resul.append(_makeDic(ser_find))
 	return final_resul
+
+
+#retorna metricas relacionadas ao tipo de servicos cadastrados no sistema
+def typeRegistredMetrics():
+	query_build = (Serv.Servico
+					.select(Serv.Servico.id_tipo, fn.COUNT(Serv.Servico.id_tipo).alias('total') )
+					.group_by(Serv.Servico.id_tipo)
+					)
+	for row in query_build:
+		print(row.id_tipo.nome_tipo,row.total)
 
 
 def _makeDic(serv_data):

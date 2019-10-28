@@ -1,11 +1,11 @@
 # used to resolve the path problem
 from datetime import time
-import Model.PeriodoAtividade as PA
-import Model.HorarioServico as HS
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+import Model.PeriodoAtividade as PA
+import Model.HorarioServico as HS
 # ---------------------------------
 
 
