@@ -77,17 +77,17 @@ def getAddress():
 @app.route('/ServiceSchedule', methods=['POST'])
 def postServiceSchedule():
 	try:
-		is_period_empty = request.form['periodoId'] == None or request.form['periodoId'] == ''
-		period_id = request.form['periodoId'] if not is_period_empty else None
+		is_period_empty = is_parameter_empty(request.form['periodoId'])
+		period_id = int(request.form['periodoId']) if not is_period_empty else None
 
-		is_begin_empty = request.form['beginTime'] == None or request.form['beginTime'] == ''
+		is_begin_empty = is_parameter_empty(request.form['beginTime'])
 		begin_time = request.form['beginTime'] if not is_begin_empty else None
 
-		is_end_empty = request.form['endTime'] == None or request.form['endTime'] == ''
+		is_end_empty = is_parameter_empty(request.form['endTime'])
 		end_time = request.form['endTime'] if not is_end_empty else None
 
-		is_day_empty = request.form['weekDay'] == None or request.form['weekDay'] == ''
-		week_day = request.form['weekDay'] if not is_day_empty else None
+		is_day_empty = is_parameter_empty(request.form['weekDay'])
+		week_day = int(request.form['weekDay']) if not is_day_empty else None
 
 		if(is_period_empty or is_begin_empty or is_end_empty or is_day_empty):
 			raise Exception('[Schedule Service - POST]Empty Required Parameter')
@@ -102,7 +102,6 @@ def postServiceSchedule():
 	}
 	response_request = None
 	try:
-		print(request.form['serviceSchedule'])
 		schedule_data['schedule_id'] = request.form['serviceSchedule'] 
 		response_request = b_horarioServico.updateSchedule(schedule_data)
 	except Exception as err:
@@ -113,17 +112,17 @@ def postServiceSchedule():
 
 @app.route('/ServiceSchedule', methods=['GET'])
 def getServiceSchedule():
-	is_period_empty = request.args.get('periodoId') == None or request.args.get('periodoId') == ''
-	period_id = request.form['periodoId'] if not is_period_empty else None
+	is_period_empty = is_parameter_empty(request.args.get('periodoId'))
+	period_id = int(request.form['periodoId']) if not is_period_empty else None
 
-	is_begin_empty = request.args.get('beginTime') == None or request.args.get('beginTime') == ''
+	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
 	begin_time = request.form['beginTime'] if not is_begin_empty else None
 
-	is_end_empty = request.args.get('endTime') == None or request.args.get('endTime') == ''
+	is_end_empty = is_parameter_empty(request.args.get('endTime'))
 	end_time = request.args.get('endTime') if not is_end_empty else None
 
-	is_day_empty = request.args.get('weekDay') == None or request.args.get('weekDay') == ''
-	week_day = request.args.get('weekDay') if not is_day_empty else None
+	is_day_empty = is_parameter_empty(request.args.get('weekDay'))
+	week_day = int(request.args.get('weekDay')) if not is_day_empty else None
 
 	if(is_period_empty and is_begin_empty and is_end_empty and is_day_empty):
 		print('empty request')
@@ -142,15 +141,15 @@ def getServiceSchedule():
 @app.route('/AtivityTime', methods=['POST'])
 def postAtivityTime():
 	try:
-		is_begin_empty = request.form['beginDate'] == '' or request.form['beginDate'] == None
+		is_begin_empty = is_parameter_empty(request.form['beginDate'])
 		begin_date = request.form['beginDate'] if not is_begin_empty else None
 
-		is_end_empty = request.form['endDate'] == '' or request.form['endDate'] == None
+		is_end_empty = is_parameter_empty(request.form['endDate'])
 		end_date = request.form['endDate'] if not is_end_empty else None
 
-		is_owner_empty = request.form['ownerId'] == '' or request.form['ownerId'] == None
-		owner_id = request.form['ownerId'] if not is_owner_empty else None
-		is_pa_update = request.form['periodoAtvidadeId'] != '' and request.form['periodoAtvidadeId']
+		is_owner_empty = is_parameter_empty(request.form['ownerId'])
+		owner_id = int(request.form['ownerId']) if not is_owner_empty else None
+		
 		if(is_begin_empty or is_end_empty or is_owner_empty):
 			raise Exception('empty required parameter')
 	except Exception as err:
@@ -160,23 +159,27 @@ def postAtivityTime():
 		'end':end_date
 	}
 	response_request = None
-	if(is_pa_update):
+	#usado para verificar se é update ou create
+	try:
 		response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time,request.form['periodoAtvidadeId'])
-	else:
-		response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time,owner_id)
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+	except Exception as err:
+		if(response_request == None):
+			logging.exception("message")
+			response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time,owner_id)
+	
+
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/AtivityTime', methods=['GET'])
 def getAtivityTime():
-	is_begin_empty = request.args.get('beginDate') == '' or request.args.get('beginDate') == None
+	is_begin_empty = is_parameter_empty(request.args.get('beginDate'))
 	begin_date = request.args.get('beginDate') if not is_begin_empty else None
 
-	is_end_empty = request.args.get('endDate') == '' or request.args.get('endDate') == None
+	is_end_empty = is_parameter_empty(request.args.get('endDate'))
 	end_date = request.args.get('endDate') if not is_end_empty else None
 
-	is_owner_empty = request.args.get('ownerId') == '' or request.args.get('ownerId') == None
-	owner_id = request.args.get('ownerId') if not is_owner_empty else None
+	is_owner_empty = is_parameter_empty(request.args.get('ownerId'))
+	owner_id = int(request.args.get('ownerId')) if not is_owner_empty else None
 
 	if(is_begin_empty and is_end_empty and is_owner_empty):
 		return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}        
@@ -192,22 +195,22 @@ def getAtivityTime():
 @app.route('/Service', methods=['POST'])
 def postService():
 	try:
-		is_title_empty = request.form['title'] == '' or request.form['title'] == None
+		is_title_empty = is_parameter_empty(request.form['title'])
 		title_service = request.form['title'] if not is_title_empty else None
 
-		is_about_empty = request.form['about'] == '' or request.form['about'] == None
+		is_about_empty = is_parameter_empty(request.form['about'])
 		about_service = request.form['about'] if not is_about_empty else None
 
-		is_price_empty = request.form['price'] == '' or request.form['price'] == None
-		price_service = request.form['price'] if not is_price_empty else None
+		is_price_empty = is_parameter_empty(request.form['price'])
+		price_service = float(request.form['price']) if not is_price_empty else None
 
-		is_owner_empty = request.form['ownerId'] == '' or request.form['ownerId'] == None
-		owner_service = request.form['ownerId'] if not is_owner_empty else None
+		is_owner_empty = is_parameter_empty(request.form['ownerId'])
+		owner_service = int(request.form['ownerId']) if not is_owner_empty else None
 
-		is_type_empty = request.form['typeService'] == '' or request.form['typeService'] == None
-		type_service = request.form['typeService']  if not is_type_empty else None
+		is_type_empty = is_parameter_empty(request.form['typeService'])
+		type_service = int(request.form['typeService'])  if not is_type_empty else None
 
-		is_hours_empty = request.form['hourService'] == '' or request.form['hourService'] == None
+		is_hours_empty = is_parameter_empty(request.form['hourService'])
 		hours_service = request.form['hourService'] if not is_hours_empty else None
 		
 		if(is_title_empty and is_about_empty and is_price_empty and is_owner_empty and is_type_empty and is_hours_empty):
@@ -236,20 +239,20 @@ def postService():
 
 @app.route('/Service', methods=['GET'])
 def getService():
-	is_title_empty	=	request.args.get('title') == '' or request.args.get('title') == None
+	is_title_empty	=	is_parameter_empty(request.args.get('title'))
 	title_service	=	request.args.get('title') if not is_title_empty else None
 
-	is_about_empty	=	request.args.get('about') == '' or request.args.get('about') == None
+	is_about_empty	=	is_parameter_empty(request.args.get('about'))
 	about_service	=	request.args.get('about') if not is_about_empty else None
 
-	is_price_empty	=	request.args.get('price') == '' or request.args.get('price') == None
-	price_service	=	request.args.get('price') if not is_price_empty else None
+	is_price_empty	=	is_parameter_empty(request.args.get('price'))
+	price_service	=	float(request.args.get('price')) if not is_price_empty else None
 
-	is_owner_empty	=	request.args.get('ownerId') == '' or request.args.get('ownerId') == None
-	owner_service	=	request.args.get('ownerId') if not is_owner_empty else None
+	is_owner_empty	=	is_parameter_empty(request.args.get('ownerId'))
+	owner_service	=	int(request.args.get('ownerId')) if not is_owner_empty else None
 
-	is_type_empty	=	request.args.get('typeService') == '' or request.args.get('typeService') == None
-	type_service	=	request.args.get('typeService')  if not is_type_empty else None	
+	is_type_empty	=	is_parameter_empty(request.args.get('typeService'))
+	type_service	=	int(request.args.get('typeService'))  if not is_type_empty else None	
 	if(is_title_empty and is_about_empty and is_price_empty and is_owner_empty and is_type_empty):
 		print('empty')
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
@@ -282,19 +285,19 @@ def getTypeService():
 @app.route('/user', methods=['POST'])
 def postUser():
 	try:
-		is_name_empty = request.form['nomeUser'] == '' or request.form['nomeUser'] == None
+		is_name_empty = is_parameter_empty(request.form['nomeUser'])
 		name_user = request.form['nomeUser'] if not is_name_empty else None
 
-		is_email_empty = request.form['emailUser'] == '' or request.form['emailUser'] == None
+		is_email_empty = is_parameter_empty(request.form['emailUser'])
 		email_user = request.form['emailUser'] if not is_email_empty else None
 		
-		is_password_empty = request.form['senha'] == '' or request.form['senha'] == None
+		is_password_empty = is_parameter_empty(request.form['senha'])
 		password = request.form['senha'] if not is_password_empty else None
 
-		is_about_empty = request.form['sobre'] == '' or request.form['sobre'] == None
+		is_about_empty = is_parameter_empty(request.form['sobre'])
 		about_user = request.form['sobre'] if not is_about_empty else None
 		
-		is_user_update = request.form['userId'] != '' and request.form['userId']
+		is_user_update = is_parameter_empty(request.form['userId'])
 		if (is_name_empty or is_email_empty or is_password_empty):
 			raise Exception('empty required parameter')
 	except Exception as err:
@@ -306,12 +309,12 @@ def postUser():
 	request_result = None
 
 	try:
-
 		if(is_user_update):
-			print("here")
 			request_result = b_user.updateUser(user_data, request.form['userId'])
 		else:
-			request_result = b_user.createUser(user_data)
+			if(request_result == None):
+				request_result = b_user.createUser(user_data)
+		
 		if (request_result == False):
 			raise Exception('Erro no Banco de Dados')
 		return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
@@ -321,13 +324,13 @@ def postUser():
 # Rota para busca de usuario
 @app.route('/user', methods=['GET'])
 def getUser():    
-	is_name_empty =  request.args.get('nomeUser') == '' or request.args.get('nomeUser') == None
+	is_name_empty =  is_parameter_empty(request.args.get('nomeUser'))
 	name_user = request.args.get('nomeUser') if not is_name_empty else None    
 
-	is_email_empty = request.args.get('emailUser') == '' or request.args.get('emailUser') == None
+	is_email_empty = is_parameter_empty(request.args.get('emailUser'))
 	email_user = request.args.get('emailUser') if not is_email_empty else None
 
-	is_about_empty = request.args.get('sobre') == '' or request.args.get('sobre') == None
+	is_about_empty = is_parameter_empty(request.args.get('sobre'))
 	about_user = request.args.get('sobre') if not is_about_empty else None
 
 	if( is_name_empty and is_email_empty and is_about_empty):
@@ -356,3 +359,6 @@ def erro_interno (erroType):
 	response = jsonify(str(erroType))
 	response.status_code = 500
 	return response
+
+def is_parameter_empty(pass_parameter:str):
+	return pass_parameter == None or pass_parameter == ''
