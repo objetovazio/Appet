@@ -3,7 +3,7 @@ As rotas utilizadas no sistema seguem o padrão Rest, onde requisições GET sã
 
 ## Dependência
 * Comunicação com o banco de dados
-Como se trata de uma aplicação usando a linguagem Python para acessar o banco de dados é feito o uso da ORM peewee, na qual é necessaria fazer a instalação e pode ser feita da seguinte maneira:
+Como se trata de uma aplicação usando a linguagem Python na versão 3 para acessar o banco de dados é feito o uso da ORM peewee, na qual é necessaria fazer a instalação e pode ser feita da seguinte maneira:
 ```bash
 pip3 install peewee
 ```
