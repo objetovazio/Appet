@@ -1,10 +1,10 @@
 # used to resolve the path problem
-import Model.Comentario as Comentario
-import Model.Avaliacao as Avaliacao
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+import Model.Comentario as Comentario
+import Model.Avaliacao as Avaliacao
 # ---------------------------------
 
 def createComentario(comentario_data:dict):

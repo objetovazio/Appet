@@ -1,11 +1,11 @@
 # used to resolve the path problem
-import Model.Usuario as User
-import Model.Servico as Servico
-import Model.Avaliacao as Avaliacao
 import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+import Model.Usuario as User
+import Model.Servico as Servico
+import Model.Avaliacao as Avaliacao
 # ---------------------------------
 
 def createAvaliacao(avalicao_data:dict):
