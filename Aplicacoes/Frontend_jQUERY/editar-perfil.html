@@ -8,35 +8,20 @@
   <!-- jQuery -->
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
-  <script type="text/javascript" src="assets/js/notificacao.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/usuario.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
 
 </head>
 
 <body class="bg-light"  style="">
 
  
-  <!-- Menu -->
-  <nav class="navbar navbar-expand-md navbar-light bg-light" style="">
-    <div class="container"> <a class="navbar-brand" href="index.html">
-        <img class="img-fluid d-block" src="assets/image/
-logo.png" style="" width="100" height="100"><b></b>
-      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar10">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
-        </ul> <a href="login.html#refentrar" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
-      </div>
-    </div>
-  </nav>
-
   <div class="pt-5" style="">
     <div class="container">
       <div class="row">
@@ -69,12 +54,16 @@ logo.png" style="" width="100" height="100"><b></b>
       </div>
       <div class="row">
         <div class="col-md-12" style="">
-          <div class="form-group">
+          <div class="form-group" id="formulario">
             <input id="id" type="text" style="display: none;" >
             <input id="email" type="text" style="display: none;" ><br>
             <label for="nome" class="mt-3">Nome<br> </label><input id="nome" type="text" class="form-control" placeholder="Nome">
             <div class="form-group">
-              <div class="form-group"><label for="senha" class="mt-2">Senha<br></label><input id="senha" type="password" class="form-control"  placeholder="*****" >  </div>
+              <div class="form-group"><label for="senha" class="mt-2">Senha<br></label><input id="senha" type="password" class="form-control"  placeholder="*****" >
+
+             <span id="versenha" class="btn btn-light"  style="margin-top: 10px; font-size: 14px; text-decoration: none; cursor: pointer; padding-top: 4px; padding-bottom: 5px; padding-top: 5px; padding-right: 15px;">Mostrar Senha</span>	
+            
+              </div>
             </div>
             <div class="form-group"><label for="sobre" class="mt-2">Sobre<br></label>
               <div class="form-group"><textarea id="sobre" class="form-control"  rows="3" placeholder="Descrição sobre você."></textarea></div>
@@ -87,7 +76,7 @@ logo.png" style="" width="100" height="100"><b></b>
                   </select>
                 </div>
                 <input type="text" class="form-control mb-2" id="form17" placeholder="Digite aqui...">
-                <a class="btn btn-light" href="#" contenteditable="true"><i class="fa fa-plus"></i>&nbsp;Adicionar outro Contato&nbsp;</a>
+                <a class="btn btn-light" href="#"><i class="fa fa-plus"></i>&nbsp;Adicionar outro Contato&nbsp;</a>
                 <div class="form-group" style=""><label></label></div>
               </div>
               <div class="form-group"><label class="mt-2">Endereço<br></label><input type="text" class="form-control mb-2" id="form17" placeholder="Rua Barnabé" required="required">
@@ -97,7 +86,7 @@ logo.png" style="" width="100" height="100"><b></b>
                       <div class="form-group"><input type="text" class="form-control" id="form17" placeholder="CEP" required="required"></div>
                     </div>
                   </div>
-                </div><a class="btn btn-light" href="#" contenteditable="true"><i class="fa fa-plus"></i>&nbsp;Adicionar outro Endereço</a>
+                </div><a class="btn btn-light" href="#" ><i class="fa fa-plus"></i>&nbsp;Adicionar outro Endereço</a>
               </div>
             </div>
           </div>
@@ -143,29 +132,60 @@ logo.png" style="" width="100" height="100"><b></b>
     
   $(document).ready( function (){ 
 
+
+
     pegaUsuario();
 
      $("#salvar").click(function() {
        
        atualizaUsuario();
-       setTimeout(function(){ pegaUsuario() }, 3000);
-      
 
      });
+
+
+    $("#versenha").click(function() {
     
+       // var inputSenha = $('#senha').attr('type', 'text');
+       var inputSenha = $('#senha');
 
+       if ( inputSenha.attr('type') == "password") {
+       		$('#senha').attr('type', 'text');
+       		$(this).text('Ocultar senha');
+       }else{
+       		$('#senha').attr('type', 'password');
+       		$(this).text('Mostrar senha');
 
+       }
+	
+	});
 
   });
   </script>
 
 
+
+  <!-- Menu -->
+  <nav id="menu-principal" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container"> <a class="navbar-brand" href="index.html">
+        <img class="img-fluid d-block" src="assets/image/
+logo.png" style="" width="100" height="100"><b></b>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar10">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
+        </ul> <a href="login.html#refentrar" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
+      </div>
+    </div>
+  </nav>
+
   <!-- Notificação -->
-  <div class="alert" style="position: fixed; top:0px; display:none; min-width: 100%;  border-radius: 0px; opacity: 0.9;
-  filter: alpha(opacity=90);" id="box-notificacao">
-    <i class="fa fa-info" style="size: 3px; color: black;"> </i>
-    <span id="msg-notificacao" style="margin-left: 5px; padding: 3px;font-weight: bold;"> </span>
+  <div class="alert" id="box-notificacao">
+    <i class="fa fa-info" > </i>
+    <span id="msg-notificacao"> </span>
   </div> 
+
 
 </body>
 </html>
