@@ -42,7 +42,7 @@ function pegaUsuario (){
 		senha:"",
 		sobre:""
 	};
-	
+	mensagem("Atualizando dados da página", "Sucesso",2000);
 	$.get(rota_user, data_request, function(){
 	}).done( function (dados){
 

@@ -9,34 +9,20 @@
   <!-- jQuery -->
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
-  <script type="text/javascript" src="assets/js/notificacao.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/usuario.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
-
+  <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
+  
 </head>
 
 <body class="bg-light" style="">
-  <span id="notificacao"> </span>
 
-  <!-- Menu -->
-  <nav class="navbar navbar-expand-md navbar-light bg-light" style="">
-    <div class="container"> <a class="navbar-brand" href="index.html">
-        <img class="img-fluid d-block" src="assets/image/
-logo.png" style="" width="100" height="100"><b></b>
-      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar10">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
-        </ul> <a href="login.html#refentrar" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
-      </div>
-    </div>
-  </nav>
+
   <div class="py-5 bg-light" style="background-image: url(assets/image/cat.jpg);  background-size: cover; background-position: to left botto; background-repeat: repeat;">
     <div class="container">
       <div class="row">
@@ -49,7 +35,7 @@ logo.png" style="" width="100" height="100"><b></b>
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-8" style=""></div>
-                <div id="refentrar" class="col-md-4" style=""><a class="btn btn-outline-secondary text-right" href="novo-usuario.html#refcadastrar">Cadastrar</a></div>
+                <div id="refentrar" class="col-md-4" style=""><a class="btn btn-outline-secondary text-right" href="novo-usuario.html">Cadastrar</a></div>
               </div>
             </div>
           </div>
@@ -112,15 +98,27 @@ logo.png" style="" width="100" height="100"><b></b>
   </script>
 
 
+  <!-- Menu -->
+  <nav id="menu-principal" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container"> <a class="navbar-brand" href="index.html">
+        <img class="img-fluid d-block" src="assets/image/
+logo.png" style="" width="100" height="100"><b></b>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar10">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
+        </ul> <a href="login.html" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Notificação -->
-  <div class="alert" style="position: fixed; top:0px; display:none; min-width: 100%;  border-radius: 0px; opacity: 0.9;
-  filter: alpha(opacity=90);" id="box-notificacao">
-    <i class="fa fa-info" style="size: 3px; color: black;"> </i>
-    <span id="msg-notificacao" style="margin-left: 5px; padding: 3px;font-weight: bold;"> </span>
+  <div class="alert" id="box-notificacao">
+    <i class="fa fa-info" > </i>
+    <span id="msg-notificacao"> </span>
   </div> 
-
- 
 
 </body>
 </html>

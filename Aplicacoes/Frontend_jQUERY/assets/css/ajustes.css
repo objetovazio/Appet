@@ -1,0 +1,43 @@
+/*
+
+Ajuste do Menu, Box-Notificação, msg-Notificação, Body
+
+*/
+
+#box-notificacao {
+position: fixed;
+top:0px;
+display:none;
+min-width: 100%;
+border-radius: 0px;
+opacity: 0.95;
+filter: alpha(opacity=95);
+}
+
+#msg-notificacao{
+margin-left: 5px;
+padding: 3px;
+font-weight: bold;
+}
+
+#menu-principal{
+position: fixed;
+top:0px;
+min-width: 100%; 
+
+}
+
+.menu-principal-transparente {
+opacity: 0.3;
+filter: alpha(opacity=30);
+transition: 0.4s;
+}
+
+.menu-principal-transparente:hover {
+opacity: 1
+}
+
+
+body{
+margin-top: 100px;
+}
