@@ -304,13 +304,19 @@ def postUser():
 				'password': password,
 				'about':about_user}
 	request_result = None
-	if(is_user_update):
-		print("here")
-		request_result = b_user.updateUser(user_data, request.form['userId'])
-	else:
-		request_result = b_user.createUser(user_data)
 
-	return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
+	try:
+
+		if(is_user_update):
+			print("here")
+			request_result = b_user.updateUser(user_data, request.form['userId'])
+		else:
+			request_result = b_user.createUser(user_data)
+		if (request_result == False):
+			raise Exception('Erro no Banco de Dados')
+		return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
+	except Exception as err:
+		return erro_interno(err)
 
 # Rota para busca de usuario
 @app.route('/user', methods=['GET'])
@@ -344,4 +350,9 @@ def getUser():
 def handle_invalid(erroType):
 	response = jsonify(str(erroType))
 	response.status_code = 400
+	return response
+
+def erro_interno (erroType):
+	response = jsonify(str(erroType))
+	response.status_code = 500
 	return response
