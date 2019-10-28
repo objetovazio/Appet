@@ -27,8 +27,20 @@ jQuery(function () {
   jQuery(window).scroll(function () {
     if (jQuery(this).scrollTop() > 200) {
      $("#menu-principal").addClass("menu-principal-transparente");
+       $("#topo").removeClass("topo-visivel");
     } else {
      $("#menu-principal").removeClass("menu-principal-transparente");
+    
+      $("#topo").addClass("topo-visivel");
     }
   });
 });
+
+// Função ir ao topo
+
+function paraTopo(){ 
+  
+  $('html, body').animate({scrollTop:0}, 'slow');
+
+}
+
