@@ -7,7 +7,9 @@ Como se trata de uma aplicação usando a linguagem Python para acessar o banco 
 ```bash
 pip3 install peewee
 ```
-
+```bash
+pip3 install -U flask-cors
+```
 ## Utilização Local
 
 ### Linux
