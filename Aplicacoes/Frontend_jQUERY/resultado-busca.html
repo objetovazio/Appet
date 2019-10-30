@@ -5,30 +5,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/image/icon.png"/>
-  <title> Appet - Resultado da Busca </title>
-
+  <title> Appet - Resultado da Busca</title>
   
+  <!-- jQuery -->
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/rotas.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
+
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
   <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
 </head>
 
 <body class="bg-light" style="">
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container"> <a class="navbar-brand" href="#">
-        <img class="img-fluid d-block" src="assets/image/logo.png" style="" width="200" height="200"><b></b>
-      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar10">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="meu-perfil.html">Meu Perfil</a> </li>
-        </ul> <a class="btn navbar-btn ml-md-2 btn-light text-dark">Sair</a>
-      </div>
-    </div>
-  </nav>
+  
+
   <div class="pt-5" style="">
     <div class="container">
       <div class="row">
@@ -95,7 +88,7 @@
             </div>
             <div class="form-group">
               <div class="form-group">
-				<a href= "#" style="color: black" title="Bruno Silva">
+				      <a href= "#" style="color: black" title="Bruno Silva">
                 <div class="row shadow-sm mb-1">
                   <div class="col-md-4 p-3" style=""><img class="img-fluid d-block rounded-circle mx-auto shadow-none" src="assets/image/icone_padrao.png" width="200" height="200"></div>
                   <div class="my-2 col-md-7" style="">
@@ -116,6 +109,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-11 bg-light" style="">
           <div class="form-group">
@@ -148,13 +142,14 @@
       </div>
     </div>
   </div>
-  <div class="py-2">
+
+  <div class="py-5 mt-3">
     <div class="container">
       <div class="row">
         <div class="col-md-9">
-          <p class="lead">Sign up to our newsletter for the latest news</p>
+          <p class="lead">Assine para receber as últimas notícias</p>
           <form class="form-inline">
-            <div class="form-group"> <input type="email" class="form-control" placeholder="Your e-mail here"> </div> <button type="submit" class="btn btn-primary ml-3">Subscribe</button>
+            <div class="form-group"> <input type="email" class="form-control" placeholder="Seu e-mail aqui"> </div> <button type="submit" class="btn btn-primary ml-3">Assinar</button>
           </form>
         </div>
         <div class="col-4 col-md-1 align-self-center"> <a href="#">
@@ -169,15 +164,40 @@
       </div>
       <div class="row">
         <div class="col-md-12 mt-3 text-center">
-          <p>© Copyright 2018 Pingendo - All rights reserved.</p>
+          <p>© Copyright 2018 - All rights reserved.</p>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
+
+
+  <!-- Menu -->
+  <nav id="menu-principal" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container"> <a class="navbar-brand" href="index.html">
+        <img class="img-fluid d-block" src="assets/image/
+logo.png" style="" width="100" height="100"><b></b>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar10">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="meu-perfil.html">Meu Perfil</a> </li>
+        </ul> <a href="login.html" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Notificação -->
+  <div class="alert" id="box-notificacao">
+    <i class="fa fa-info" > </i>
+    <span id="msg-notificacao"> </span>
+  </div> 
+
+  <!--  ir ao topo -->
+  <span id="topo" onclick="paraTopo()" class="topo-visivel"> <i style="font-size: 20px;" class="fa fa-arrow-up"></i> Topo</span>
+
+
 </body>
 
 </html>
