@@ -55,3 +55,15 @@ cursor: pointer;
 opacity: 0.1;
 filter: alpha(opacity=10);
 }
+
+
+
+#botaoEditar{
+float: right;
+margin-top: -10px;
+}
+
+input[type=text]:disabled {
+  background: white;
+    border: none;
+}

@@ -42,7 +42,7 @@ function pegaUsuario (){
 		senha:"",
 		sobre:""
 	};
-	mensagem("Atualizando dados da página", "Sucesso",2000);
+	
 	$.get(rota_user, data_request, function(){
 	}).done( function (dados){
 
@@ -58,7 +58,7 @@ function pegaUsuario (){
 	
 	}).fail( function (msg) {
 
-		var texto = "Falha ao tentar pegar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
 		mensagem(texto, "Erro",5000);
 	});
 
