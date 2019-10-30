@@ -297,7 +297,7 @@ def postUser():
 		is_about_empty = is_parameter_empty(request.form['sobre'])
 		about_user = request.form['sobre'] if not is_about_empty else None
 		
-		is_user_create = is_parameter_empty(request.form['userId'])
+		is_user_update = not is_parameter_empty(request.form['userId'])
 		if (is_name_empty or is_email_empty or is_password_empty):
 			raise Exception('empty required parameter')
 	except Exception as err:
@@ -309,11 +309,11 @@ def postUser():
 	request_result = None
 
 	try:
-		if(is_user_create and request_result == None):
-			request_result = b_user.createUser(user_data)
-		else:
+		if(is_user_update):
 			request_result = b_user.updateUser(user_data, request.form['userId'])
-				
+		else:
+			if(request_result == None):
+				request_result = b_user.createUser(user_data)
 		
 		if (request_result == False):
 			raise Exception('Erro no Banco de Dados')
