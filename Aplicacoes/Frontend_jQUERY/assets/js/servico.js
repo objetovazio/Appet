@@ -1,69 +1,58 @@
 function adicionaServico (){
 
-var data_request = {
-title:$("#titulo").val(),
-about:$("#descricao").val(),
-prince:$("#valor").val(),
-owner:'1',
-type: tipoServico($("#tiposervico").val()),
-hour: ''
-};
+	var data_request = {
+		title:$("#titulo").val(),
+		about:$("#descricao").val(),
+		price:$("#valor").val(),
+		ownerId:'1',
+		typeService: $("#tiposervico").val(),
+		hourService: ''
+	};
 
-if (validaServico(data_request) == true) {
-$.post(rota_servico, data_request, function(){
-}).done( function (){
+	if (validaServico(data_request) == true) {
 
+		$.post(rota_servico, data_request, function(){
+		}).done( function (){
 
+		$("#titulo").val("");
+		$("#descricao").val("");
+		$("#valor").val("");
+		$('#tiposervico').val("");		
 
-$("#titulo").val("");
-$("#descricao").val("");
-$("#valor").val("");
+		var texto = "Cadastro do serviço realizado!";
+		mensagem(texto, "Sucesso", 2000);
 
-var texto = "Cadastro do serviço realizado!";
-mensagem(texto, "Sucesso", 2000);
+		}).fail( function (msg) {
 
-
-}).fail( function (msg) {
-
-var texto = "Falha ao realizar cadastro do serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
-mensagem(texto, "Erro",5000);
-});
-}
+		var texto = "Falha ao realizar cadastro do serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		mensagem(texto, "Erro",5000);
+		});
+	}
+	
 console.log(data_request);
 }
 
 function validaServico(servico){
-var msg = "";
-try {
-if (servico.titulo.length == 0){
-msg = "Preencha o campo titulo";
-throw msg;}
-if (servico.about.length == 0) {
-msg = "Preencha o campo de descricao";
-throw  msg;}
-if (servico.prince.length == 0) {
-msg = "Preencha o campo de valor"
-throw msg;}
-if ($.isNumeric(servico.prince) == false) {
-msg = "Campo valor só aceita números"
-throw msg;}
-return true;
-}catch(err) {
-mensagem(msg, "Atencao",2000);
-    return false;
-  }
-}
-
-function tipoServico(strservico){
-var idServico;
-if (strservico == "Passeio") {
-idServico = "1";
-}
-if (strservico == "Adestramento") {
-idServico = "2";
-}
-if (strservico == "Petshop") {
-idServico = "3";
-}
-return idServico;
+	var msg = "";
+	try {
+		if (servico.title.length == 0){
+		msg = "Preencha o campo titulo";
+		throw msg;}	
+		if (servico.typeService.length == 0){
+		msg = "Selecione o tipo de serviço";
+		throw msg;}
+		if (servico.about.length == 0) {
+		msg = "Preencha o campo descricao";
+		throw  msg;}
+		if (servico.price.length == 0) {
+		msg = "Preencha o campo valor"
+		throw msg;}
+		if ($.isNumeric(servico.price) == false) {
+		msg = "Campo valor só aceita números"
+		throw msg;}
+		return true;
+	}catch(err) {
+	mensagem(msg, "Atencao", 2000);
+	    return false;
+	 }
 }
