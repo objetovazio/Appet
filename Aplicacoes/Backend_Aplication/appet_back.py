@@ -202,13 +202,13 @@ def postService():
 		about_service = request.form['about'] if not is_about_empty else None
 
 		is_price_empty = is_parameter_empty(request.form['price'])
-		price_service = float(request.form['price']) if not is_price_empty else None
+		price_service = request.form['price'] if not is_price_empty else None
 
 		is_owner_empty = is_parameter_empty(request.form['ownerId'])
-		owner_service = int(request.form['ownerId']) if not is_owner_empty else None
+		owner_service = request.form['ownerId'] if not is_owner_empty else None
 
 		is_type_empty = is_parameter_empty(request.form['typeService'])
-		type_service = int(request.form['typeService'])  if not is_type_empty else None
+		type_service = request.form['typeService']  if not is_type_empty else None
 
 		is_hours_empty = is_parameter_empty(request.form['hourService'])
 		hours_service = request.form['hourService'] if not is_hours_empty else None
