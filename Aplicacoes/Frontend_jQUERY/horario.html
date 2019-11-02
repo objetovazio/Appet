@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/image/icon.png"/>
-  <title> Appet - Agenda Serviço</title>
+  <title> Appet - Horário </title>
   
   <!-- jQuery -->
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-light" style="">
+<body class="bg-light"style="">
 
   <div class="pt-5" style="">
     <div class="container">
@@ -30,12 +30,13 @@
       </div>
     </div>
   </div>
+
   <div class="m-0">
     <div class="container">
       <div class="row">
         <div class="col-md-3">
-          <h4 class="" contenteditable="true"><b>Agenda de Serviço</b><br></h4>
-           <a href="javascript:history.back()" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
+          <h4 class="" contenteditable="true"><b>Horários de Atuação</b><br></h4>
+           <a href="meu-perfil.html" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-3"></div>
@@ -43,6 +44,7 @@
       </div>
     </div>
   </div>
+
   <div class="py-2" style="">
     <div class="container">
       <div class="row">
@@ -50,13 +52,6 @@
       </div>
       <div class="row">
         <div class="col-md-12" style="">
-          <div class="card">
-            <div class="card-header"> Legenda</div>
-            <div class="card-body mb-3">
-              <p class="text-success"><i class="fa fa-circle"></i> Horário Livre</p>
-              <p class="text-muted"><i class="fa fa-circle"></i> Horário Agendado</p>
-            </div>
-          </div>
           <div class="row my-2"></div>
           <div class="row">
             <div class="col-md-3"></div>
@@ -65,55 +60,29 @@
             <div class="col-md-3"></div>
           </div>
           <div class="row">
-            <div class="col-md-12">
-              <h3 class="my-3">
-                <div style="text-align: center;">
-                  <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>AGENDA</b></span></font>
-                </div>
-              </h3>
-              <div class="col-md-12 text-center my-2">
-                <a class="btn btn-light text-right mr-5" href="meu-perfil.html"><i class="fa fa-fw fa-chevron-left"></i>&nbsp;Voltar&nbsp;</a>
-                <a class="btn btn-light text-dark ml-5" href="#">Avançar&nbsp;<i class="fa fa-fw fa-chevron-right"></i> </a>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
-      <div class="table-responsive">
-        <table class="table table-bordered ">
+            
+          <h3 class="my-3">
+          <div style="text-align: center;">
+              <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>HORÁRIOS</b></span></font>
+              </div>
+           </h3>
+               
+        
+        <div class="table-responsive">
+        <table id="tabelaPeriodo" class="table table-bordered ">
           <thead class="thead-dark">
-            <tr>
-              <th class="text-center">Seg<br> 30/09</th>
-              <th class="text-center">Ter<br> 01/10</th>
-              <th class="text-center">Qua<br> 02/10</th>
-              <th class="text-center">Qui<br> 03/10</th>
-              <th class="text-center">Sex<br> 04/10</th>
-              <th class="text-center">Sab<br> 05/10</th>
-              <th class="text-center">Dom<br> 06/10</th>
-            </tr>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Periodo Atividade</th>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Dia da Semana</th>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Hora Inicial</th>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Hora Final</th>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Ação</th>
           </thead>
           <tbody>
             <tr>
-              <th class="py-3"></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="" class="py-3"></td>
-            </tr>
-            <tr>
-              <th class="table-success text-center py-3">7:00</th>
-              <td></td>
-              <td style=""></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -122,6 +91,66 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  
+  
+  <div class="py-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-12 my-2"></div>
+          <div class="row">
+            <div class="col-md-4"><a class="btn btn-secondary my-2" href="#">Salvar</a>  <br><br></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="form-group">
+            <input id="idHorario" type="text" style="display: none;" >
+            <label>Periodo de Atividade</label>
+
+            <select class="form-control border-0 my-2" id="periodoAtividade">
+              <option>01/12/2019 - 30/12/2019</option>
+            </select>
+
+            <label>Dia da Semana</label>
+
+            <select class="form-control border-0 my-2" id="diaSemana">
+              <option>Segunda</option>
+              <option>Terça</option>
+              <option>Quarta</option>
+              <option>Quinta</option>
+              <option>Sexta</option>
+              <option>Sábado</option>
+              <option>Domingo</option>
+            </select>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group"><label>Horário Inicial</label><select class="form-control border-0 my-2" id="horarioInicial">
+                    <option>00:00</option>
+                    <option>00:30</option>
+                    <option>01:00</option>
+                    <option>01:30</option>
+                    <option>...</option>
+                  </select></div>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-4">
+                <div class="form-group"><label>Horário Final</label><select class="form-control border-0 my-2" id="horarioFinal">
+                    <option>00:00</option>
+                    <option>00:30</option>
+                    <option>01:00</option>
+                    <option>01:30</option>
+                    <option>...</option>
+                  </select></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
