@@ -14,6 +14,7 @@ import Business.Business_user as b_user
 import Business.Business_periodoAtividade as b_periodoAtividade
 import Business.Business_HorarioServico as b_horarioServico
 import Business.Business_Servico as b_servico
+import Business.Business_TipoServico as TS
 import logging
 
 app = Flask(__name__)
@@ -270,7 +271,7 @@ def getService():
 # Rota para criacao e atualizacao de Tipo de Serviço
 @app.route('/TypeService', methods=['POST'])
 def postTypeService():
-	name_service_type = request.args.get('nomeTipoServico')
+	name_service_type = request.form('nomeTipoServico')
 	print(name_service_type)
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
@@ -278,8 +279,16 @@ def postTypeService():
 # Rota para busca de Tipo de Serviço
 @app.route('/TypeService', methods=['GET'])
 def getTypeService():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	service_query = {}
+	have_name = is_parameter_empty(request.args.get('nomeTipoServico'))
+	if(have_name):
+		service_query['nome_ts'] = request.args.get('nomeTipoServico')
+	else:
+		service_query['nome_ts'] = None
+	service_query['id_ts'] = None
+	data_result = TS.findTypeService(service_query)
+	return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
 
 # Rota para criacao e atualizacao de usuario
 @app.route('/user', methods=['POST'])

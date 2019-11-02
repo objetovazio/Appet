@@ -32,7 +32,10 @@ def findTypeService(data_query:dict):
     if(have_id):
         result_query = TS.TipoServico.get_by_id(data_query['id_ts'])
     else:
-        result_query = TS.TipoServico.select().where(TS.TipoServico.contains(data_query['nome_ts']))
+        if(data_query['nome_ts']):
+            result_query = TS.TipoServico.select().where(TS.TipoServico.contains(data_query['nome_ts']))
+        else:
+            result_query = TS.TipoServico.select()
     final_result = []
     for result in result_query:
         final_result.append(_makeDic(result))
