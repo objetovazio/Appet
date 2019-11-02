@@ -67,7 +67,10 @@ def getContact():
 
 @app.route('/Address', methods=['POST'])
 def postAddress():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
+	try:
+		num = 0
+	except Exception as err:
+		print(err)
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Address', methods=['GET'])
@@ -280,7 +283,7 @@ def postTypeService():
 @app.route('/TypeService', methods=['GET'])
 def getTypeService():
 	service_query = {}
-	have_name = is_parameter_empty(request.args.get('nomeTipoServico'))
+	have_name = not is_parameter_empty(request.args.get('nomeTipoServico'))
 	if(have_name):
 		service_query['nome_ts'] = request.args.get('nomeTipoServico')
 	else:
