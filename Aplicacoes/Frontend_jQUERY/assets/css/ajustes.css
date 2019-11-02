@@ -61,9 +61,18 @@ filter: alpha(opacity=10);
 #botaoEditar{
 float: right;
 margin-top: -10px;
+text-decoration: none;
 }
 
 input[type=text]:disabled {
   background: white;
     border: none;
+}
+
+
+.ocultar{
+
+opacity: 0.4;
+filter: alpha(opacity=40);
+transition: 0.4s;
 }
