@@ -39,6 +39,7 @@
       <div class="row">
         <div class="col-md-3">
           <h4 class=""><b>Editar Perfil</b><br></h4><br>
+
           
           <button id="salvar"  class="btn mt-2 text-dark btn-secondary">Salvar</button>
           <a href="meu-perfil.html" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
@@ -149,7 +150,6 @@
 
   <script type="text/javascript">
 
-
     $(document).ready(function () {
 
       // Preencher dados do usuario
@@ -167,7 +167,6 @@
       $("#versenha").click(function () {
 
         var inputSenha = $('#senha');
-
         if (inputSenha.attr('type') == "password") {
           $('#senha').attr('type', 'text');
           $(this).text('Ocultar senha');
