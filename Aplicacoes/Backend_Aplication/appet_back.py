@@ -15,6 +15,7 @@ import Business.Business_periodoAtividade as b_periodoAtividade
 import Business.Business_HorarioServico as b_horarioServico
 import Business.Business_Servico as b_servico
 import Business.Business_TipoServico as TS
+import Business.Business_Endereco as b_address
 import logging
 
 app = Flask(__name__)
@@ -68,15 +69,58 @@ def getContact():
 @app.route('/Address', methods=['POST'])
 def postAddress():
 	try:
-		num = 0
+		is_user_empty = is_parameter_empty(request.form['userId'])
+		is_cep_empty = is_parameter_empty(request.form['cep'])
+		is_bairro_empty = is_parameter_empty(request.form['bairro'])
+		is_cidade_empty = is_parameter_empty(request.form['cidade'])
+		is_estado_empty = is_parameter_empty(request.form['estado'])
+		is_num_empty = is_parameter_empty(request.form['numero'])
+		if(is_user_empty or is_cep_empty or is_bairro_empty or is_cidade_empty or is_estado_empty or is_num_empty):
+			raise Exception('[ADDRESS - POST]Empty Required Parameter')
 	except Exception as err:
 		print(err)
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+		handle_invalid(err)
+	address_data = {
+		'user_id':request.form['userId'],
+		'cep':request.form['cep'],
+		'bairro':request.form['bairro'],
+		'city':request.form['cidade'],
+		'state':request.form['estado'],
+		'num':request.form['numero']
+	}
+
+	response_request = None
+	try:
+		address_data['id'] = request.form['id']
+		response_request = b_address.updateUserAddress(address_data)
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_address.createUserAddress(address_data)
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Address', methods=['GET'])
 def getAddress():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	is_user_empty	=	is_parameter_empty(request.args.get('userId'))
+	is_cep_empty	=	is_parameter_empty(request.args.get('cep'))
+	is_bairro_empty	=	is_parameter_empty(request.args.get('bairro'))
+	is_cidade_empty	=	is_parameter_empty(request.args.get('cidade'))
+	is_estado_empty	=	is_parameter_empty(request.args.get('estado'))
+	is_num_empty	=	is_parameter_empty(request.args.get('numero'))
+	if(is_user_empty and is_cep_empty and is_bairro_empty and is_cidade_empty and is_estado_empty and is_num_empty):
+		print('empty request')
+		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+	query_data ={
+		'user_id':		request.args.get('userId'),
+		'cep':			request.args.get('cep'),
+		'bairro':		request.args.get('bairro'),
+		'city':			request.args.get('cidade'),
+		'state':		request.args.get('estado'),
+		'num':			request.args.get('numero'),
+		'address_id':	request.args.get('id')
+	}
+	data_result = b_address.findAddress(query_data)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/ServiceSchedule', methods=['POST'])
 def postServiceSchedule():
