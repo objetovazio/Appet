@@ -37,72 +37,10 @@
       <div class="row">
         <div class="col-md-3">
           <h4 class="" contenteditable="true"><b>Periodos de Atuação</b><br></h4>
-           <a href="meu-perfil.html" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
-        </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-3"></div>
-        <div class="col-md-3"></div>
-      </div>
-    </div>
-  </div>
+            <a class="btn mt-2 text-dark btn-secondary" id="salvar" >Salvar</a> 
+            <a class="btn mt-2 text-dark btn-secondary" style="margin-left: 10px;" href="meu-perfil.html" id="voltar" > Voltar</a> 
 
-
-  <div class="py-2" style="">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12"><label for="form16" class="mt-0"><br></label></div>
-      </div>
-      <div class="row">
-        <div class="col-md-12" style="">
-          <div class="row my-2"></div>
-          <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-                 <h3 class="my-3">
-                <div style="text-align: center;">
-                  <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>PERIODO</b></span></font>
-                </div>
-              </h3>
-               
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table  style="max-width: 500px; margin: auto;" id="tabelaPeriodo" class="table table-bordered ">
-          <thead class="thead-dark">
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Data Inicial</th>
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Data Final</th>
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Ação</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-
-  <br>
-  <br>
-
-  
-  <div class="py-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="col-md-12 my-2"></div>
-          <div class="row">
-            <div class="col-md-4">
-              <Button class="btn btn-secondary my-2" id="salvar" >Salvar</Button>  <br><br></div>
+             <br><br></div>
             <div class="col-md-4"></div>
             <div class="col-md-2"></div>
             <div class="col-md-2"></div>
@@ -131,6 +69,44 @@
       </div>
     </div>
   </div>
+
+
+
+  <div class="py-2" style="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12"><label for="form16" class="mt-0"><br></label></div>
+      </div>
+          <div class="row">
+            <div class="col-md-12">
+                 <h3 class="my-3">
+                <div style="text-align: center;">
+                  <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>PERIODO</b></span></font>
+                </div>
+              </h3>
+               
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table  style="max-width: 500px; margin: auto;" id="tabelaPeriodo" class="table table-bordered ">
+          <thead class="thead-dark">
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Data Inicial</th>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Data Final</th>
+              <th style="min-width: 100px; max-width: 100px;" class="text-center">Ação</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+
+  <br>
+  <br>
+
+  
+
 
 
   <div class="py-5 mt-3">
@@ -167,7 +143,8 @@ $(document).ready( function (){
 
   $('#salvar').click(function(){
 
-    adicionarPeriodoAtividade();
+    adicionarPeriodoAtividade()
+    
   });
 
 
