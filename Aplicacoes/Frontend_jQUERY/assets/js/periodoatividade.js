@@ -25,23 +25,18 @@ function adicionarPeriodoAtividade(){
 		periodoAtvidadeId:$("#idPeriodo").val()
 	};
 
-	
-	
+
 	if (validaPeriodoAtividade(data_request) == true) {
-		console.log("entrou 1")
+		
 		$.post(rota_periodo_atividade, data_request, function(){
 		}).done( function (){
-
-			console.log("entrou 2")
 
 			var texto = "Cadastro do periodo de atividade realizado!";
 			mensagem(texto, "Sucesso", 2000);
 
 			$("#idPeriodo").val("");
 
-
 			 pegaPeriodoAtividade(data_request);
-
 
 		}).fail( function (msg) {
 
@@ -49,47 +44,56 @@ function adicionarPeriodoAtividade(){
 			mensagem(texto, "Erro",5000);
 		});
 	}
-	
-	console.log("saiu")
 
 }
 
 
 function pegaPeriodoAtividade(periodoAtvidade){
 	
+	$.get(rota_periodo_atividade, periodoAtvidade, function(){
+	}).done( function (dados){
+
+		var periodo = JSON.parse(dados).data[0];
+
+		adicionaLinha(periodo);
+
+
+	}).fail( function (msg) {
+
+		var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		mensagem(texto, "Erro",5000);
+	});
 	
-	if (validaPeriodoAtividade(periodoAtvidade) == true) {
-
-
-		console.log("dados enviados");
-		console.log(periodoAtvidade);
-
-		
-
-		$.get(rota_periodo_atividade, periodoAtvidade, function(){
-		}).done( function (dados){
-
-
-			console.log("dados recebidos");
-			console.log(dados);
-			
-			var periodo = JSON.parse(dados).data[0];
-
-			console.log(periodo);
-
-			adicionaLinha(periodo);
-
-
-		}).fail( function (msg) {
-
-			var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
-			mensagem(texto, "Erro",5000);
-		});
-	}
-
 }
 
 
+function pegaListaPeriodoAtividade(){
+
+	var data_request = {
+		beginDate:"",
+		endDate:"",
+		ownerId:"1",
+		periodoAtvidadeId:""
+	};
+	
+	$.get(rota_periodo_atividade, data_request, function(){
+	}).done( function (dados){
+
+		var periodo = JSON.parse(dados).data;
+
+		$(periodo).each(function(index, elemento) {
+			adicionaLinha(elemento);
+		});
+		
+
+
+	}).fail( function (msg) {
+
+		var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		mensagem(texto, "Erro",5000);
+	});
+	
+}
 
 
 
@@ -112,27 +116,19 @@ function validaPeriodoAtividade(periodoAtvidade) {
 
 function adicionaLinha(periodoAtvidade) {
 
-	console.log(periodoAtvidade);
-	// var datainicio = periodoAtvidade.beginDate.slice(0, 4) +"-"+ 
- //        			 periodoAtvidade.beginDate.slice(4, 6) +"-"+  
- //        			 periodoAtvidade.beginDate.slice(6);
- //    var datafinal = periodoAtvidade.endDate.slice(0, 4) +"-"+  
- //        			periodoAtvidade.endDate.slice(4, 6) +"-"+  
- //        			periodoAtvidade.endDate.slice(6);
-
-	// $("#tabelaPeriodo").append(
-	// 	"<tr data-id='"+ periodoAtvidade. +"'>" +
- //        	"<td data-dInicio = '"+ datainicio +"'>"+ 
- //        		datainicio +
- //        	"</td>" +
- //        	"<td data-dFinal = '"+ datafinal +"'>"+ 
- //        		datafinal +
- //        	"</td>" +
- //        	"<td>" + 
- //        		"<a onclick='atualizaLinha(this);'  style='margin-left: 15px;padding-left:10px;cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
- //        		"<a onclick='removeLinha(this);'  style='margin-left: 20px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
- //        	"</td>" +
- //      	"</tr>");     
+	$("#tabelaPeriodo").append(
+		"<tr data-id='"+ periodoAtvidade.id_periodo_atividade +"'>" +
+        	"<td data-dInicio = '"+ periodoAtvidade.begin +"'>"+ 
+        		periodoAtvidade.begin +
+        	"</td>" +
+        	"<td data-dFinal = '"+ periodoAtvidade.end +"'>"+ 
+        		periodoAtvidade.end +
+        	"</td>" +
+        	"<td>" + 
+        		"<a onclick='atualizaLinha(this);'  style='margin-left: 15px;padding-left:10px;cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
+        		"<a onclick='removeLinha(this);'  style='margin-left: 20px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
+        	"</td>" +
+      	"</tr>");     
 }
 
 function removeLinha(elementoExcluir){
@@ -155,9 +151,6 @@ function atualizaLinha(elementoAtualiza){
 	// var a = $(elementoAtualiza).parents("tr").children().each(function(){
  //  		 alert($(this).text());
  // 	});
-
-
-	$(elementoAtualiza).parents("tr").remove();
 
 }
 
