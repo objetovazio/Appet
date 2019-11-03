@@ -17,6 +17,7 @@ import Business.Business_Servico as b_servico
 import Business.Business_TipoServico as b_tipoServ
 import Business.Business_Endereco as b_address
 import Business.Business_Contato as b_contato
+import Business.Business_Avaliacao as b_avaliacao
 import logging
 
 app = Flask(__name__)
@@ -29,13 +30,51 @@ def hello_world():
 
 @app.route('/Rate', methods=['POST'])
 def postRate():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_author_empty = is_parameter_empty(request.form['author'])
+		is_service_empty = is_parameter_empty(request.form['service'])
+		is_rate_empty = is_parameter_empty(request.form['nota'])
+		if(is_author_empty or is_service_empty or is_rate_empty):
+			raise Exception('[RATE - POST] Empty Required Parameter ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	rate_data = {
+		'user_id':request.form['author'],
+		'service_id':request.form['service'],
+		'nota':request.form['nota']
+	}
+	response_request = None
+	try:
+		rate_data['avaliacao_id']=request.form['id']
+		response_request = b_avaliacao.updateAvaliacao(rate_data)
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_avaliacao.createAvaliacao(rate_data)
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Rate',methods=['GET'])
 def getRate():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_author_empty		=	is_parameter_empty(request.args.get('author'))
+		is_service_empty	=	is_parameter_empty(request.args.get('service'))
+		is_rate_empty		=	is_parameter_empty(request.args.get('nota'))
+		is_id_empty			=	is_parameter_empty(request.args.get('id'))
+		if(is_author_empty and is_service_empty and is_rate_empty and is_id_empty):
+			raise Exception('[RATE - GET] Empty Parameters ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	
+	query_data ={
+		'user_id':request.args.get('author'),
+		'service_id':request.args.get('service'),
+		'nota':request.args.get('nota'),
+		'avaliacao_id':request.args.get('id')
+	}
+	data_result = b_avaliacao.findAvaliacao(query_data)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/CrediCard', methods=['POST'])
 def postCrediCard():
@@ -63,7 +102,7 @@ def postContact():
 		is_owner_empty = is_parameter_empty(request.form['ownerId'])
 		is_type_empty = is_parameter_empty(request.form['type'])
 		is_content_empty = is_parameter_empty(request.form['content'])
-		if(is_owner_empty and is_type_empty and is_content_empty):
+		if(is_owner_empty or is_type_empty or is_content_empty):
 			raise Exception('[CONTACT - POST] Empty Required Parameter')
 	except Exception as err:
 		print(err)
