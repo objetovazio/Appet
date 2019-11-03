@@ -83,7 +83,11 @@ def updateService(serv_data: dict):
 #adicionar tipo e dono do servico nos parametros de busca
 def searchService(serv_query):
 	result_query = None
-	print(serv_query['price'])
+	final_result = []
+	if(serv_query['id_service']!= None):
+		result_query = Serv.Servico.get_by_id(serv_query['id_service'])
+		final_result.append(_makeDic(result_query))
+		return final_result
 	if(serv_query['title'] != None):
 		if(serv_query['about'] != None and serv_query['price'] != None):
 			result_query = Serv.Servico.select().where((Serv.Servico.titulo.contains(serv_query['titulo'])) &
@@ -113,11 +117,10 @@ def searchService(serv_query):
 		result_query = Serv.Servico.select().where(
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
 			(Serv.Servico.preco > (-0.5)+float(serv_query['price'])))
-	final_resul = []
 	print(result_query)
 	for ser_find in result_query:
-		final_resul.append(_makeDic(ser_find))
-	return final_resul
+		final_result.append(_makeDic(ser_find))
+	return final_result
 
 
 #retorna metricas relacionadas ao tipo de servicos cadastrados no sistema

@@ -42,6 +42,12 @@ def updateUser(user_data, user_id):
 #user_query = (DIC) paramerto de busca.
 def findUsers(user_query):
     query_result = None
+    final_result = []
+    if(user_query['user_id']!= None):
+        query_result = User.Usuario.get_by_id(user_query['user_id'])
+        final_result.append(_makeResultDic(query_result))
+        return final_result
+
     if(user_query['user_name'] != None):
         if(user_query['email_user'] != None and user_query['about_user'] != None):
             query_result = User.Usuario.select().where((User.Usuario.nome.contains(user_query['user_name'])) &
@@ -69,7 +75,6 @@ def findUsers(user_query):
         query_result = User.Usuario.select().where(
             (User.Usuario.sobre.contains(user_query['about_user'])) )
     
-    final_result = []
     for find_user in query_result:
         final_result.append(_makeResultDic(find_user))
     return final_result

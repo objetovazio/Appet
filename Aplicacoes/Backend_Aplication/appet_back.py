@@ -229,13 +229,17 @@ def getAtivityTime():
 	is_owner_empty = is_parameter_empty(request.args.get('ownerId'))
 	owner_id = int(request.args.get('ownerId')) if not is_owner_empty else None
 
+	is_id_empty = is_parameter_empty(request.args.get('paId'))
+	id_pa = int(request.args.get('paId')) if not is_id_empty else None
+
 	if(is_begin_empty and is_end_empty and is_owner_empty):
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}  
 
 	ativity_time = {
 		'begin':begin_date,
 		'end':end_date,
-		'owner_id':owner_id
+		'owner_id':owner_id,
+		'id':id_pa
 	}
 
 	data_result = b_periodoAtividade.findPeriodoAtividade(ativity_time)
@@ -305,7 +309,11 @@ def getService():
 
 	is_type_empty	=	is_parameter_empty(request.args.get('typeService'))
 	type_service	=	int(request.args.get('typeService'))  if not is_type_empty else None	
-	if(is_title_empty and is_about_empty and is_price_empty and is_owner_empty and is_type_empty):
+
+	is_id_empty		=	is_parameter_empty(request.args.get('service_id'))
+	id_service		=	int(request.args.get('service_id') ) if not is_id_empty else None
+
+	if(is_title_empty and is_about_empty and is_price_empty and is_owner_empty and is_type_empty and is_id_empty):
 		print('empty')
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 	request_query = {
@@ -313,7 +321,8 @@ def getService():
 		'about':about_service,
 		'price':price_service,
 		'owner':owner_service,
-		'type':type_service
+		'type':type_service,
+		'id_service':id_service
 	}
 	data_result = b_servico.searchService(request_query)
 	return json.dumps({'success': True,
@@ -393,14 +402,18 @@ def getUser():
 	is_about_empty = is_parameter_empty(request.args.get('sobre'))
 	about_user = request.args.get('sobre') if not is_about_empty else None
 
-	if( is_name_empty and is_email_empty and is_about_empty):
+	is_id_empty = is_parameter_empty(request.args.get('userId'))
+	user_id = request.args.get('userId') if not is_id_empty else None
+
+	if( is_name_empty and is_email_empty and is_about_empty and is_id_empty):
 		print('empty')
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 	else:
 		user_query = {
 			'user_name': name_user,
 			'email_user': email_user,
-			'about_user': about_user
+			'about_user': about_user,
+			'user_id': user_id
 		}
 		data_result = b_user.findUsers(user_query)
 		return json.dumps({'success': True,

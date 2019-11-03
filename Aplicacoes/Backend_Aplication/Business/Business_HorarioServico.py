@@ -59,7 +59,12 @@ def updateSchedule(schedule_data: dict):
 
 
 def findSchedule(query_param: dict):
+	final_result = []
 	query_result = None
+	if(query_param['id']!= None):
+		query_result = PA.PeriodoAtividade.get_by_id(query_param['id'])
+		final_result.append(_makeResultDic(query_result))
+		return final_result
 	is_period_empty = query_param['period_id'] == None
 	is_begin_empty = query_param['begin_hour'] == None
 	is_end_empty = query_param['end_hour'] == None
@@ -144,7 +149,7 @@ def findSchedule(query_param: dict):
 	else:
 		query_result = HS.HorarioServico.select().where(
 			(HS.HorarioServico.dia_semana == query_param['week_day']))
-	final_result = []
+	
 	for schedule_find in query_result:
 		final_result.append(_makeResultDic(schedule_find))
 	return final_result
