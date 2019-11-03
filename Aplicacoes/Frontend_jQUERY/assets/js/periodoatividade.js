@@ -116,19 +116,50 @@ function validaPeriodoAtividade(periodoAtvidade) {
 
 function adicionaLinha(periodoAtvidade) {
 
-	$("#tabelaPeriodo").append(
-		"<tr data-id='"+ periodoAtvidade.id_periodo_atividade +"'>" +
-        	"<td data-dInicio = '"+ periodoAtvidade.begin +"'>"+ 
-        		periodoAtvidade.begin +
-        	"</td>" +
-        	"<td data-dFinal = '"+ periodoAtvidade.end +"'>"+ 
-        		periodoAtvidade.end +
-        	"</td>" +
-        	"<td>" + 
-        		"<a onclick='atualizaLinha(this);'  style='margin-left: 15px;padding-left:10px;cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
-        		"<a onclick='removeLinha(this);'  style='margin-left: 20px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
-        	"</td>" +
-      	"</tr>");     
+	var linha = "<tr data-id='"+ periodoAtvidade.id_periodo_atividade +"'>" +
+		        	"<td data-dInicio = '"+ periodoAtvidade.begin +"'>"+ 
+		        		periodoAtvidade.begin +
+		        	"</td>" +
+		        	"<td data-dFinal = '"+ periodoAtvidade.end +"'>"+ 
+		        		periodoAtvidade.end +
+		        	"</td>" +
+		        	"<td>" + 
+		        		"<a onclick='atualizaLinha(this);'  style='cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
+		        		"<a onclick='removeLinha(this);'  style='margin-left: 10px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
+		        	"</td>" +
+		      	"</tr>";
+
+
+	// remove a linha
+	// $("#tabelaPeriodo  tr[data-id='" + periodoAtvidade.id_periodo_atividade + "']").remove();
+	if ($("#tabelaPeriodo  tr[data-id='" + periodoAtvidade.id_periodo_atividade + "']").length){
+
+		 $("#tabelaPeriodo  tr[data-id='" + periodoAtvidade.id_periodo_atividade + "']").remove();
+
+	}
+	// preoend adiciona a primeira linha
+	// append adiciona no final
+	$("#tabelaPeriodo").prepend(
+
+				"<tr data-id='"+ periodoAtvidade.id_periodo_atividade +"'>" +
+		        	"<td data-dInicio = '"+ periodoAtvidade.begin +"'>"+ 
+		        		periodoAtvidade.begin +
+		        	"</td>" +
+		        	"<td data-dFinal = '"+ periodoAtvidade.end +"'>"+ 
+		        		periodoAtvidade.end +
+		        	"</td>" +
+		        	"<td>" + 
+		        		"<a onclick='atualizaLinha(this);'  style='cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
+		        		"<a onclick='removeLinha(this);'  style='margin-left: 10px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
+		        	"</td>" +
+		      	"</tr>"
+
+			);
+	
+
+
+		
+ 
 }
 
 function removeLinha(elementoExcluir){
@@ -151,7 +182,7 @@ function atualizaLinha(elementoAtualiza){
 	// var a = $(elementoAtualiza).parents("tr").children().each(function(){
  //  		 alert($(this).text());
  // 	});
-
+ // $(elementoExcluir).parents("tr").remove();
 }
 
 

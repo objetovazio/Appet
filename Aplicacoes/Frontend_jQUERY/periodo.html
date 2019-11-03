@@ -37,7 +37,7 @@
       <div class="row">
         <div class="col-md-3">
           <h4 class="" contenteditable="true"><b>Periodos de Atuação</b><br></h4>
-            <a class="btn mt-2 text-dark btn-secondary" id="salvar" >Salvar</a> 
+            <button class="btn mt-2 text-dark btn-secondary" id="salvar" >Salvar</button> 
             <a class="btn mt-2 text-dark btn-secondary" style="margin-left: 10px;" href="meu-perfil.html" id="voltar" > Voltar</a> 
 
              <br><br></div>
@@ -81,7 +81,7 @@
             <div class="col-md-12">
                  <h3 class="my-3">
                 <div style="text-align: center;">
-                  <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>PERIODO</b></span></font>
+                  <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>PERIODO DE ATIVIDADE</b></span></font>
                 </div>
               </h3>
                
@@ -90,7 +90,7 @@
         </div>
       </div>
       <div class="table-responsive">
-        <table  style="max-width: 500px; margin: auto;" id="tabelaPeriodo" class="table table-bordered ">
+        <table  style="max-width: 500px; margin: auto; text-align: center;" id="tabelaPeriodo" class="table table-bordered table-all">
           <thead class="thead-dark">
               <th style="min-width: 100px; max-width: 100px;" class="text-center">Data Inicial</th>
               <th style="min-width: 100px; max-width: 100px;" class="text-center">Data Final</th>
@@ -144,11 +144,11 @@ $(document).ready( function (){
 
   $('#salvar').click(function(){
 
-    adicionarPeriodoAtividade()
+     $('#salvar').prop('disabled', true);
+     adicionarPeriodoAtividade();
+      setTimeout(function () { $('#salvar').prop('disabled', false); }, 2000);
+      });
     
-  });
-
-
 });
 
 </script>>

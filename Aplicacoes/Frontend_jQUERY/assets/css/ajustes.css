@@ -98,3 +98,33 @@ transition: 0.4s;
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
+
+.table-all{
+border-collapse:collapse;
+border-spacing:0;
+width:100%;
+display:table
+}
+
+.table-all{
+border:1px solid #ccc		
+}
+.table-all tr{
+border-bottom:1px solid #ddd
+}
+.table-all tr:nth-child(odd){
+background-color:#fff
+}
+.table-all tr:nth-child(even){
+background-color:#f1f1f1
+}
+.table-all td,.table-all th{
+padding:8px 8px;
+display:table-cell;
+text-align:center;
+vertical-align:top
+}
+.table-all th:first-child,.table-all td:first-child{
+padding-left:16px
+}
