@@ -198,9 +198,6 @@ def postAtivityTime():
 		is_owner_empty = is_parameter_empty(request.form['ownerId'])
 		owner_id = int(request.form['ownerId']) if not is_owner_empty else None
 		
-		is_periodoAtvidadeId_empty =  is_parameter_empty( request.form['periodoAtvidadeId'] )
-		periodoAtvidadeId = int(request.form['periodoAtvidadeId']) if not is_periodoAtvidadeId_empty else None
-		
 		if(is_begin_empty or is_end_empty or is_owner_empty):
 			raise Exception('empty required parameter')
 	except Exception as err:
@@ -212,19 +209,13 @@ def postAtivityTime():
 	response_request = None
 
 	try:
-		#usado para verificar se é update ou create
-		if (periodoAtvidadeId == None):
-			response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time, owner_id)
-		else:
-			response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time, periodoAtvidadeId)
-		
-		if (response_request == False):
-			raise Exception('Erro no Banco de Dados')
 
-		return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
-
+		periodoAtvidadeId = request.form['periodoAtvidadeId']
+		response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time, periodoAtvidadeId)
 	except Exception as err:
-		return erro_interno(err)
+		if(response_request == None):
+			response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time,owner_id)
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/AtivityTime', methods=['GET'])
