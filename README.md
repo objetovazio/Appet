@@ -66,25 +66,25 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 
 | ID:RNF 01        |  Tipo Requisito: Requisito Não Funcional |
 | ------------- |:-------------:|
-| Descrição      | Os serviços disponibilizados no sistema devem ser cadastrados pelos prórprios usuarios. |
+| Descrição      | O sistema deve funcionar 24 horas por dia. |
 | Dependência     | RNF02      |
 | Conflito      | -      |
 
 | ID:RNF 02        |  Tipo Requisito: Requisito Não Funcional |
 | ------------- |:-------------:|
-| Descrição      | Para cadastrar um serviço no sistema é necessario que o prestador informe : dia da semana referente a disponibilidade, o intervalo de tempo que a prestação de serviço dura, o valor referente a este período somado a periodicidade que o profissional está disposto a ceder no dia em questão.. |
+| Descrição      | O sistema deve realizar o tratamento de dados, evitando possíveis falhas.|
 | Dependência     | -      |
 | Conflito      | -      |
 
 | ID:RNF 03        |  Tipo Requisito: Requisito Não Funcional |
 | ------------- |:-------------:|
-| Descrição      | Ao se cadastrar no sistema, o usuario deve informar os seguintes dados: nome, e-mail, endereço e telefone. |
+| Descrição      | O sistema deve autenticar usuários |
 | Dependência     | -      |
 | Conflito      | -      |
 
 | ID:RNF 04        |  Tipo Requisito: Requisito Não Funcional |
 | ------------- |:-------------:|
-| Descrição      | O usuario que deseja cadastrar um serviço no sistema deve informar os meios de pagamentos que serão aceitos para a contratação do serviço prestado. |
+| Descrição      | O tempo para a geração de relatórios deve ser inferior a dez segundos. |
 | Dependência     | -      |
 | Conflito      | -      |
 
@@ -102,7 +102,7 @@ Disponivel no [link](https://docs.google.com/spreadsheets/d/1KR7TdsCXbvCLtQgdvFr
 
 | ID:RNF 07        |  Tipo Requisito: Requisito Não Funcional |
 | ------------- |:-------------:|
-| Descrição      | O sistema deve realizar o tratamento de dados, evitando possíveis falhas. |
+| Descrição      | As senhas associadas aos usuários devem ser encriptografadas. |
 | Dependência     | -      |
 | Conflito      | -      |
 
