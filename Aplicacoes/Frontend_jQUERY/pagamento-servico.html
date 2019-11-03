@@ -1,0 +1,113 @@
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
+<title> Appet - Pagamento Servico</title>
+
+<!-- jQuery -->
+<script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+
+
+<!--Page Requirements-->
+<script type="text/javascript" src="assets/js/rotas.js"></script>
+<script type="text/javascript" src="assets/js/util.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AdGuoJ47fiIQ-j_G6X3nloFJ9jvOIFU5k3mNUYszjtYb1V0mkMnrlM8TYAL1qt0nkVCvY4OTsbesTC9O&currency=BRL"></script>
+<script type="text/javascript" src="assets/js/pagamento-servico.js"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link rel="stylesheet" href="assets/css/theme.css" type="text/css">
+<link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
+</head>
+
+<body class="bg-light">
+    <!-- Menu -->
+    <nav id="menu-principal" class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container"> <a class="navbar-brand" href="index.html">
+                <img class="img-fluid d-block" src="assets/image/
+logo.png" width="100" height="100"><b></b>
+            </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse"
+                data-target="#navbar10">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar10">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="meu-perfil.html">Meu Perfil</a> </li>
+                </ul> <a href="login.html" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
+            </div>
+        </div>
+    </nav>
+    <div class="pt-5">
+        <div class="container">
+            <div class="row">
+                <!--INFORMACAO SERVICO-->
+                <div class="col-md-6 card">
+                    <div class="card-body shadow-sm ">
+                        <h5 class="card-title mb-3"><b>Informações do Serviço</b></h5>
+                        <p id="nome-prestador"class="card-text"><b>Carlos Silva</b></p>
+                        <p class="card-text">Avaliação: <b id="media-avaliacao">4 </b><i class="fa fa-3 fa-star" style="color:yellow"></i>
+                        </p>
+                        <p class="card-text">Valor do Serviço: <b id="preco-servico">R$ 20.00</b></p>
+                        <p class="card-text">Endereço: <b id="endereco">Rua doze, Laranjeiras, Serra-ES</b></p>
+                    </div>
+                </div>
+                <!--INFORMACAO HORARIO-->
+                <div class="col-md-6 card">
+                    <div class="card-body shadow-sm">
+                        <h5 class="card-title mb-3"><b>Horario Serviço</b></h5>
+                        <p class="card-text">Data: <b id="data-servico"></b>
+                        </p>
+                        <p class="card-text">Horario: <b id="horario-servico">11:30 - 12:30</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="padding-top: 10px; ">
+                <div>
+                    <h4>Formas de Pagamentos</h4>
+                </div>
+                <div class="row" id="payment-area">
+                    <div class="col-md-6" id="paypal-area"></div>
+                    <div class="col-md-6" style="text-align: center;" id="boleto-area">
+                        <div id="boleto-request">
+                            <div>
+                                <input type="image"
+                                    src="https://sandbox.boletobancario.com/boletofacil/img/payment-buttons/button-box-medium.png"
+                                    name="submit" alt="Pague com Boleto Banc&aacute;rio!" />
+                            </div>
+                            Informe CPF
+                            <div>
+                                <input id='cpf-payer' type="text" placeholder="CPF">
+                            </div>
+                            <div style="padding-top: 2px;">
+                                <input hidden value='' id='nome-usuario'>
+                                <input class='btn btn-primary'  id='boleto-button' type="button" value="Gerar Boleto">
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Notificação -->
+    <div class="alert" id="box-notificacao">
+        <i class="fa fa-info"> </i>
+        <span id="msg-notificacao"> </span>
+    </div>
+
+    <!--  ir ao topo -->
+    <span id="topo" onclick="paraTopo()" class="topo-visivel"> <i style="font-size: 20px;" class="fa fa-arrow-up"></i>
+        Topo</span>
+
+</body>
+
+</html>
