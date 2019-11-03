@@ -64,6 +64,12 @@ margin-top: -10px;
 text-decoration: none;
 }
 
+#botaoEditarServico{
+float: right;
+margin-top: 0px;
+text-decoration: none;
+}
+
 input[type=text]:disabled {
   background: white;
     border: none;
@@ -127,4 +133,15 @@ vertical-align:top
 }
 .table-all th:first-child,.table-all td:first-child{
 padding-left:16px
+}
+
+
+.display-block{
+
+	display: block;
+}
+
+.display-none{
+		
+	display: none;
 }

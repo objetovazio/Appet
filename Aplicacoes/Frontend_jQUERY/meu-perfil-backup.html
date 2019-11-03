@@ -85,10 +85,11 @@
         <div class="col-md-6" style="">
           <div class="card" id="cardServico">
 
-            <div class="card-header"> Serviços Disponibilizados  <a id="botaoEditarServico" class="ocultar" href="cadastro-servico.html" title="Editar Informação" style="float: right;"><i class="fa fa-pencil"></i> Editar</a></div>
+            <div class="card-header"> Serviços Disponibilizados  <a id="botaoEditar" class="ocultar" href="editar-perfil.html" title="Editar Informação"><i class="fa fa-pencil"></i> Editar</a></div>
             <div class="card-body" id="cardServicoConteudo">
               <p> Serviços cadastrados.</p>
             </div>
+            <a id="adicionarServico" class="btn btn-light text-left ocultar" href="cadastro-servico.html"><i class="fa fa-plus"></i>&nbsp;Adicionar Serviços</a>
           </div>
           <div class="row">
             <div class="col-md-12">
@@ -188,13 +189,13 @@
 
     $( "#cardServico" ).mousemove(function() {
 
-      $("#botaoEditarServico").removeClass("ocultar");
+      $("#adicionarServico").removeClass("ocultar");
 
     });
 
     $( "#cardServico" ).mouseout(function() {
 
-      $("#botaoEditarServico").addClass("ocultar");
+      $("#adicionarServico").addClass("ocultar");
 
     });    
 

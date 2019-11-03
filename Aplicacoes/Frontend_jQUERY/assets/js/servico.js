@@ -56,3 +56,68 @@ function validaServico(servico){
 	    return false;
 	 }
 }
+
+
+function pegaListaServico (){
+
+	var data_request = {
+		title:"",
+		about:"",
+		price:"",
+		ownerId:'1',
+		typeService: "",
+		hourService: ""
+	};
+
+	$.get(rota_servico, data_request, function () {
+	}).done(function (dados) {
+
+			// convert a strgin em objeto e ao mesmo tempo
+			// acessa a chave data
+			var servico = JSON.parse(dados).data;
+			console.log(servico);
+			var texto = ""
+			$(servico).each(function(index, elemento) {
+				console.log(elemento.about);
+				texto += "<p onclick='mostrar(this)'> 	&bull; <em style='cursor:pointer; font-style: oblique; text-shadow'>"+elemento.title+"</em> <em style='font-size:14px; margin-left:4px;  cursor:pointer'>  &#8212; R$ "+
+				 elemento.price +" </em> <i style='float:right; cursor:pointer; color: gray  ' class='fa fa-chevron-down'></i> <br>"+
+				"<span class='display-none' style='font-size:15px;'>&nbsp;&nbsp;&nbsp;tipo: "+elemento.id_type + "<br>&nbsp;&nbsp;&nbsp;sobre: " +elemento.about+ "<br>"+"</span></p>";
+			});
+
+			$("#cardServicoConteudo").html( texto);
+			
+			
+
+
+		}).fail(function (msg) {
+
+			var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText;
+			mensagem(texto, "Erro", 5000);
+		});
+	
+	
+}
+
+
+function mostrar(elemento){
+
+	// var elemento = $(elemento).children();
+	// var atributo = elemento.css("display");
+	if ($(elemento).children('span').hasClass('display-none')){
+
+		
+		$(elemento).children('span').removeClass('display-none');
+		$(elemento).children('i').removeClass('fa-chevron-down');
+		$(elemento).children('i').addClass('fa-chevron-up');
+
+	}else {
+
+		$(elemento).children('span').addClass('display-none');
+		$(elemento).children('i').addClass('fa-chevron-down');
+		$(elemento).children('i').removeClass('fa-chevron-up');
+	}
+
+}
+
+
+

@@ -35,7 +35,7 @@ class Usuario {
 		var data_request = {
 			userId: "",
 			nomeUser: "",
-			emailUser: "carla@gmail.com",
+			emailUser: "elimar@macena.com",
 			senha: "",
 			sobre: ""
 		};
