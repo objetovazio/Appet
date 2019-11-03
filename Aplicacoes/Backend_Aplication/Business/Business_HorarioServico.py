@@ -62,100 +62,54 @@ def findSchedule(query_param: dict):
 	final_result = []
 	query_result = None
 	if(query_param['id']!= None):
-		query_result = PA.PeriodoAtividade.get_by_id(query_param['id'])
+		query_result = HS.HorarioServico.get_by_id(query_param['id'])
 		final_result.append(_makeResultDic(query_result))
 		return final_result
-	is_period_empty = query_param['period_id'] == None
-	is_begin_empty = query_param['begin_hour'] == None
-	is_end_empty = query_param['end_hour'] == None
-	is_day_empty = query_param['week_day'] == None
-	if (not is_period_empty):
-		if(not is_begin_empty and not is_end_empty and not is_day_empty):
-			begin_time = time(query_param['begin_hour'][0:2],
-							  query_param['begin_hour'][2:4], query_param['begin_hour'][4:6])
-			end_time = time(query_param['end_hour'][0:2],
-							query_param['end_hour'][2:4], query_param['end_hour'][4:6])
-			query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-															(HS.HorarioServico.dia_semana == query_param['week_day']) &
-															(HS.HorarioServico.horario_inicio == begin_time) &
-															(HS.HorarioServico.horario_fim == end_time))
-		elif(not is_begin_empty):
-			begin_time = time(query_param['begin_hour'][0:2],
-							  query_param['begin_hour'][2:4], query_param['begin_hour'][4:6])
-			if(not is_end_empty):
-				end_time = time(query_param['end_hour'][0:2],
-								query_param['end_hour'][2:4], query_param['end_hour'][4:6])
-				query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-																(HS.HorarioServico.horario_inicio == begin_time) &
-																(HS.HorarioServico.horario_fim == end_time))
-			elif(not is_day_empty):
-				query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-																(HS.HorarioServico.dia_semana == query_param['week_day']) &
-																(HS.HorarioServico.horario_inicio == begin_time))
-			else:
-				query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-																(HS.HorarioServico.dia_semana == query_param['week_day']) &
-																(HS.HorarioServico.horario_inicio == begin_time) &
-																(HS.HorarioServico.horario_fim == end_time))
-		elif(not is_end_empty):
-			end_time = time(query_param['end_hour'][0:2],
-							query_param['end_hour'][2:4], query_param['end_hour'][4:6])
-			if(not is_day_empty):
-				query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-																(HS.HorarioServico.dia_semana == query_param['week_day']) &
-																(HS.HorarioServico.horario_fim == end_time))
-			else:
-				query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-																(HS.HorarioServico.horario_fim == end_time))
-		elif(not is_day_empty):
-			query_result = HS.HorarioServico.select().where((HS.HorarioServico.id_periodo == query_param['period_id']) &
-															(HS.HorarioServico.dia_semana == query_param['week_day']))
+	have_begin = query_param['begin_hour'] != None
+	have_end = query_param['end_hour'] != None
+	have_day = query_param['week_day'] != None
+	if(have_begin):
+		if(have_end and have_day):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
+				(HS.HorarioServico.dia_semana == query_param['week_day'])
+			)
+		elif(have_end):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.horario_fim == query_param['end_hour'])
+			)
+		elif(have_day):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.dia_semana == query_param['week_day'])
+			)
 		else:
 			query_result = HS.HorarioServico.select().where(
-				(HS.HorarioServico.id_periodo == query_param['period_id']))
-
-	elif(not is_begin_empty):
-		begin_time = time(query_param['begin_hour'][0:2],
-						  query_param['begin_hour'][2:4], query_param['begin_hour'][4:6])
-		if(not is_end_empty and not is_day_empty):
-			end_time = time(query_param['end_hour'][0:2],
-							query_param['end_hour'][2:4], query_param['end_hour'][4:6])
-			query_result = HS.HorarioServico.select().where((HS.HorarioServico.dia_semana == query_param['week_day']) &
-															(HS.HorarioServico.horario_inicio == begin_time) &
-															(HS.HorarioServico.horario_fim == end_time))
-		elif(not is_end_empty):
-			end_time = time(query_param['end_hour'][0:2],
-							query_param['end_hour'][2:4], query_param['end_hour'][4:6])
-			query_result = HS.HorarioServico.select().where((HS.HorarioServico.horario_inicio == begin_time) &
-															(HS.HorarioServico.horario_fim == end_time))
-		elif(not is_day_empty):
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour'])
+			)
+	elif(have_end):
+		if(have_day):
 			query_result = HS.HorarioServico.select().where(
-				(HS.HorarioServico.dia_semana == query_param['week_day']) &
-				(HS.HorarioServico.horario_inicio == begin_time))
+				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
+				(HS.HorarioServico.dia_semana == query_param['week_day'])
+			)
 		else:
 			query_result = HS.HorarioServico.select().where(
-				(HS.HorarioServico.horario_inicio == begin_time))
-
-	elif(not is_end_empty):
-		end_time = time(query_param['end_hour'][0:2],
-						query_param['end_hour'][2:4], query_param['end_hour'][4:6])
-		if(not is_day_empty):
-			query_result = HS.HorarioServico.select().where((HS.HorarioServico.dia_semana == query_param['week_day']) &
-															(HS.HorarioServico.horario_fim == end_time))
-		else:
-			query_result = HS.HorarioServico.select().where(
-				(HS.HorarioServico.horario_fim == end_time))
-
+				(HS.HorarioServico.horario_fim == query_param['end_hour'])
+			)
 	else:
 		query_result = HS.HorarioServico.select().where(
-			(HS.HorarioServico.dia_semana == query_param['week_day']))
-	
+				(HS.HorarioServico.dia_semana == query_param['week_day'])
+			)
 	for schedule_find in query_result:
 		final_result.append(_makeResultDic(schedule_find))
 	return final_result
 
 
 def _makeResultDic(schedule_data):
+	print(schedule_data)
 	result = {
 		'schedule_id': schedule_data.id_horario_servico,
 		'period_id': schedule_data.id_periodo.id_periodo_atividde,

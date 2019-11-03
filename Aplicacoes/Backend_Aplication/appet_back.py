@@ -279,26 +279,27 @@ def postServiceSchedule():
 
 @app.route('/ServiceSchedule', methods=['GET'])
 def getServiceSchedule():
-	is_period_empty = is_parameter_empty(request.args.get('periodoId'))
-	period_id = int(request.form['periodoId']) if not is_period_empty else None
+	is_schedule_empty = is_parameter_empty(request.args.get('id'))
+	print()
+	schedule = request.args.get('id') if not is_schedule_empty else None
 
 	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
-	begin_time = request.form['beginTime'] if not is_begin_empty else None
+	begin_time = request.args.get('beginTime') if not is_begin_empty else None
 
 	is_end_empty = is_parameter_empty(request.args.get('endTime'))
 	end_time = request.args.get('endTime') if not is_end_empty else None
 
 	is_day_empty = is_parameter_empty(request.args.get('weekDay'))
-	week_day = int(request.args.get('weekDay')) if not is_day_empty else None
+	week_day = request.args.get('weekDay') if not is_day_empty else None
 
-	if(is_period_empty and is_begin_empty and is_end_empty and is_day_empty):
+	if(is_schedule_empty and is_begin_empty and is_end_empty and is_day_empty):
 		print('empty request')
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 	schedule_query = {
-		'period_id':period_id,
-		'begin_hour':begin_time,
-		'end_hour':end_time,
-		'week_day':week_day
+		'id':schedule if not is_schedule_empty else None,
+		'begin_hour':begin_time if not is_begin_empty else None,
+		'end_hour':end_time if not is_end_empty else None,
+		'week_day':week_day if not is_day_empty else None
 	}
 	data_result = b_horarioServico.findSchedule(schedule_query)
 	return json.dumps({'success': True,
