@@ -17,6 +17,8 @@ class Contratacao(BaseCon):
     data_agendamento = DateTimeField()
     forma_pagamento = CharField()
     valor = IntegerField()
+    status_pagamento = IntegerField()
+    token_pagamento = CharField()
     status_contratacao = IntegerField()
     ## FK relacional com contrato com o usuario que contratou o servico
     id_usuario = ForeignKeyField(Usuario)

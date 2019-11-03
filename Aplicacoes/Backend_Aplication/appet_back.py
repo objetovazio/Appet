@@ -14,8 +14,9 @@ import Business.Business_user as b_user
 import Business.Business_periodoAtividade as b_periodoAtividade
 import Business.Business_HorarioServico as b_horarioServico
 import Business.Business_Servico as b_servico
-import Business.Business_TipoServico as TS
+import Business.Business_TipoServico as b_tipoServ
 import Business.Business_Endereco as b_address
+import Business.Business_Contato as b_contato
 import logging
 
 app = Flask(__name__)
@@ -58,13 +59,53 @@ def getComment():
 
 @app.route('/Contact', methods=['POST'])
 def postContact():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_owner_empty = is_parameter_empty(request.form['ownerId'])
+		is_type_empty = is_parameter_empty(request.form['type'])
+		is_content_empty = is_parameter_empty(request.form['content'])
+		if(is_owner_empty and is_type_empty and is_content_empty):
+			raise Exception('[CONTACT - POST] Empty Required Parameter')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	contact_data={
+		'owner':request.form['ownerId'],
+		'type':request.form['type'],
+		'content':request.form['conent']
+	}
+	
+	response_request = None
+	try:
+		contact_data['id'] = request.form['contactId']
+		response_request = b_contato.updateContato(contact_data)
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_contato.createContato(contact_data)
+	
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
+	
 
 @app.route('/Contact', methods=['GET'])
 def getContact():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_owner_empty = is_parameter_empty(request.args.get('ownerId'))
+		is_type_empty = is_parameter_empty(request.args.get('type'))
+		is_content_empty = is_parameter_empty(request.args.get('content'))
+		is_id_empty = is_parameter_empty(request.args.get('id'))
+		if(is_owner_empty and is_type_empty and is_content_empty):
+			raise Exception('[CONTACT - GET] No parameters')
+	except Exception as err:
+		print (err)
+		handle_invalid(err)
+	query_data ={
+		'owner':request.args.get('ownerId') if not is_owner_empty else None,
+		'type':request.args.get('type') if not is_type_empty else None,
+		'content':request.args.get('content') if not is_content_empty else None,
+		'id':request.args.get('id') if not is_id_empty else None
+	}
+	data_result = b_contato.findContato(query_data)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Address', methods=['POST'])
 def postAddress():
@@ -355,7 +396,7 @@ def getTypeService():
 	else:
 		service_query['nome_ts'] = None
 	service_query['id_ts'] = None
-	data_result = TS.findTypeService(service_query)
+	data_result = b_tipoServ.findTypeService(service_query)
 	return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
 
