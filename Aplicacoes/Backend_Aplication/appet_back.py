@@ -14,8 +14,11 @@ import Business.Business_user as b_user
 import Business.Business_periodoAtividade as b_periodoAtividade
 import Business.Business_HorarioServico as b_horarioServico
 import Business.Business_Servico as b_servico
-import Business.Business_TipoServico as TS
+import Business.Business_TipoServico as b_tipoServ
 import Business.Business_Endereco as b_address
+import Business.Business_Contato as b_contato
+import Business.Business_Avaliacao as b_avaliacao
+import Business.Business_Comentario as b_comentario
 import logging
 
 app = Flask(__name__)
@@ -28,13 +31,51 @@ def hello_world():
 
 @app.route('/Rate', methods=['POST'])
 def postRate():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_author_empty = is_parameter_empty(request.form['author'])
+		is_service_empty = is_parameter_empty(request.form['service'])
+		is_rate_empty = is_parameter_empty(request.form['nota'])
+		if(is_author_empty or is_service_empty or is_rate_empty):
+			raise Exception('[RATE - POST] Empty Required Parameter ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	rate_data = {
+		'user_id':request.form['author'],
+		'service_id':request.form['service'],
+		'nota':request.form['nota']
+	}
+	response_request = None
+	try:
+		rate_data['avaliacao_id']=request.form['id']
+		response_request = b_avaliacao.updateAvaliacao(rate_data)
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_avaliacao.createAvaliacao(rate_data)
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Rate',methods=['GET'])
 def getRate():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_author_empty		=	is_parameter_empty(request.args.get('author'))
+		is_service_empty	=	is_parameter_empty(request.args.get('service'))
+		is_rate_empty		=	is_parameter_empty(request.args.get('nota'))
+		is_id_empty			=	is_parameter_empty(request.args.get('id'))
+		if(is_author_empty and is_service_empty and is_rate_empty and is_id_empty):
+			raise Exception('[RATE - GET] Empty Parameters ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	
+	query_data ={
+		'user_id':request.args.get('author')if not is_author_empty else None,
+		'service_id':request.args.get('service')if not is_service_empty else None,
+		'nota':request.args.get('nota')if not is_rate_empty else None,
+		'avaliacao_id':request.args.get('id'if not is_id_empty else None)
+	}
+	data_result = b_avaliacao.findAvaliacao(query_data)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/CrediCard', methods=['POST'])
 def postCrediCard():
@@ -48,23 +89,101 @@ def getCrediCard():
 
 @app.route('/Comment', methods=['POST'])
 def postComment():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_rateId_empty		=	is_parameter_empty(request.form['avaliacaoId'])
+		is_comment_empty	=	is_parameter_empty(request.form['comentario'])
+
+		if(is_rateId_empty or is_comment_empty):
+			raise Exception('[COMMENT - POST]  Empty Required Parameter')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	
+	comment_data={
+		'aval_id':request.form['avaliacaoId'],
+		'comentario':request.form['comentario']
+	}
+	
+	response_request = None
+	try:
+		comment_data['comentario_id'] = request.form['id']
+		response_request = b_comentario.updateComentario(comment_data)
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_comentario.createComentario(comment_data)
+	
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Comment', methods=['GET'])
 def getComment():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_rateId_empty		=	is_parameter_empty(request.args.get['avaliacaoId'])
+		is_comment_empty	=	is_parameter_empty(request.args.get['comentario'])
+		is_id_empty			=	is_parameter_empty(request.args.get['id'])
+		if(is_rateId_empty and is_comment_empty and is_id_empty):
+			raise Exception('[COMMENT - GET]  Empty Parameters')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	
+	query_data= {
+		'comentario_id': request.args.get['id'] if not is_id_empty else None,
+		'comentario': request.args.get['comentario'] if not is_id_empty else None,
+		'aval_id':request.args.get['avaliacaoId'] if not is_rateId_empty else None
+	}
+	data_result = b_comentario.findComentario(query_data)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Contact', methods=['POST'])
 def postContact():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_owner_empty = is_parameter_empty(request.form['ownerId'])
+		is_type_empty = is_parameter_empty(request.form['type'])
+		is_content_empty = is_parameter_empty(request.form['content'])
+		if(is_owner_empty or is_type_empty or is_content_empty):
+			raise Exception('[CONTACT - POST] Empty Required Parameter')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	contact_data={
+		'owner':request.form['ownerId'],
+		'type':request.form['type'],
+		'content':request.form['conent']
+	}
+	
+	response_request = None
+	try:
+		contact_data['id'] = request.form['contactId']
+		response_request = b_contato.updateContato(contact_data)
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_contato.createContato(contact_data)
+	
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
+	
 
 @app.route('/Contact', methods=['GET'])
 def getContact():
-	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	try:
+		is_owner_empty = is_parameter_empty(request.args.get('ownerId'))
+		is_type_empty = is_parameter_empty(request.args.get('type'))
+		is_content_empty = is_parameter_empty(request.args.get('content'))
+		is_id_empty = is_parameter_empty(request.args.get('id'))
+		if(is_owner_empty and is_type_empty and is_content_empty):
+			raise Exception('[CONTACT - GET] No parameters')
+	except Exception as err:
+		print (err)
+		handle_invalid(err)
+	query_data ={
+		'owner':request.args.get('ownerId') if not is_owner_empty else None,
+		'type':request.args.get('type') if not is_type_empty else None,
+		'content':request.args.get('content') if not is_content_empty else None,
+		'id':request.args.get('id') if not is_id_empty else None
+	}
+	data_result = b_contato.findContato(query_data)
+	return json.dumps({'success': True,
+	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Address', methods=['POST'])
 def postAddress():
@@ -355,7 +474,7 @@ def getTypeService():
 	else:
 		service_query['nome_ts'] = None
 	service_query['id_ts'] = None
-	data_result = TS.findTypeService(service_query)
+	data_result = b_tipoServ.findTypeService(service_query)
 	return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
 
