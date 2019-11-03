@@ -198,6 +198,9 @@ def postAtivityTime():
 		is_owner_empty = is_parameter_empty(request.form['ownerId'])
 		owner_id = int(request.form['ownerId']) if not is_owner_empty else None
 		
+		is_periodoAtvidadeId_empty =  is_parameter_empty( request.form['periodoAtvidadeId'] )
+		periodoAtvidadeId = int(request.form['periodoAtvidadeId']) if not is_periodoAtvidadeId_empty else None
+		
 		if(is_begin_empty or is_end_empty or is_owner_empty):
 			raise Exception('empty required parameter')
 	except Exception as err:
@@ -207,16 +210,22 @@ def postAtivityTime():
 		'end':end_date
 	}
 	response_request = None
-	#usado para verificar se é update ou create
-	try:
-		response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time,request.form['periodoAtvidadeId'])
-	except Exception as err:
-		if(response_request == None):
-			logging.exception("message")
-			response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time,owner_id)
-	
 
-	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
+	try:
+		#usado para verificar se é update ou create
+		if (periodoAtvidadeId == None):
+			response_request = b_periodoAtividade.createPeriodoAtividade(ativity_time, owner_id)
+		else:
+			response_request = b_periodoAtividade.updatePeriodoAtividade(ativity_time, periodoAtvidadeId)
+		
+		if (response_request == False):
+			raise Exception('Erro no Banco de Dados')
+
+		return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
+
+	except Exception as err:
+		return erro_interno(err)
+
 
 @app.route('/AtivityTime', methods=['GET'])
 def getAtivityTime():
@@ -230,15 +239,19 @@ def getAtivityTime():
 	owner_id = int(request.args.get('ownerId')) if not is_owner_empty else None
 
 	if(is_begin_empty and is_end_empty and is_owner_empty):
-		return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}        
+		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}  
+
 	ativity_time = {
 		'begin':begin_date,
 		'end':end_date,
 		'owner_id':owner_id
 	}
+
 	data_result = b_periodoAtividade.findPeriodoAtividade(ativity_time)
-	return json.dumps({'success': True,
-		'data':data_result}), 200, {'ContentType': 'application/json'}
+	print(ativity_time)
+	print(data_result)
+	return json.dumps({'success': True,'data':data_result}), 200, {'ContentType': 'application/json'}
+
 
 @app.route('/Service', methods=['POST'])
 def postService():

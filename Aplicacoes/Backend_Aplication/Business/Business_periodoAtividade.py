@@ -101,6 +101,15 @@ def findPeriodoAtividade(periodo_search):
     final_result = []
     for find_pa in query_result:
         final_result.append(_makeResultDic(find_pa))
+
+    # dataInicial = final_result[0]['begin'][0:4] + final_result[0]['begin'][5:7]  + final_result[0]['begin'][8:]
+    # dataFinal = final_result[0]['end'][0:4] + final_result[0]['end'][5:7]  + final_result[0]['end'][8:]
+
+    for i in range (len(final_result)): 
+        dataInicial = str(final_result[i]['begin'])
+        dataFinal = str(final_result[i]['end'])
+        final_result[i]['begin'] = dataInicial
+        final_result[i]['end'] = dataFinal
     return final_result
 
 def _makeResultDic(pa_obj):
