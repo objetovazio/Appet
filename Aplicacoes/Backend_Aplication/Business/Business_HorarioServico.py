@@ -7,8 +7,16 @@ sys.path.append(diretorio)
 import Model.PeriodoAtividade as PA
 import Model.HorarioServico as HS
 from peewee import fn
+from enum import Enum
 # ---------------------------------
-
+class Day(Enum):
+	DOMINGO =1
+	SEGUNDA = 2
+	TERCA = 3
+	QUARTA = 4
+	QUINTA = 5
+	SEXTA = 6
+	SABADO = 7
 
 def createSchedule(schedule_data):
 	try:
@@ -114,11 +122,19 @@ def weekdayMetrics():
 			HS.HorarioServico.dia_semana, fn.COUNT(HS.HorarioServico.dia_semana).alias('total')
 			).group_by(HS.HorarioServico.dia_semana)
 	)
+	data_result = {}
 	for row in query_build:
-		print(row.dia_semana,row.total)
+		data_result[Day(row.dia_semana).name] = row.total
+	return data_result
+
+#recieve day name
+def getWeekdayEnum(dayString :str):
+	for name,value in Day.__members__.items():
+		if(dayString == name):
+			return value
+	return None
 
 def _makeResultDic(schedule_data):
-	print(schedule_data)
 	result = {
 		'schedule_id': schedule_data.id_horario_servico,
 		'period_id': schedule_data.id_periodo.id_periodo_atividde,
