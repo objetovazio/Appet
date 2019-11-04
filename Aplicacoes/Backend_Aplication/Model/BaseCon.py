@@ -1,5 +1,5 @@
 from peewee import *
-from peewee import fn
+
 
 
 class BaseCon(Model):

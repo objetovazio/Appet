@@ -6,6 +6,7 @@ diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 import Model.PeriodoAtividade as PA
 import Model.HorarioServico as HS
+from peewee import fn
 # ---------------------------------
 
 
@@ -110,7 +111,7 @@ def findSchedule(query_param: dict):
 def weekdayMetrics():
 	query_build = (
 		HS.HorarioServico.select(
-			HS.HorarioServico.dia_semana, HS.HorarioServico.fn.COUNT(HS.HorarioServico.dia_semana).alias('total')
+			HS.HorarioServico.dia_semana, fn.COUNT(HS.HorarioServico.dia_semana).alias('total')
 			).group_by(HS.HorarioServico.dia_semana)
 	)
 	for row in query_build:

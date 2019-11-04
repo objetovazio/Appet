@@ -9,6 +9,7 @@ import Model.Usuario as User
 import Model.Servico as Serv
 import Model.ServicoHorario as SH
 import Model.HorarioServico as HS
+from peewee import fn
 # ---------------------------------
 
 
@@ -298,7 +299,7 @@ def searchService(serv_query):
 #retorna metricas relacionadas ao tipo de servicos cadastrados no sistema
 def typeRegistredMetrics():
 	query_build = (Serv.Servico
-					.select(Serv.Servico.id_tipo, Serv.Servico.fn.COUNT(Serv.Servico.id_tipo).alias('total') )
+					.select(Serv.Servico.id_tipo, fn.COUNT(Serv.Servico.id_tipo).alias('total') )
 					.group_by(Serv.Servico.id_tipo)
 					)
 	for row in query_build:
