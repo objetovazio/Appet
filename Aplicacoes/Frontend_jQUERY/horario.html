@@ -11,6 +11,7 @@
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
   <script type="text/javascript" src="assets/js/util.js"></script>
+  <script type="text/javascript" src="assets/js/horarioservico.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
@@ -73,7 +74,7 @@
                
         
         <div class="table-responsive">
-        <table id="tabelaPeriodo" class="table table-bordered ">
+        <table id="tabelaHorario" class="table table-bordered ">
           <thead class="thead-dark">
               <th style="min-width: 100px; max-width: 100px;" class="text-center">Periodo Atividade</th>
               <th style="min-width: 100px; max-width: 100px;" class="text-center">Dia da Semana</th>
@@ -103,7 +104,7 @@
         <div class="col-md-12">
           <div class="col-md-12 my-2"></div>
           <div class="row">
-            <div class="col-md-4"><a class="btn btn-secondary my-2" href="#">Salvar</a>  <br><br></div>
+            <div class="col-md-4"><a class="btn btn-secondary my-2" href="#" id="salvar">Salvar</a>  <br><br></div>
             <div class="col-md-4"></div>
             <div class="col-md-2"></div>
             <div class="col-md-2"></div>
@@ -130,23 +131,15 @@
             
             <div class="row">
               <div class="col-md-4">
-                <div class="form-group"><label>Horário Inicial</label><select class="form-control border-0 my-2" id="horarioInicial">
-                    <option>00:00</option>
-                    <option>00:30</option>
-                    <option>01:00</option>
-                    <option>01:30</option>
-                    <option>...</option>
-                  </select></div>
+                <div class="form-group"><label>Horário Inicial</label><input class="form-control border-0 my-2" type="time" id="horarioInicial">
+                    
+                </input></div>
               </div>
               <div class="col-md-1"></div>
               <div class="col-md-4">
-                <div class="form-group"><label>Horário Final</label><select class="form-control border-0 my-2" id="horarioFinal">
-                    <option>00:00</option>
-                    <option>00:30</option>
-                    <option>01:00</option>
-                    <option>01:30</option>
-                    <option>...</option>
-                  </select></div>
+                <div class="form-group"><label>Horário Final</label><input class="form-control border-0 my-2" type="time" id="horarioFinal">
+
+                  </input></div>
               </div>
             </div>
           </div>
@@ -182,6 +175,27 @@
       </div>
     </div>
   </div>
+
+
+
+
+  <script type="text/javascript">
+  
+    $(document).ready( function (){ 
+    
+      //pegaListaPeriodoAtividade();
+    
+      $('#salvar').click(function(){
+    
+         $('#salvar').prop('disabled', true);
+         adicionaHorarioDisp();
+          setTimeout(function () { $('#salvar').prop('disabled', false); }, 2000);
+          });
+          
+        
+    });
+    
+    </script>>
 
 
   <!-- Menu -->
