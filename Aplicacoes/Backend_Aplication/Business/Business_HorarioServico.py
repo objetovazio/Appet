@@ -109,8 +109,12 @@ def findSchedule(query_param: dict):
 
 def weekdayMetrics():
 	query_build = (
-		HS.HorarioServico.select(Hs.HorarioServico.dia_semana, fn.COUNT(Serv.Servico.id_tipo).alias('total'))
+		HS.HorarioServico.select(
+			HS.HorarioServico.dia_semana, HS.HorarioServico.fn.COUNT(HS.HorarioServico.dia_semana).alias('total')
+			).group_by(HS.HorarioServico.dia_semana)
 	)
+	for row in query_build:
+		print(row.dia_semana,row.total)
 
 def _makeResultDic(schedule_data):
 	print(schedule_data)
