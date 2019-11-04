@@ -9,7 +9,6 @@ import Model.Usuario as User
 import Model.Servico as Serv
 import Model.ServicoHorario as SH
 import Model.HorarioServico as HS
-from peewee import fn
 # ---------------------------------
 
 
