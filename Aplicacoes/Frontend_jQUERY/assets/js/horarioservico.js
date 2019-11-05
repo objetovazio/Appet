@@ -17,18 +17,45 @@ function adicionaHorarioDisp(){
 		input_date_end = "";
     }
 
-    raw_time_begin = $("horarioInicial").val();
-    raw_time_end = $("horarioFinal").val();
+    console.log($('#horario-inicial').val())
     
+    raw_time_begin = $("#horarioInicial").val();
+    raw_time_end = $("#horarioFinal").val();
 
 	var data_request = {
 		beginDate:input_date_begin,
         endDate:input_date_end,
         beginTime:input_time_begin,
         endTime:input_time_end,
+        weekDay: $("#diaSemana").val(),
 		ownerId:"1",
 		horarioId:$("#idHorario").val()
     }
+
 };
 
+/*
+function validaData(){
 
+}
+
+
+function validacao(data_request){
+    if (validaData){
+        if (validaHorario){
+            enviaPostHorario(data_request);
+        }
+        else{
+            alert("Insira um horário válido!");
+        }
+    }
+    else{
+        alert("Insira uma data válida!");
+    }
+}
+
+function enviaPostHorario(data_request){
+
+
+}
+*/

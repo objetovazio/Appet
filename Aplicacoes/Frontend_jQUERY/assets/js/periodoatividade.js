@@ -192,3 +192,50 @@ function atualizaLinha(elementoAtualiza){
 
 
 
+
+
+
+
+
+
+
+// nao apagar isso obg
+// gambiarra pro horario.html
+
+function pegaPeriodos (){
+
+	var data_request = {
+		beginDate:"",
+		endDate:"",
+		ownerId:"1",
+		periodoAtvidadeId:""
+	};
+	
+	$.get(rota_periodo_atividade, data_request, function(){
+	}).done( function (dados){
+
+		// convert a string em objeto e ao mesmo tempo
+		// acessa a chave data no indice 0
+		var periodo = JSON.parse(dados).data;
+		console.log(periodo);
+
+		var texto;
+
+		// key é chave do JSON, item é o dado do JSON
+		// #tipeservico é o elemento select do html
+		$(periodo).each(function(key, item) {
+			texto = item.end;
+			$("#periodoAtividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
+		});
+	
+	}).fail( function (msg) {
+
+		var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		mensagem(texto, "Erro",5000);
+	});
+
+}
+
+
+
+

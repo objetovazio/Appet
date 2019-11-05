@@ -12,6 +12,7 @@
   <script type="text/javascript" src="assets/js/rotas.js"></script>
   <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/horarioservico.js"></script>
+  <script type="text/javascript" src="assets/js/periodoatividade.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
@@ -112,9 +113,8 @@
           <div class="form-group">
             <input id="idHorario" type="text" style="display: none;" >
             <label>Periodo de Atividade</label>
-
-            <select class="form-control border-0 my-2" id="periodoAtividade">
-              <option>01/12/2019 - 30/12/2019</option>
+            <select class="form-control border-0 my-2" type="date" class="form-control border-0" id="periodoAtividade">
+              <option value="">Periodo de Atividade</option>
             </select>
 
             <label>Dia da Semana</label>
@@ -177,25 +177,21 @@
   </div>
 
 
-
-
   <script type="text/javascript">
   
     $(document).ready( function (){ 
     
-      //pegaListaPeriodoAtividade();
-    
       $('#salvar').click(function(){
-    
+        alert("wdopsdfopsdjf");
          $('#salvar').prop('disabled', true);
-         adicionaHorarioDisp();
+          adicionaHorarioDisp();
           setTimeout(function () { $('#salvar').prop('disabled', false); }, 2000);
           });
-          
         
-    });
+      pegaPeriodos();
     
-    </script>>
+    });
+    </script>
 
 
   <!-- Menu -->
