@@ -5,13 +5,16 @@ diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
 import Model.Usuario as User
+from passlib.hash import pbkdf2_sha256
 
 #POST METHOD ZONE
 
+
 # user_data = (DIC) novo usuario para ser inserido na base
 def createUser(user_data):
+    hashPass = pbkdf2_sha256.hash(user_data['password'])
     new_user = User.Usuario(nome=user_data['name'], email=user_data['email'],
-                            senha=user_data['password'], sobre=user_data['about'])
+                            senha=hashPass, sobre=user_data['about'])
     try:
         new_user.save()
     except Exception as err:
@@ -78,6 +81,22 @@ def findUsers(user_query):
     for find_user in query_result:
         final_result.append(_makeResultDic(find_user))
     return final_result
+
+def userLogin(user_query):
+    email = user_query['email_user']
+    password = user_query['password']
+    if(email != None and password != None):
+        user = User.Usuario.select().where((User.Usuario.email == email))
+        
+        isCorretPassword = pbkdf2_sha256.verify(password, user[0].senha)
+        if(len(user) == 1 and isCorretPassword):
+            dic_user = _makeResultDic(user[0])
+            dic_user['password'] = ''
+            return dic_user
+        #end-if
+
+    return None
+# end
 
 def _makeResultDic(user_obj):
     user_dic = {

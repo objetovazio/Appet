@@ -4,6 +4,7 @@ from flask import json
 from flask import jsonify
 from flask import request
 from flask_cors import CORS
+from flask import session
 # used to resolve the path problem
 import sys
 from os.path import dirname, abspath
@@ -22,6 +23,7 @@ import Business.Business_Comentario as b_comentario
 import logging
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 #app.run(debug=True)
 CORS(app)
 
@@ -547,10 +549,47 @@ def getUser():
 		data_result = b_user.findUsers(user_query)
 		return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
-	
 
-
+@app.route('/login', methods=['POST'])
+def loginUser():    
+	is_email_empty = is_parameter_empty(request.form['emailUser'])
+	email_user = request.form['emailUser'] if not is_email_empty else None
 		
+	is_password_empty = is_parameter_empty(request.form['senha'])
+	password = request.form['senha'] if not is_password_empty else None
+	
+	if(is_email_empty or is_password_empty):
+		print('empty')
+		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+	else:
+		user_query = {
+			'email_user': email_user,
+			'password': password
+		}
+		data_result = b_user.userLogin(user_query)
+
+		session['logger_user'] = data_result
+
+		return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
+#end-loginuser
+
+@app.route('/getsession', methods=['GET'])
+def getSession():
+	if('logger_user' in session):
+		print(session['logger_user'])
+		return json.dumps({'success': True, 'data':session['logger_user']}), 200, {'ContentType': 'application/json'}
+	#end-if
+
+	return json.dumps({'success': False, 'data': 'Not Logged!'}), 200, {'ContentType': 'application/json'}
+#end-getrSession
+
+@app.route('/logoff', methods=['POST'])
+def logOff():
+	session.pop('logger_user', None)
+	print(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
+	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+#end-logoff
 
 def handle_invalid(erroType):
 	response = jsonify(str(erroType))
