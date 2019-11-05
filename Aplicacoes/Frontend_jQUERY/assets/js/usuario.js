@@ -1,26 +1,15 @@
 class Usuario {
 	static Novo(usuarioData) {
+		if (Usuario.validaUsuario(usuarioData) == true) {
 
-		var data_request = {
-			userId: "",
-			nomeUser: $("#nome").val(),
-			emailUser: $("#email").val(),
-			senha: $("#senha").val(),
-			sobre: ""
-		};
-
-		if (Usuario.validaUsuario(data_request) == true) {
-
-			$.post(rota_user, data_request, function () {
+			$.post(rota_user, usuarioData, function () {
 			}).done(function () {
-
 				var texto = "Cadastro realizado!";
 				mensagem(texto, "Sucesso", 2000);
 
 				$("#nome").val("");
 				$("#email").val("");
 				$("#senha").val("");
-
 
 			}).fail(function (msg) {
 
@@ -89,7 +78,6 @@ class Usuario {
 		}
 	}
 
-
 	static validaUsuario(usuario) {
 		var msg = "";
 		try {
@@ -118,6 +106,40 @@ class Usuario {
 		}
 
 	}
+
+	static efetuarLogin(usuario) {
+		if (usuario['emailUser'] == '') {
+			mensagem("O campo email é obrigatório.", "Atencao", 5000);
+			return;
+		}
+
+		if (usuario['senha'] == '') {
+			mensagem("O campo senha é obrigatório.", "Atencao", 5000);
+			return;
+		}
+
+		$.post(rota_login, usuario, function () {
+		}).done(function (data) {
+			var result = JSON.parse(data);
+			if (result['success']) {
+				var texto = "Login efeturado com sucesso!";
+
+				mensagem(texto, "Sucesso", 5000);
+				setTimeout(function () {
+					window.location = './index.html';
+				}, 2000);
+			}
+			else {
+				mensagem("Usuário ou senha incorretos.", "Erro", 5000);
+			}
+
+		}).fail(function (msg) {
+			var texto = "Falha ao realizar login! Status: " + msg.status + " | Motivo: " + msg.responseText;
+			mensagem(texto, "Erro", 5000);
+		});
+
+	}
+
 }
 
 // function getUsuario (){

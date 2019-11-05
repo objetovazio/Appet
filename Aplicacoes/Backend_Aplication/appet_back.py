@@ -23,7 +23,7 @@ import Business.Business_Comentario as b_comentario
 import logging
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = b'\xc2\xbf\xbf\xe8\x82LA\xd3\xe8\xdd\x84U\xeb\xec\x825uq\xee\x96\x19#i\xe2' #os.urandom(24)
 #app.run(debug=True)
 CORS(app)
 
@@ -568,10 +568,11 @@ def loginUser():
 		}
 		data_result = b_user.userLogin(user_query)
 
-		session['logger_user'] = data_result
-
-		return json.dumps({'success': True,
-		'data':data_result}), 200, {'ContentType': 'application/json'}
+		if(data_result != None):
+			session['logger_user'] = data_result
+			return json.dumps({'success': True, 'data':data_result}), 200, {'ContentType': 'application/json'}
+		else:
+			return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 #end-loginuser
 
 @app.route('/getsession', methods=['GET'])
@@ -580,6 +581,8 @@ def getSession():
 		print(session['logger_user'])
 		return json.dumps({'success': True, 'data':session['logger_user']}), 200, {'ContentType': 'application/json'}
 	#end-if
+
+	print(session.keys())
 
 	return json.dumps({'success': False, 'data': 'Not Logged!'}), 200, {'ContentType': 'application/json'}
 #end-getrSession
