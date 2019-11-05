@@ -20,6 +20,7 @@ import Business.Business_Endereco as b_address
 import Business.Business_Contato as b_contato
 import Business.Business_Avaliacao as b_avaliacao
 import Business.Business_Comentario as b_comentario
+import Business.Business_Contratacao as b_contrato
 import logging
 
 app = Flask(__name__)
@@ -506,8 +507,8 @@ def postUser():
 				'email': email_user,
 				'password': password,
 				'about':about_user}
+	
 	request_result = None
-
 	try:
 		if(is_user_update):
 			request_result = b_user.updateUser(user_data, request.form['userId'])
@@ -593,6 +594,63 @@ def logOff():
 	print(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 #end-logoff
+
+@app.route('/contratacao', methods=['GET'])
+def getContratacao():
+	try:
+		is_id_empty			=	is_parameter_empty(request.args.get('id'))
+		is_token_empty		=	is_parameter_empty(request.args.get('token'))
+		is_buyer_empty		=	is_parameter_empty(request.args.get('comprador'))
+		is_service_empty	=	is_parameter_empty(request.args.get('servico'))
+		is_method_empty		=	is_parameter_empty(request.args.get('metodo'))
+		is_status_empty		=	is_parameter_empty(request.args.get('status'))
+		if(is_id_empty and is_token_empty and is_token_empty and is_service_empty and is_method_empty and is_status_empty):
+			raise Exception('[CONTRATACAO - GET] Empty Parameters ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	query_data = {
+		'id_contratacao':request.args.get('id') if not is_id_empty else None,
+		'payment_token':request.args.get('token') if not is_token_empty else None,
+		'id_buyer':request.args.get('comprador') if not is_buyer_empty else None,
+		'id_service':request.args.get('servico') if not is_service_empty else None,
+		'payment_method':request.args.get('metodo') if not is_method_empty else None,
+		'payment_status':request.args.get('status') if not is_status_empty else None
+	}
+	data_result = b_contrato.findContratacao(query_data)
+	return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
+
+@app.route('/contratacao', methods=['POST'])
+def postContratacao():
+	try:
+		is_token_empty		=	is_parameter_empty(request.post['token'])
+		is_buyer_empty		=	is_parameter_empty(request.post['comprador'])
+		is_service_empty	=	is_parameter_empty(request.post['servico'])
+		is_method_empty		=	is_parameter_empty(request.post['metodo'])
+		is_status_empty		=	is_parameter_empty(request.post['status'])
+		if(is_token_empty or is_buyer_empty or is_service_empty or is_method_empty or is_status_empty):
+			raise Exception('[CONTRATACAO - POST] Empty required parameter')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	
+	contratacao_data={
+		'payment_token':request.post['token'],
+		'id_buyer':request.post['comprador'],
+		'id_service':request.post['servico'],
+		'payment_method':request.post['metodo'],
+		'payment_status':request.post['status']
+	}
+	
+	response_request = None
+	try:
+		contratacao_data['id_contratacao'] = request.args.get('id')
+	except Exception as err:
+		if(response_request == None):
+			response_request = b_contrato.createContratacao(contratacao_data)
+	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
+
 
 def handle_invalid(erroType):
 	response = jsonify(str(erroType))
