@@ -83,14 +83,17 @@ function startPagamentos() {
                         alert('Transaction completed by ' + details.payer.name.given_name);
                     }
                     else {
-                        alert('Ao registrar a contratação')
+                        window.location.replace('./pagamento-reprovado.html');
                     }
                 })
 
             });
         },
         onCancel: function (data, actions) {
-
+            window.location.replace('./pagamento-reprovado.html');
+        },
+        onError: function(err){
+            window.location.replace('./pagamento-reprovado.html');
         }
     }).render('#paypal-area');
     $('#boleto-button').click(function (event) {
@@ -110,10 +113,11 @@ function startPagamentos() {
                 token_boleto = response_boleto.code
                 registre_contrato = send_registre(token_boleto, 1, 1).then((isRegistred) => {
                     if (isRegistred) {
-                        window.open(response_boleto.link, '_blank').focus()
+                        window.open(response_boleto.link, '_blank');
+                        window.location.replace('./pagamento-aprovado.html');
                     }
                     else {
-                        alert('Ao registrar a contratação')
+                        window.location.replace('./pagamento-reprovado.html');
                     }
                 })
 

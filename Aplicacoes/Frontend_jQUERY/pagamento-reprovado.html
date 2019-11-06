@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
-<title> Appet - Pagamento Servico</title>
+<title> Appet - Pagamento Aprovado</title>
 
 <!-- jQuery -->
 <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
@@ -12,62 +12,39 @@
 <script type="text/javascript" src="assets/js/rotas.js"></script>
 <script type="text/javascript" src="assets/js/util.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-<script
-    src="https://www.paypal.com/sdk/js?client-id=AdGuoJ47fiIQ-j_G6X3nloFJ9jvOIFU5k3mNUYszjtYb1V0mkMnrlM8TYAL1qt0nkVCvY4OTsbesTC9O&currency=BRL"></script>
-<script type="text/javascript" src="assets/js/pagamento-servico.js"></script>
-
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
 <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
 </head>
 
 <body class="bg-light">
-    <!-- Menu -->
-    <nav id="menu-principal" class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container"> <a class="navbar-brand" href="index.html">
-                <img class="img-fluid d-block" src="assets/image/
-logo.png" width="100" height="100"><b></b>
-            </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse"
-                data-target="#navbar10">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar10">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="meu-perfil.html">Meu Perfil</a> </li>
-                </ul> <a href="login.html" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
-            </div>
-        </div>
-    </nav>
+
     <div class="pt-5">
         <div class="container">
-			<div style="text-align:center;">
-				<div>
-					<i class="fa fa-times-circle" aria-hidden="true" style="color:rgb(162, 16, 16);font-size:15rem"></i>
-					<div class="">
-						<div style="padding:5px;text-align: center;font-size: 3rem"> 
-							Algo deu errado, não foi possivel contratar o servico.
-							<div><a href="/buscar-servico.html">Quer tentar outro servico?</a></div>
-						</div>
-					</div>
-				</div>
+            <div style="text-align:center;">
+                <div>
+                    <i class="fa fa-times-circle" aria-hidden="true" style="color:rgb(162, 16, 16);font-size:15rem"></i>
+                    <div class="">
+                        <div style="padding:5px;text-align: center;font-size: 3rem">
+                            Algo deu errado, não foi possivel contratar o servico.
+                            <div><a href="/buscar-servico.html">Quer tentar outro servico?</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Notificação -->
-    <div class="alert" id="box-notificacao">
-        <i class="fa fa-info"> </i>
-        <span id="msg-notificacao"> </span>
-    </div>
-
-    <!--  ir ao topo -->
-    <span id="topo" onclick="paraTopo()" class="topo-visivel"> <i style="font-size: 20px;" class="fa fa-arrow-up"></i>
-        Topo</span>
-
+     <!-- start header -->
+     <div id="header"></div>
+     <!-- end header -->
+     <!--  Rodape -->
+     <div id="footer"></div>
+     <!--  Rodape -->    
 </body>
 
 </html>
