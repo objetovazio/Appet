@@ -9,12 +9,14 @@ sys.path.append(diretorio)
 from Model.BaseCon import BaseCon
 from Model.Usuario import Usuario
 from Model.Servico import Servico
+from Model.HorarioServico import HorarioServico
 
 class Contratacao(BaseCon):
     ##ORM reconhece automaticamente como PK
     id_contratacao = AutoField()
     data_solicitacao = DateField()
-    data_agendamento = DateTimeField()
+    data_agendamento = DateField()
+    horario_agendamento = ForeignKeyField(HorarioServico)
     forma_pagamento = CharField()
     valor = IntegerField()
     status_pagamento = IntegerField()

@@ -7,24 +7,26 @@ sys.path.append(diretorio)
 import Model.Usuario as User
 import Model.Servico as Servico
 import Model.Contratacao as Contrato
+import Model.HorarioServico as HorarioServ
 # ---------------------------------
 
 def createContratacao(contrato_data:dict):
     related_buyer = User.Usuario.get_by_id(contrato_data['id_buyer'])
     related_serv = Servico.Servico.get_by_id(contrato_data['id_service'])
+    related_hour = HorarioServ.HorarioServico.get_by_id(contrato_data['hour'])
+
     d_work = date(int(contrato_data['date_work'][0:4]), int(
             contrato_data['date_work'][4:6]), int(contrato_data['date_work'][6:8]))
     d_req = d_work = date(int(contrato_data['date_request'][0:4]), int(
             contrato_data['date_request'][4:6]), int(contrato_data['date_request'][6:8]))
 
     nem_contrato = Contrato.Contratacao(
-        data_solicitacao = d_req,data_agendamento = d_work,
+        data_solicitacao = d_req,data_agendamento = d_work,horario_agendamento = related_hour,
         forma_pagamento = contrato_data['payment_method'],valor = contrato_data['price'],
         status_pagamento = contrato_data['payment_status'],token_pagamento = contrato_data['payment_token'],
         id_usuario=related_buyer, id_servico=related_serv,status_contratacao = 1
     )
     try:
-        nem_contrato.create_table()
         nem_contrato.save()
         return True
     except Exception as err:

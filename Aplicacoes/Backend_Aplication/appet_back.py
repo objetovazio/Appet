@@ -629,7 +629,14 @@ def postContratacao():
 		is_service_empty	=	is_parameter_empty(request.form['servico'])
 		is_method_empty		=	is_parameter_empty(request.form['metodo'])
 		is_status_empty		=	is_parameter_empty(request.form['status'])
-		if(is_token_empty or is_buyer_empty or is_service_empty or is_method_empty or is_status_empty):
+		is_request_empty	=	is_parameter_empty(request.form['data_req'])
+		is_work_empty		=	is_parameter_empty(request.form['data_serv'])
+		is_price_empty		=	is_parameter_empty(request.form['preco'])
+		is_hour_empty		=	is_parameter_empty(request.form['horario'])
+
+		have_empty_data = is_request_empty or is_work_empty or is_price_empty or is_hour_empty
+		have_empty_data = have_empty_data or  is_token_empty or is_buyer_empty or is_service_empty or is_method_empty or is_status_empty
+		if(have_empty_data):
 			raise Exception('[CONTRATACAO - POST] Empty required parameter')
 	except Exception as err:
 		print(err)
@@ -643,7 +650,8 @@ def postContratacao():
 		'payment_status':request.form['status'],
 		'date_request':request.form['data_req'],
 		'date_work':request.form['data_serv'],
-		'price':float(request.form['preco'])
+		'price':float(request.form['preco']),
+		'hour':request.form['horario']
 	}
 	print(contratacao_data)
 	response_request = None
