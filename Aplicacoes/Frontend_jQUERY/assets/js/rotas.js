@@ -5,6 +5,7 @@ const rota_horario_Servico = rota_raiz+"/ServiceSchedule";
 const rota_servico = rota_raiz+"/Service";
 const rota_tipo_servico = rota_raiz+"/TypeService";
 
-const rota_login = rota_raiz + "/login"
-const rota_logoff = rota_raiz + "/logoff"
-const rota_sessao = rota_raiz + "/getsession"
+const rota_login = rota_raiz + "/login";
+const rota_logoff = rota_raiz + "/logoff";
+const rota_sessao = rota_raiz + "/getsession";
+const rota_contratacao = rota_raiz + "/contratacao";
