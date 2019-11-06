@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/png" href="assets/image/icon.png"/>
+  <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
   <title> Appet - Horário </title>
-  
+
   <!-- jQuery -->
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
@@ -15,14 +15,17 @@
   <script type="text/javascript" src="assets/js/periodoatividade.js"></script>
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
   <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
 
 </head>
 
-<body class="bg-light"style="">
+<body class="bg-light" style="">
 
   <div class="pt-5" style="">
     <div class="container">
@@ -38,7 +41,7 @@
       <div class="row">
         <div class="col-md-3">
           <h4 class="" contenteditable="true"><b>Horários de Atuação</b><br></h4>
-           <a href="meu-perfil.html" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
+          <a href="meu-perfil.html" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-3"></div>
@@ -62,26 +65,26 @@
             <div class="col-md-3"></div>
           </div>
           <div class="row">
-           
+
           </div>
         </div>
       </div>
-            
-          <h3 class="my-3">
-          <div style="text-align: center;">
-              <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>HORÁRIOS</b></span></font>
-              </div>
-           </h3>
-               
-        
-        <div class="table-responsive">
+
+      <h3 class="my-3">
+        <div style="text-align: center;">
+          <font color="#212529"><span style="font-size: 21px; white-space: nowrap;"><b>HORÁRIOS</b></span></font>
+        </div>
+      </h3>
+
+
+      <div class="table-responsive">
         <table id="tabelaHorario" class="table table-bordered ">
           <thead class="thead-dark">
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Periodo Atividade</th>
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Dia da Semana</th>
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Hora Inicial</th>
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Hora Final</th>
-              <th style="min-width: 100px; max-width: 100px;" class="text-center">Ação</th>
+            <th style="min-width: 100px; max-width: 100px;" class="text-center">Periodo Atividade</th>
+            <th style="min-width: 100px; max-width: 100px;" class="text-center">Dia da Semana</th>
+            <th style="min-width: 100px; max-width: 100px;" class="text-center">Hora Inicial</th>
+            <th style="min-width: 100px; max-width: 100px;" class="text-center">Hora Final</th>
+            <th style="min-width: 100px; max-width: 100px;" class="text-center">Ação</th>
           </thead>
           <tbody>
             <tr>
@@ -97,21 +100,19 @@
     </div>
   </div>
 
-  
-  
   <div class="py-2">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12 my-2"></div>
           <div class="row">
-            <div class="col-md-4"><a class="btn btn-secondary my-2" href="#" id="salvar">Salvar</a>  <br><br></div>
+            <div class="col-md-4"><a class="btn btn-secondary my-2" href="#" id="salvar">Salvar</a> <br><br></div>
             <div class="col-md-4"></div>
             <div class="col-md-2"></div>
             <div class="col-md-2"></div>
           </div>
           <div class="form-group">
-            <input id="idHorario" type="text" style="display: none;" >
+            <input id="idHorario" type="text" style="display: none;">
             <label>Periodo de Atividade</label>
             <select class="form-control border-0 my-2" type="date" class="form-control border-0" id="periodoAtividade">
               <option value="">Periodo de Atividade</option>
@@ -128,16 +129,18 @@
               <option>Sábado</option>
               <option>Domingo</option>
             </select>
-            
+
             <div class="row">
               <div class="col-md-4">
-                <div class="form-group"><label>Horário Inicial</label><input class="form-control border-0 my-2" type="time" id="horarioInicial">
-                    
-                </input></div>
+                <div class="form-group"><label>Horário Inicial</label><input class="form-control border-0 my-2"
+                    type="time" id="horarioInicial">
+
+                  </input></div>
               </div>
               <div class="col-md-1"></div>
               <div class="col-md-4">
-                <div class="form-group"><label>Horário Final</label><input class="form-control border-0 my-2" type="time" id="horarioFinal">
+                <div class="form-group"><label>Horário Final</label><input class="form-control border-0 my-2"
+                    type="time" id="horarioFinal">
 
                   </input></div>
               </div>
@@ -149,78 +152,29 @@
   </div>
 
 
-  <div class="py-5 mt-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-9">
-          <p class="lead">Assine para receber as últimas notícias</p>
-          <form class="form-inline">
-            <div class="form-group"> <input type="email" class="form-control" placeholder="Seu e-mail aqui"> </div> <button type="submit" class="btn btn-primary ml-3">Assinar</button>
-          </form>
-        </div>
-        <div class="col-4 col-md-1 align-self-center"> <a href="#">
-            <i class="fa fa-fw fa-facebook text-muted fa-2x"></i>
-          </a> </div>
-        <div class="col-4 col-md-1 align-self-center"> <a href="#">
-            <i class="fa fa-fw fa-twitter text-muted fa-2x"></i>
-          </a> </div>
-        <div class="col-4 col-md-1 align-self-center"> <a href="#">
-            <i class="fa fa-fw fa-instagram text-muted fa-2x"></i>
-          </a> </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 mt-3 text-center">
-          <p>© Copyright 2018 - All rights reserved.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- start header -->
+  <div id="header"></div>
+  <!-- end header -->
+  <!--  Rodape -->
+  <div id="footer"></div>
+  <!--  Rodape -->
 
 
   <script type="text/javascript">
-  
-    $(document).ready( function (){ 
-    
-      $('#salvar').click(function(){
+
+    $(document).ready(function () {
+
+      $('#salvar').click(function () {
         alert("wdopsdfopsdjf");
-         $('#salvar').prop('disabled', true);
-          adicionaHorarioDisp();
-          setTimeout(function () { $('#salvar').prop('disabled', false); }, 2000);
-          });
-        
+        $('#salvar').prop('disabled', true);
+        adicionaHorarioDisp();
+        setTimeout(function () { $('#salvar').prop('disabled', false); }, 2000);
+      });
+
       pegaPeriodos();
-    
+
     });
-    </script>
-
-
-  <!-- Menu -->
-  <nav id="menu-principal" class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container"> <a class="navbar-brand" href="index.html">
-        <img class="img-fluid d-block" src="assets/image/
-logo.png" style="" width="100" height="100"><b></b>
-      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar10">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"> <a class="nav-link" href="buscar-servico.html">Serviços</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="meu-perfil.html">Meu Perfil</a> </li>
-        </ul> <a href="login.html" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Notificação -->
-  <div class="alert" id="box-notificacao">
-    <i class="fa fa-info" > </i>
-    <span id="msg-notificacao"> </span>
-  </div> 
-
-  <!--  ir ao topo -->
-  <span id="topo" onclick="paraTopo()" class="topo-visivel"> <i style="font-size: 20px;" class="fa fa-arrow-up"></i> Topo</span>
-
-
+  </script>
 </body>
 
 </html>
