@@ -608,7 +608,7 @@ def getContratacao():
 			raise Exception('[CONTRATACAO - GET] Empty Parameters ')
 	except Exception as err:
 		print(err)
-		handle_invalid(err)
+		return handle_invalid(err)
 	query_data = {
 		'id_contratacao':request.args.get('id') if not is_id_empty else None,
 		'payment_token':request.args.get('token') if not is_token_empty else None,
@@ -624,11 +624,11 @@ def getContratacao():
 @app.route('/contratacao', methods=['POST'])
 def postContratacao():
 	try:
-		is_token_empty		=	is_parameter_empty(request.post['token'])
-		is_buyer_empty		=	is_parameter_empty(request.post['comprador'])
-		is_service_empty	=	is_parameter_empty(request.post['servico'])
-		is_method_empty		=	is_parameter_empty(request.post['metodo'])
-		is_status_empty		=	is_parameter_empty(request.post['status'])
+		is_token_empty		=	is_parameter_empty(request.form['token'])
+		is_buyer_empty		=	is_parameter_empty(request.form['comprador'])
+		is_service_empty	=	is_parameter_empty(request.form['servico'])
+		is_method_empty		=	is_parameter_empty(request.form['metodo'])
+		is_status_empty		=	is_parameter_empty(request.form['status'])
 		if(is_token_empty or is_buyer_empty or is_service_empty or is_method_empty or is_status_empty):
 			raise Exception('[CONTRATACAO - POST] Empty required parameter')
 	except Exception as err:
@@ -636,20 +636,23 @@ def postContratacao():
 		handle_invalid(err)
 	
 	contratacao_data={
-		'payment_token':request.post['token'],
-		'id_buyer':request.post['comprador'],
-		'id_service':request.post['servico'],
-		'payment_method':request.post['metodo'],
-		'payment_status':request.post['status']
+		'payment_token':request.form['token'],
+		'id_buyer':request.form['comprador'],
+		'id_service':request.form['servico'],
+		'payment_method':request.form['metodo'],
+		'payment_status':request.form['status'],
+		'date_request':request.form['data_req'],
+		'date_work':request.form['data_serv'],
+		'price':float(request.form['preco'])
 	}
-	
+	print(contratacao_data)
 	response_request = None
 	try:
-		contratacao_data['id_contratacao'] = request.args.get('id')
+		contratacao_data['id_contratacao'] = request.form['id']
 	except Exception as err:
 		if(response_request == None):
 			response_request = b_contrato.createContratacao(contratacao_data)
-	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
+	return json.dumps({'success': response_request}),200, {'ContentType': 'application/json'}
 
 
 def handle_invalid(erroType):

@@ -67,7 +67,6 @@ def updateService(serv_data: dict):
 		if(convert_data['hour'] != None):
 
 			old_collector = SH.ServicoHorario.delete().where((SH.ServicoHorario.id_servico == old_serv)).execute()
-			print(old_collector)
 			for new_schedules in convert_data['hour']:
 				schedule_obj = HS.HorarioServico.get_by_id(new_schedules)
 				schedule_link = SH.ServicoHorario(
@@ -82,7 +81,6 @@ def updateService(serv_data: dict):
 
 #adicionar tipo e dono do servico nos parametros de busca
 def searchService(serv_query):
-	print(serv_query)
 	result_query = None
 	final_result = []
 	if(serv_query['id_service']!= None):
@@ -94,7 +92,6 @@ def searchService(serv_query):
 	have_price = serv_query['price'] != None
 	have_owner = serv_query['owner'] != None
 	have_type = serv_query['type'] != None
-	print(have_title,have_about,have_price,have_owner,have_type)
 	if(have_title):
 		if(have_about and have_price and have_owner and have_type):
 			result_query = Serv.Servico.select().where(
@@ -290,7 +287,6 @@ def searchService(serv_query):
 		result_query = Serv.Servico.select().where(
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
-	print(result_query)
 	for ser_find in result_query:
 		final_result.append(_makeDic(ser_find))
 	return final_result
@@ -302,8 +298,9 @@ def typeRegistredMetrics():
 					.select(Serv.Servico.id_tipo, fn.COUNT(Serv.Servico.id_tipo).alias('total') )
 					.group_by(Serv.Servico.id_tipo)
 					)
+	data_result = []
 	for row in query_build:
-		print(row.id_tipo.nome_tipo,row.total)
+		data_result.append(row.id_tipo.nome_tipo,row.total)
 
 
 def _makeDic(serv_data):
