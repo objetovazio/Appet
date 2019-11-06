@@ -8,7 +8,17 @@ import Model.Usuario as User
 import Model.Servico as Servico
 import Model.Contratacao as Contrato
 import Model.HorarioServico as HorarioServ
+from enum import Enum
 # ---------------------------------
+
+class PaymentMethod(Enum):
+    BOLETO = 1
+    PAYPAL = 2
+
+class PaymentStatus(Enum):
+    AGUARDANDO = 1
+    CANCELADO = 2
+    APROVADO = 3
 
 def createContratacao(contrato_data:dict):
     related_buyer = User.Usuario.get_by_id(contrato_data['id_buyer'])
