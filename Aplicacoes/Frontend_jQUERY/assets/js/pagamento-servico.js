@@ -1,7 +1,7 @@
+const pagamento_data = {}
+location.search.substr(1).split("&").forEach(function (item) { pagamento_data[item.split("=")[0]] = item.split("=")[1] });
 
 $(document).ready(function () {
-    var pagamento_data = {}
-    location.search.substr(1).split("&").forEach(function (item) { pagamento_data[item.split("=")[0]] = item.split("=")[1] });
     setPageValues(pagamento_data);
     $('#cpf-payer').mask('000.000.000-00', { reverse: true });
     $('#cpf-payer').keyup(function (e) {
@@ -11,7 +11,7 @@ $(document).ready(function () {
         }
     });
     startPagamentos();
-    
+
 });
 
 //START PAGE ZONE
@@ -61,7 +61,7 @@ function getHorarioPromise(idHorario) {
 }
 
 //PAGAMENTO ZONE
-function startPagamentos(){
+function startPagamentos() {
     paypal.Buttons({
         createOrder: function (data, actions) {
             // Set up the transaction
@@ -74,15 +74,23 @@ function startPagamentos(){
             });
         },
         onApprove: function (data, actions) {
-            actions.redirect('https://www.google.com');
             // Capture the funds from the transaction
             return actions.order.capture().then(function (details) {
                 // Show a success message to your buyer
-                alert('Transaction completed by ' + details.payer.name.given_name);
+                token_paypal = details.purchase_units[0].payments.captures[0].id
+                registre_contrato = send_registre(token_paypal, 2, 3).then((isRegistred) => {
+                    if (isRegistred) {
+                        alert('Transaction completed by ' + details.payer.name.given_name);
+                    }
+                    else {
+                        alert('Ao registrar a contratação')
+                    }
+                })
+
             });
         },
         onCancel: function (data, actions) {
-            actions.redirect('https://www.youtube.com');
+
         }
     }).render('#paypal-area');
     $('#boleto-button').click(function (event) {
@@ -98,13 +106,43 @@ function startPagamentos(){
                     //notificationUrl: url da rota que ira manipular pagamento do boleto
                 }
             ).done(function (data) {
-                var response_boleto = data
-                console.log(data);
-                window.open(response_boleto.data.charges[0].link, '_blank').focus()
+                var response_boleto = data.data.charges[0];
+                token_boleto = response_boleto.code
+                registre_contrato = send_registre(token_boleto, 1, 1).then((isRegistred) => {
+                    if (isRegistred) {
+                        window.open(response_boleto.link, '_blank').focus()
+                    }
+                    else {
+                        alert('Ao registrar a contratação')
+                    }
+                })
+
             })
         }
         else {
             alert('empty');
         }
     })
+}
+
+function send_registre(tokenPayment, method, sstatus) {
+    var today = new Date()
+    return new Promise((resolve, reject) => {
+        $.post('http://127.0.0.1:5000/contratacao',
+            {
+                'token': tokenPayment,
+                'comprador': pagamento_data.usuario,
+                'servico': pagamento_data.servico,
+                'metodo': method,
+                'status': sstatus,
+                'data_req': formated = String(today.getFullYear()) + String(today.getMonth()) + String(today.getDay()),
+                'data_serv': pagamento_data.data,
+                'preco': $('#preco-servico').val(),
+                'horario': pagamento_data.horario
+
+            }).done(function (data) {
+                //resolver isso depois
+                resolve(data === "{\"success\": true}");
+            });
+    });
 }
