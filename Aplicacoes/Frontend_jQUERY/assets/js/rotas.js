@@ -9,3 +9,5 @@ const rota_login = rota_raiz + "/login";
 const rota_logoff = rota_raiz + "/logoff";
 const rota_sessao = rota_raiz + "/getsession";
 const rota_contratacao = rota_raiz + "/contratacao";
+const rota_endereco = rota_raiz + "/Address";
+const rota_avaliacao = rota_raiz + "/Rate";

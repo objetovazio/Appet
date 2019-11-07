@@ -71,5 +71,5 @@ $(function () {
   $("#footer").load("./templates/footer.html");
 
 
-  verificarRotaLogado();
+  //verificarRotaLogado();
 })
