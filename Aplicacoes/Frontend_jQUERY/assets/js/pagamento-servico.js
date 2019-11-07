@@ -132,7 +132,7 @@ function startPagamentos() {
 function send_registre(tokenPayment, method, sstatus) {
     var today = new Date()
     return new Promise((resolve, reject) => {
-        $.post('http://127.0.0.1:5000/contratacao',
+        $.post(rota_contratacao,
             {
                 'token': tokenPayment,
                 'comprador': pagamento_data.usuario,

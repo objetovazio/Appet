@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
+  <title> Appet - Buscar Serviço</title>
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/rotas.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
+
+</head>
+
+<body class="bg-light" style="">
+
+  <div class="m-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3" style="">
+          <h4 class=""><b>Buscar Serviço</b><br></h4>
+          <h4 class="">Avançada</h4>
+        </div>
+        <div class="col-md-3 " style=""></div>
+        <div class="col-md-3 p-0" style=""></div>
+        <div class="col-md-3" style=""><a class="btn mt-2 text-dark btn-secondary" href="./busca-simples.html">Busca
+            Simples<br></a></div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5" style="">
+    <div class="container">
+      <div class="row">
+
+        <div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="tiposervico">Tipo de Serviço</label>
+            </div>
+            <select class="custom-select" style="width: 10rem;" id="tiposervico">
+              <option selected>Choose...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="input-group mb-3">
+            
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="Bairro">Bairro</span>
+            </div>
+            <input type="text" class="form-control" id="Bairro">
+
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="Cidade">Cidade</span>
+            </div>
+            <input type="text" class="form-control" id="Cidade">
+          </div>
+          <div class="input-group mb-3">
+            
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="Estado">Estado</span>
+              </div>
+              <input type="text" class="form-control" id="Estado">
+              </div>
+
+        </div>
+      </div>
+      <div class="row">
+          <a class="btn btn-secondary" href="resultado-busca.html">Buscar<br></a>
+      </div>
+      
+
+
+      <!-- start header -->
+      <div id="header"></div>
+      <!-- end header -->
+      <!--  Rodape -->
+      <div id="footer"></div>
+      <!--  Rodape -->
+</body>
+
+</html>
