@@ -2,8 +2,41 @@ const busca_data = {}
 location.search.substr(1).split("&").forEach(function (item) { busca_data[item.split("=")[0]] = item.split("=")[1] });
 $(document).ready(function () {
     var finded_service = getSimpleServicePromise().then((serviceData) => {
-        console.log(serviceData);
+        
         serviceData.forEach((currentService) => {
+            $('#resultArea').append(
+            
+                '<div class="row" style="" id="result"'+serviceData.id_service+'>'+ 
+                `
+                <div class="col-md-12 mb-4 bg-light" style="">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <a href="#" style="color: black" title="Carlos Silva">
+                        <div class="form-group">
+                          <div class="row shadow-sm mb-1">
+                            <div class="col-md-4 p-3" style=""><img class="img-fluid d-block rounded-circle mx-auto shadow-none"
+                                src="assets/image/icone_padrao.png" width="200" height="200"></div>
+                            <div class="my-2 col-md-7" style="">
+                              <div class="card">
+                                <div class="card-body shadow-sm">
+                                  <h5 class="card-title mb-3"><b>_OWNERNAME</b></h5>
+                                  <p class="card-text">Avaliação: <b>_AVERATE <i class="fa fa-3 fa-star" style="color:yellow"></i></b>
+                                  </p>
+                                  <p class="card-text">Valor do Serviço: <b>R$</b> <b>_VALUESERV</b></p>
+                                  <p class="card-text" contenteditable="true">Endereço: <b>_ENDERECO</b>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              `
+            );
             userOwner = getUserPromise(currentService.id_user).then(console.log);
             addressOwner = getAddressOwner(currentService.id_user).then(console.log);
             getRateServicePromice(currentService.id_service).then((rate) => {
