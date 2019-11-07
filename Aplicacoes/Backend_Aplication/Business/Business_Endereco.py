@@ -11,7 +11,7 @@ import Model.Endereco as Address
 def createUserAddress(address_data: dict):
     try:
         user_related = User.Usuario.get_by_id(address_data['user_id'])
-        new_address = Address.Endereco(id_usario=user_related, cep=address_data['cep'], nome_bairro=address_data['bairro'],
+        new_address = Address.Endereco(id_usuario=user_related, cep=address_data['cep'], nome_bairro=address_data['bairro'],
                                         nome_cidade=address_data['city'], nome_estado=address_data['state'], num_endereco=address_data['num'])
         new_address.create_table()
         new_address.save()
@@ -48,6 +48,13 @@ def findAddress(query_data:dict):
     if(have_id):
         result_query = Address.Endereco.get_by_id(query_data['address_id'])
         final_result.append(_makeDic(result_query))
+        return final_result
+
+    have_user = query_data['user_id'] != '' and query_data['user_id'] != None
+    if(have_user):
+        result_query = Address.Endereco.select().where((Address.Endereco.id_usuario == query_data['user_id']))
+        for address_find in result_query:
+            final_result.append(_makeDic(address_find))
         return final_result
 
     have_cep = query_data['cep'] != '' and query_data['cep'] != None
@@ -183,7 +190,7 @@ def findAddress(query_data:dict):
 def _makeDic(address_obj:Address.Endereco):
     address_dict = {
         'id_address':address_obj.id_endereco,
-        'id_user':address_obj.id_usuario.id_usuario,
+        'id_user':address_obj.id_usuario.usuario_id,
         'cep':address_obj.cep,
         'bairro':address_obj.nome_bairro,
         'city':address_obj.nome_cidade,

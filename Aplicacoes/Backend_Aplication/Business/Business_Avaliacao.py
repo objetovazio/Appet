@@ -13,6 +13,7 @@ def createAvaliacao(avalicao_data:dict):
     related_servico = Servico.Servico.get_by_id(avalicao_data['service_id'])
     new_avaliacao = Avaliacao.Avaliacao(id_usuario=related_user, id_servico=related_servico, nota=avalicao_data['nota'])
     try:
+        new_avaliacao.create_table()
         new_avaliacao.save()
         return True
     except Exception as err:
@@ -87,7 +88,7 @@ def _makeDic(avaliacao_obj):
     avaliacao_dic = {
         'id_avaliacao':avaliacao_obj.id_avaliacao,
         'nota':avaliacao_obj.nota,
-        'id_usuario':avaliacao_obj.id_usuario.id_usuario,
+        'id_usuario':avaliacao_obj.id_usuario.usuario_id,
         'id_servico':avaliacao_obj.id_servico.id_servico
     }
     return avaliacao_dic
