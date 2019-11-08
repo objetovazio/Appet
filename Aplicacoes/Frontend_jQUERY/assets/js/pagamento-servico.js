@@ -18,12 +18,24 @@ $(document).ready(function () {
 function setPageValues(data) {
     dataContratacao = "" + data.data.slice(6, 8) + "/" + data.data.slice(4, 6) + "/" + data.data.slice(0, 4);
     $('#data-servico').text(dataContratacao);
+    $('#media-avaliacao').text(pagamento_data.rateServ);
+    $('#media-avaliacao').val(pagamento_data.rateServ);
+    var addressServ = String(pagamento_data.addressServ).replace(/_/g,' ').replace(/-/g,',');
+    $('#endereco').val(addressServ);
+    $('#endereco').text(addressServ);
     getUserPromise(data.usuario).then((buyerResponse) => {
         $('#nome-usuario').val(buyerResponse.name);
     });
     getServicePromise(data.servico).then((response) => {
-        $('#preco-servico').text(response.price);
-        $('#preco-servico').val(response.price);
+        if(String(response.price).length > 3){
+            $('#preco-servico').text(response.price);
+            $('#preco-servico').val(response.price);
+        }
+        else{
+            $('#preco-servico').text(String(response.price)+'0');
+            $('#preco-servico').val(String(response.price)+'0');
+        }
+        
         getUserPromise(response.id_user).then((ownerResponse) => {
             $('#nome-prestador').text(ownerResponse.name);
         })
