@@ -1,48 +1,68 @@
 const busca_data = {}
 location.search.substr(1).split("&").forEach(function (item) { busca_data[item.split("=")[0]] = item.split("=")[1] });
 $(document).ready(function () {
+    mountPageData();
+});
+
+function mountPageData(){
     var finded_service = getSimpleServicePromise().then((serviceData) => {
         
         serviceData.forEach((currentService) => {
-            $('#resultArea').append(
-            
-                '<div class="row" style="" id="result"'+serviceData.id_service+'>'+ 
-                `
-                <div class="col-md-12 mb-4 bg-light" style="">
-                  <div class="form-group">
+            var infoServHtml = `
+            <div class="row" style="" id="result_IDSERV>
+            <div class="col-md-12 mb-4 bg-light" style="">
+              <div class="form-group">
+                <div class="form-group">
+                  <a   id="aTitle_IDSERV"style="color: black" title=_TITLEID>
                     <div class="form-group">
-                      <a href="#" style="color: black" title="Carlos Silva">
-                        <div class="form-group">
-                          <div class="row shadow-sm mb-1">
-                            <div class="col-md-4 p-3" style=""><img class="img-fluid d-block rounded-circle mx-auto shadow-none"
-                                src="assets/image/icone_padrao.png" width="200" height="200"></div>
-                            <div class="my-2 col-md-7" style="">
-                              <div class="card">
-                                <div class="card-body shadow-sm">
-                                  <h5 class="card-title mb-3"><b>_OWNERNAME</b></h5>
-                                  <p class="card-text">Avaliação: <b>_AVERATE <i class="fa fa-3 fa-star" style="color:yellow"></i></b>
-                                  </p>
-                                  <p class="card-text">Valor do Serviço: <b>R$</b> <b>_VALUESERV</b></p>
-                                  <p class="card-text" contenteditable="true">Endereço: <b>_ENDERECO</b>
-                                  </p>
-                                </div>
-                              </div>
+                      <div class="row shadow-sm mb-1">
+                        <div class="col-md-4 p-3" style=""><img class="img-fluid d-block rounded-circle mx-auto shadow-none"
+                            src="assets/image/icone_padrao.png" width="200" height="200"></div>
+                        <div class="my-2 col-md-7" style="">
+                          <div class="card">
+                            <div class="card-body shadow-sm">
+                              <h5 class="card-title mb-3"><b id="owner_IDSERV"></b></h5>
+                              <p class="card-text">Avaliação: <b id="avg_IDSERV"> </b> <i class="fa fa-3 fa-star" style="color:yellow"></i>
+                              </p>
+                              <p class="card-text">Valor do Serviço: <b>R$</b> <b id="value_IDSERV"></b></p>
+                              <p class="card-text" contenteditable="true">Endereço: <b id="address_IDSERV"></b>
+                              </p>
                             </div>
                           </div>
                         </div>
-                      </a>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
-              `
+            </div>
+          </div>
+          `;
+            $('#resultArea').append(
+                infoServHtml.replace(/_IDSERV/g,currentService.id_service)    
             );
-            userOwner = getUserPromise(currentService.id_user).then(console.log);
-            addressOwner = getAddressOwner(currentService.id_user).then(console.log);
+            if(String(currentService.price).length > 3){
+                $('#value'+currentService.id_service).val(currentService.price);
+                $('#value'+currentService.id_service).text(currentService.price);
+            }
+            else{
+                $('#value'+currentService.id_service).val(String(currentService.price)+'0');
+                $('#value'+currentService.id_service).text(String(currentService.price)+'0');
+            }
+            userOwner = getUserPromise(currentService.id_user).then((currentOwner)=>{
+                $('#owner'+currentService.id_service).val(currentOwner.name);
+                $('#owner'+currentService.id_service).text(currentOwner.name);
+                $('#aTitle'+currentService.id_service).attr('title',currentOwner.name);
+            });
+            addressOwner = getAddressOwner(currentService.id_user).then((currentAddress)=>{
+                var addressLine = currentAddress.bairro +", "+currentAddress.city + ", " + currentAddress.state;
+                $('#address'+currentService.id_service).val(addressLine);
+                $('#address'+currentService.id_service).text(addressLine);
+            });
             getRateServicePromice(currentService.id_service).then((rate) => {
                 console.log(rate)
                 var rateSerivce = 0;
-                if (rate) {
+                if (rate.length > 0) {
                     var rateAmount = 0;
                     var numRate = 0;
                     rate.forEach((currentRate) => {
@@ -51,10 +71,28 @@ $(document).ready(function () {
                     })
                     rateSerivce = rateAmount / numRate;
                 }
+                $('#avg'+currentService.id_service).val(rateSerivce);
+                $('#avg'+currentService.id_service).text(rateSerivce);
             })
         });
+        redirectLogic();
     });
-});
+}
+
+function redirectLogic(){
+    $('a').click((event)=>{
+        console.log(event);
+        var serviceContractData = event.currentTarget.innerText.split('\n');
+        var selectedService = event.currentTarget.id.slice(6);
+        var rateService = serviceContractData[2].slice(11).replace(' ','');
+        //var serviceValue = serviceContractData[4].slice(20).replace(' ','');
+        var addressService = serviceContractData[6].slice(10).replace(/ /g,'_').replace(/,/g,'-');
+        var today = new Date();
+        var formatDateRequest = String(today.getFullYear())+String(today.getMonth())+String((today.getDate()>10)?today.getDate() :'0'+String(today.getDate()));
+        var parametersUrl = 'usuario=2&servico='+ selectedService + '&horario=6&data='+ formatDateRequest + '&rateServ=' + rateService + '&addressServ=' + addressService;
+        document.location.href = './pagamento-servico.html?'+parametersUrl;
+    })
+}
 
 function getSimpleServicePromise() {
     return new Promise((resolve, reject) => {
