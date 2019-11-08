@@ -11,3 +11,4 @@ const rota_sessao = rota_raiz + "/getsession";
 const rota_contratacao = rota_raiz + "/contratacao";
 const rota_endereco = rota_raiz + "/Address";
 const rota_avaliacao = rota_raiz + "/Rate";
+const rota_cronograma_servico = rota_raiz + "/ServiceSchedule";

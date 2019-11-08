@@ -6,7 +6,7 @@ function adicionaServico (){
 		price:$("#valor").val(),
 		ownerId:'1',
 		typeService: $("#tiposervico").val(),
-		hourService: ''
+		hourService: []
 	};
 
 	if (validaServico(data_request) == true) {
@@ -57,7 +57,6 @@ function validaServico(servico){
 	 }
 }
 
-
 function pegaListaServico (){
 
 	var data_request = {
@@ -86,9 +85,6 @@ function pegaListaServico (){
 
 			$("#cardServicoConteudo").html( texto);
 			
-			
-
-
 		}).fail(function (msg) {
 
 			var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText;
@@ -116,8 +112,35 @@ function mostrar(elemento){
 		$(elemento).children('i').addClass('fa-chevron-down');
 		$(elemento).children('i').removeClass('fa-chevron-up');
 	}
-
 }
 
 
+function pegaHorarioServico() {
+			var data_request = {
+			id: "1",
+			beginTime: "",
+			endTime: "",
+			weekDay: ""
+		};
 
+		$.get(rota_cronograma_servico, data_request, function () {
+		}).done(function (dados) {
+
+			// convert a strgin em objeto 
+			var horarios = JSON.parse(dados).data;
+
+			$(horarios).each(function(key, item) {
+				var ini = item.begin_time;
+				var fim = item.end_time;
+				var intervalo =' '+ini.substring(0,2) +":"+ ini.substring(2,4) +":"+ ini.substring(4,6) + " - "+ fim.substring(0,2) +":"+ fim.substring(2,4) +":"+ fim.substring(4,6);
+				$("#horaservico").append('<input type="checkbox" value=' +item.schedule_id+ '>' + intervalo +'<br>');
+		});
+
+		//console.log(horarios);
+
+		}).fail(function (msg) {
+
+			var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText;
+			mensagem(texto, "Erro", 5000);
+		});
+}
