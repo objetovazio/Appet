@@ -32,6 +32,7 @@ app = Flask(__name__)
 app.secret_key = b'\xc2\xbf\xbf\xe8\x82LA\xd3\xe8\xdd\x84U\xeb\xec\x825uq\xee\x96\x19#i\xe2' #os.urandom(24)
 #app.run(debug=True)
 CORS(app)
+session_time_minute = 60
 
 def token_required(f):
 	@wraps(f)
@@ -43,14 +44,18 @@ def token_required(f):
 		#
 
 		if not token:
+			print(" >>>>>> token_required() = Nenhum Usuário Logado!!")
 			return  jsonify({'message': 'Token inexistente. O usuário deve fazer login.'}), 401
 		#
 
 		try:
 			dataToken = jwt.decode(token, app.secret_key)
 			current_user = b_user.verifyToken(dataToken['user_id'], dataToken['email_user'])
+			print(" >>>>>> token_required() = Usuário Logado: " + current_user['email'])	
+
 		except Exception as e:
-			print(str(e))
+			print(" >>>>>> token_required() = Token Inválido!! Tire o comentário na função para ver detalhes da exception")
+			#print(str(e))
 			return jsonify({'message': 'Token inválido.'}), 401
 
 		return f(current_user, *args, **kwargs)
@@ -574,6 +579,7 @@ def getUser(current_user):
 		data_result = current_user #b_user.findUsers(user_query)
 		return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
+#
 
 @app.route('/login', methods=['POST'])
 def loginUser():    
@@ -594,8 +600,8 @@ def loginUser():
 		data_result = b_user.userLogin(user_query)
 
 		if data_result:
-			#the token is valid per 10 minutes
-			token = jwt.encode({'user_id': data_result['user_id'], 'email_user' : data_result['email'], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=10)}, app.secret_key)		
+			# the token time is defined by session_time_minute variable
+			token = jwt.encode({'user_id': data_result['user_id'], 'email_user' : data_result['email'], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=session_time_minute)}, app.secret_key)		
 			return json.dumps({'success': True, 'token': token.decode('UTF-8')}), 200, {'ContentType': 'application/json'}
 		else:
 			return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
