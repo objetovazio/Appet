@@ -7,6 +7,8 @@
   <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
   <title> Appet - Relatórios</title>
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet">
 
   <!-- jQuery -->
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
@@ -42,11 +44,12 @@
       <div class="row">
         <div class="col-md-12">
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" style="pointer-events: none;" > Selecione
+            <a href="#" class="list-group-item list-group-item-action active" style="pointer-events: none;"> Selecione
               uma opção</a>
 
             <!-- relatorio 1 -->
-            <a id="opt1" href="#" class="list-group-item list-group-item-action">Contabilização de Serviços Cadastrados</a>
+            <a id="opt1" href="#" class="list-group-item list-group-item-action">Contabilização de Serviços
+              Cadastrados</a>
             <div id="relatorio1" class="list-group-item" style="display:none;">
 
               <span></span>
@@ -55,8 +58,8 @@
 
 
             <!-- relatorio 2 -->
-            <a id="opt2" href="#" class="list-group-item list-group-item-action">Relação entre Serviços Cadastrados e Dias da
-              Semana</a>
+            <a id="opt2" href="#" class="list-group-item list-group-item-action">Contabilização entre Horários de
+              Serviços Cadastrados e Dias da Semana</a>
             <div id="relatorio2" class="list-group-item" style="display:none; transition: all 1s;">
 
               <span></span>
@@ -72,41 +75,93 @@
   </div>
 
 
+
+  <style>
+    tr, td, th {
+      text-align: center;
+    }
+
+    td{
+      font-family: 'Karla';
+      background-color: aliceblue;
+    }
+
+    th {
+      color: #12bbad;
+      text-transform: uppercase;
+      padding: 5px 0px 6px 0px;
+    }
+
+    table {
+      width: 100%;
+      border-spacing: 5px;
+      border-collapse: separate;
+      table-layout: fixed;
+    }
+  </style>
+
   <script>
+    const daysOfWeek = ['DOMINGO', 'SEGUNDA', 'TERCA', 'QUARTA', 'QUINTA', 'SEXTA', 'SABADO'];
+
+    function JSONtoTableWeek(data) {
+
+      return `
+          <table>
+            <tr>
+              ${daysOfWeek.map(day => `<th>${day}</th>`).join('')}
+            </tr>
+
+            <tr>
+              ${daysOfWeek.map(day => `<td>${data[day] || 0}</td>`).join('')}
+            </tr>
+          </table>`
+    }
+
+    function JSONtoTableTypeServ(data){
+
+      return `
+          <table>
+            <tr>
+              ${Object.keys(data).map(Service => `<th>${Service}</th>`).join('')}
+            </tr>
+
+            <tr>
+              ${Object.keys(data).map(Service => `<td>${data[Service]}</td>`).join('')}
+            </tr>
+          </table>`
+
+
+    }
+
+
     $(document).ready(() => {
       // hide/show relatorios
-      var relatorio1Selected = false;
-      var relatorio2Selected = false;
+      let relatorio1Selected = false;
+      let relatorio2Selected = false;
 
-      $('#opt1').click( async() => {
-        $('#relatorio1').css({'display': relatorio1Selected ? 'none' : 'block'});
-        
-        if (!relatorio1Selected){
+      $('#opt1').click(async () => {
+        $('#relatorio1').css({ 'display': relatorio1Selected ? 'none' : 'block' });
+
+        if (!relatorio1Selected) {
           const res = await getTypeServices();
-
-          console.warn(res);
-          
-          $('#relatorio1').children().replaceWith("<span>12423</span>")
+          if (res) $('#relatorio1').children().replaceWith(JSONtoTableTypeServ(res.data))
         }
-        
+
         relatorio1Selected = !relatorio1Selected;
 
       });
 
       $('#opt2').click(async () => {
-        $('#relatorio2').css({'display': relatorio2Selected ? 'none' : 'block'});
+        $('#relatorio2').css({ 'display': relatorio2Selected ? 'none' : 'block' });
 
         if (!relatorio2Selected) {
           const res = await getWeekDayServices();
-          console.warn(res);
-          
-          $('#relatorio2').children().replaceWith("<span>sadaf</span>")
-
+          if (res) $('#relatorio2').children().replaceWith(JSONtoTableWeek(res.data))
         }
 
         relatorio2Selected = !relatorio2Selected;
 
-        
+
       });
     });
   </script>
