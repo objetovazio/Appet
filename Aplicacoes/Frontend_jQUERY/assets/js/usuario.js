@@ -21,15 +21,7 @@ class Usuario {
 
 	static pegaUsuario() {
 
-		var data_request = {
-			userId: "",
-			nomeUser: "",
-			emailUser: "elimar@macena.com",
-			senha: "",
-			sobre: ""
-		};
-
-		$.get(rota_user, data_request, function () {
+		$.get(rota_user, function () {
 		}).done(function (dados) {
 			// convert a strgin em objeto e ao mesmo tempo
 			// acessa a chave data no indice 0

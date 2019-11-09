@@ -47,7 +47,7 @@ function paraTopo() {
 }
 
 function verificarRotaLogado() {
-  var rotas_unlogged = ['index.html', 'cadastro-servico.html', 'login.html', 'novo-usuario.html'];
+  var rotas_unlogged = ['index.html', 'login.html', 'novo-usuario.html'];
   var rotaAtual = document.location.href.match(/[^\/]+$/)[0];
 
   if (!rotas_unlogged.includes(rotaAtual)) {
@@ -83,3 +83,22 @@ $(function () {
 
   verificarRotaLogado();
 })
+
+$(document).ajaxComplete(function (event, xhr, options) {
+  try {
+    var data = JSON.parse(xhr.responseText);
+
+    if ('token_required' in data && data['token_required']) {
+      mensagem("Usuário deve estar logado para acessar página atual.", "Erro", 5000);
+      setTimeout(function () {
+        window.location = './index.html';
+      }, 2000);
+    }
+
+    console.log(data)
+  }
+  catch (err) {
+    console.log('Not Json')
+  }
+
+});

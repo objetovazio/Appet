@@ -45,7 +45,8 @@ def token_required(f):
 
 		if not token:
 			print(" >>>>>> token_required() = Nenhum Usuário Logado!!")
-			return  jsonify({'message': 'Token inexistente. O usuário deve fazer login.'}), 401
+			return json.dumps({'token_required': True}), 200, {'ContentType': 'application/json'}
+			# return  jsonify({'message': 'Token inexistente. O usuário deve fazer login.'}), 401
 		#
 
 		try:
@@ -56,7 +57,8 @@ def token_required(f):
 		except Exception as e:
 			print(" >>>>>> token_required() = Token Inválido!! Tire o comentário na função para ver detalhes da exception")
 			#print(str(e))
-			return jsonify({'message': 'Token inválido.'}), 401
+			return json.dumps({'token_required': true}), 200, {'ContentType': 'application/json'}
+			# return jsonify({'message': 'Token inválido.'}), 401
 
 		return f(current_user, *args, **kwargs)
 	#end-decorated
