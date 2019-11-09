@@ -298,9 +298,10 @@ def typeRegistredMetrics():
 					.select(Serv.Servico.id_tipo, fn.COUNT(Serv.Servico.id_tipo).alias('total') )
 					.group_by(Serv.Servico.id_tipo)
 					)
-	data_result = []
+	data_result = {}
 	for row in query_build:
-		data_result.append(row.id_tipo.nome_tipo,row.total)
+		data_result[row.id_tipo.nome_tipo] = row.total
+	return data_result
 
 
 def _makeDic(serv_data):

@@ -706,6 +706,19 @@ def postContratacao():
 	return json.dumps({'success': response_request}),200, {'ContentType': 'application/json'}
 
 
+@app.route('/relatorio/weekDayServices')
+def getMetricsWeekDay():
+	data_result = b_horarioServico.weekdayMetrics()
+	return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
+
+@app.route('/relatorio/typeServices')
+def getMetricsTypeService():
+	data_result = b_servico.typeRegistredMetrics()
+	return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
+
+
 def handle_invalid(erroType):
 	response = jsonify(str(erroType))
 	response.status_code = 400
