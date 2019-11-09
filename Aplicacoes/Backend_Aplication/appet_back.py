@@ -521,12 +521,12 @@ def postTypeService():
 @token_required
 def getTypeService():
 	service_query = {}
-	have_name = not is_parameter_empty(request.args.get('nomeTipoServico'))
-	if(have_name):
-		service_query['nome_ts'] = request.args.get('nomeTipoServico')
-	else:
-		service_query['nome_ts'] = None
-	service_query['id_ts'] = None
+	is_name_empty = is_parameter_empty (request.args.get('nomeTipoServico'))
+	is_id_empty = is_parameter_empty(request.args.get('idType'))
+	
+	service_query['nome_ts'] = request.args.get('nomeTipoServico') if not is_name_empty else None
+	service_query['id_ts'] = request.args.get('idType') if not is_id_empty else None
+	
 	data_result = b_tipoServ.findTypeService(service_query)
 	return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
