@@ -21,14 +21,14 @@ function adicionaHorarioDisp(){
     
     raw_time_begin = $("#horarioInicial").val();
     raw_time_end = $("#horarioFinal").val();
-
+    owner = [1];
 	var data_request = {
 		beginDate:input_date_begin,
         endDate:input_date_end,
         beginTime:input_time_begin,
         endTime:input_time_end,
         weekDay: $("#diaSemana").val(),
-		ownerId:"1",
+		ownerId:JSON.stringify(owner),
 		horarioId:$("#idHorario").val()
     }
 

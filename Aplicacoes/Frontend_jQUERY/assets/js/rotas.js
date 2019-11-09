@@ -12,3 +12,6 @@ const rota_contratacao = rota_raiz + "/contratacao";
 const rota_endereco = rota_raiz + "/Address";
 const rota_avaliacao = rota_raiz + "/Rate";
 const rota_cronograma_servico = rota_raiz + "/ServiceSchedule";
+
+const rota_relatorio_weekDayServices = rota_raiz + "/relatorio/weekDayServices";
+const rota_relatorio_typeServices = rota_raiz + "/relatorio/typeServices";

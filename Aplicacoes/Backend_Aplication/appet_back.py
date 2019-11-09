@@ -326,7 +326,6 @@ def postServiceSchedule(current_user):
 @token_required
 def getServiceSchedule(current_user):
 	is_schedule_empty = is_parameter_empty(request.args.get('id'))
-	print()
 	schedule = request.args.get('id') if not is_schedule_empty else None
 
 	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
@@ -420,8 +419,6 @@ def getAtivityTime(current_user):
 	}
 
 	data_result = b_periodoAtividade.findPeriodoAtividade(ativity_time)
-	print(ativity_time)
-	print(data_result)
 	return json.dumps({'success': True,'data':data_result}), 200, {'ContentType': 'application/json'}
 
 
@@ -484,10 +481,9 @@ def getService(current_user):
 	price_service	=	float(request.args.get('price')) if not is_price_empty else None
 
 	is_owner_empty	=	is_parameter_empty(request.args.get('ownerId'))
-	owner_service	=	int(request.args.get('ownerId')) if not is_owner_empty else None
-
+	owner_service	=	request.args.get('ownerId') if not is_owner_empty else None
 	is_type_empty	=	is_parameter_empty(request.args.get('typeService'))
-	type_service	=	int(request.args.get('typeService'))  if not is_type_empty else None	
+	type_service	=	request.args.get('typeService')  if not is_type_empty else None	
 
 	is_id_empty		=	is_parameter_empty(request.args.get('service_id'))
 	id_service		=	int(request.args.get('service_id') ) if not is_id_empty else None
@@ -512,7 +508,6 @@ def getService(current_user):
 @token_required
 def postTypeService(current_user):
 	name_service_type = request.form('nomeTipoServico')
-	print(name_service_type)
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
@@ -521,12 +516,12 @@ def postTypeService(current_user):
 @token_required
 def getTypeService(current_user):
 	service_query = {}
-	have_name = not is_parameter_empty(request.args.get('nomeTipoServico'))
-	if(have_name):
-		service_query['nome_ts'] = request.args.get('nomeTipoServico')
-	else:
-		service_query['nome_ts'] = None
-	service_query['id_ts'] = None
+	is_name_empty = is_parameter_empty (request.args.get('nomeTipoServico'))
+	is_id_empty = is_parameter_empty(request.args.get('idType'))
+	
+	service_query['nome_ts'] = request.args.get('nomeTipoServico') if not is_name_empty else None
+	service_query['id_ts'] = request.args.get('idType') if not is_id_empty else None
+	
 	data_result = b_tipoServ.findTypeService(service_query)
 	return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
@@ -696,7 +691,6 @@ def postContratacao(current_user):
 		'price':float(request.form['preco']),
 		'hour':request.form['horario']
 	}
-	print(contratacao_data)
 	response_request = None
 	try:
 		contratacao_data['id_contratacao'] = request.form['id']
@@ -704,6 +698,19 @@ def postContratacao(current_user):
 		if(response_request == None):
 			response_request = b_contrato.createContratacao(contratacao_data)
 	return json.dumps({'success': response_request}),200, {'ContentType': 'application/json'}
+
+
+@app.route('/relatorio/weekDayServices')
+def getMetricsWeekDay():
+	data_result = b_horarioServico.weekdayMetrics()
+	return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
+
+@app.route('/relatorio/typeServices')
+def getMetricsTypeService():
+	data_result = b_servico.typeRegistredMetrics()
+	return json.dumps({'success': True,
+		'data':data_result}), 200, {'ContentType': 'application/json'}
 
 
 def handle_invalid(erroType):
