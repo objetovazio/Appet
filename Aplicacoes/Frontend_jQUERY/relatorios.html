@@ -13,6 +13,7 @@
   <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
   <script type="text/javascript" src="assets/js/util.js"></script>
+  <script type='text/javascript' src="assets/js/relatorios.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -44,22 +45,26 @@
             <a href="#" class="list-group-item list-group-item-action active" style="pointer-events: none;" > Selecione
               uma opção</a>
 
-
+            <!-- relatorio 1 -->
             <a id="opt1" href="#" class="list-group-item list-group-item-action">Contabilização de Serviços Cadastrados</a>
             <div id="relatorio1" class="list-group-item" style="display:none;">
-              <span>oi</span>
+
+              <span></span>
+
             </div>
 
 
-
+            <!-- relatorio 2 -->
             <a id="opt2" href="#" class="list-group-item list-group-item-action">Relação entre Serviços Cadastrados e Dias da
               Semana</a>
             <div id="relatorio2" class="list-group-item" style="display:none; transition: all 1s;">
-              <span>oxxx</span>
+
+              <span></span>
+
             </div>
 
 
-            
+
           </div>
         </div>
       </div>
@@ -69,17 +74,39 @@
 
   <script>
     $(document).ready(() => {
+      // hide/show relatorios
       var relatorio1Selected = false;
       var relatorio2Selected = false;
 
-      $('#opt1').click(() => {
+      $('#opt1').click( async() => {
         $('#relatorio1').css({'display': relatorio1Selected ? 'none' : 'block'});
+        
+        if (!relatorio1Selected){
+          const res = await getTypeServices();
+
+          console.warn(res);
+          
+          $('#relatorio1').children().replaceWith("<span>12423</span>")
+        }
+        
         relatorio1Selected = !relatorio1Selected;
+
       });
 
-      $('#opt2').click(() => {
+      $('#opt2').click(async () => {
         $('#relatorio2').css({'display': relatorio2Selected ? 'none' : 'block'});
+
+        if (!relatorio2Selected) {
+          const res = await getWeekDayServices();
+          console.warn(res);
+          
+          $('#relatorio2').children().replaceWith("<span>sadaf</span>")
+
+        }
+
         relatorio2Selected = !relatorio2Selected;
+
+        
       });
     });
   </script>
