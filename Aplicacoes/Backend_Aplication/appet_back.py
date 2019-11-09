@@ -326,7 +326,6 @@ def postServiceSchedule():
 @token_required
 def getServiceSchedule():
 	is_schedule_empty = is_parameter_empty(request.args.get('id'))
-	print()
 	schedule = request.args.get('id') if not is_schedule_empty else None
 
 	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
@@ -420,8 +419,6 @@ def getAtivityTime():
 	}
 
 	data_result = b_periodoAtividade.findPeriodoAtividade(ativity_time)
-	print(ativity_time)
-	print(data_result)
 	return json.dumps({'success': True,'data':data_result}), 200, {'ContentType': 'application/json'}
 
 
@@ -484,10 +481,9 @@ def getService():
 	price_service	=	float(request.args.get('price')) if not is_price_empty else None
 
 	is_owner_empty	=	is_parameter_empty(request.args.get('ownerId'))
-	owner_service	=	int(request.args.get('ownerId')) if not is_owner_empty else None
-
+	owner_service	=	request.args.get('ownerId') if not is_owner_empty else None
 	is_type_empty	=	is_parameter_empty(request.args.get('typeService'))
-	type_service	=	int(request.args.get('typeService'))  if not is_type_empty else None	
+	type_service	=	request.args.get('typeService')  if not is_type_empty else None	
 
 	is_id_empty		=	is_parameter_empty(request.args.get('service_id'))
 	id_service		=	int(request.args.get('service_id') ) if not is_id_empty else None
@@ -512,7 +508,6 @@ def getService():
 @token_required
 def postTypeService():
 	name_service_type = request.form('nomeTipoServico')
-	print(name_service_type)
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
@@ -696,7 +691,6 @@ def postContratacao():
 		'price':float(request.form['preco']),
 		'hour':request.form['horario']
 	}
-	print(contratacao_data)
 	response_request = None
 	try:
 		contratacao_data['id_contratacao'] = request.form['id']
