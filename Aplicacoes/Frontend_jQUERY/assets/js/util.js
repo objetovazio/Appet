@@ -1,7 +1,4 @@
-
-
 // Mensagem
-
 function mensagem(msg, tipo, tempo) {
 
   // Define a cor da mensagem de acordo com o tipo
@@ -41,64 +38,10 @@ jQuery(function () {
 // Função ir ao topo
 
 function paraTopo() {
-
   $('html, body').animate({ scrollTop: 0 }, 'slow');
-
 }
-
-function verificarRotaLogado() {
-  var rotas_unlogged = ['index.html', 'login.html', 'novo-usuario.html'];
-  var rotaAtual = document.location.href.match(/[^\/]+$/)[0];
-
-  if (!rotas_unlogged.includes(rotaAtual)) {
-    $.ajaxSetup({
-      headers: {
-        'x-access-token': $.cookie('token')
-      }
-    });
-
-    $.get(rota_sessao, function (logged_user) {
-      var data = JSON.parse(logged_user);
-
-      if (data['success'] == false) {
-        if (!rotas_unlogged.includes(rotaAtual)) {
-          mensagem("Usuário deve estar logado para acessar página atual.", "Erro", 5000);
-          setTimeout(function () {
-            window.location = './index.html';
-          }, 2000);
-        }
-      }
-    }).fail(function (msg) {
-      var texto = " " + msg.status + " | Motivo: " + msg.responseText;
-      mensagem(texto, "Erro", 5000);
-    });;
-  }
-}
-
 
 $(function () {
   $("#header").load("./templates/header.html");
   $("#footer").load("./templates/footer.html");
-
-
-  verificarRotaLogado();
 })
-
-$(document).ajaxComplete(function (event, xhr, options) {
-  try {
-    var data = JSON.parse(xhr.responseText);
-
-    if ('token_required' in data && data['token_required']) {
-      mensagem("Usuário deve estar logado para acessar página atual.", "Erro", 5000);
-      setTimeout(function () {
-        window.location = './index.html';
-      }, 2000);
-    }
-
-    console.log(data)
-  }
-  catch (err) {
-    console.log('Not Json')
-  }
-
-});
