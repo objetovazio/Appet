@@ -27,7 +27,7 @@ function setPageValues(data) {
         $('#nome-usuario').val(buyerResponse.name);
     });
     getServicePromise(data.servico).then((response) => {
-        if(String(response.price).length > 3){
+        if(String(response.price).split('.')[1].length > 1){
             $('#preco-servico').text(response.price);
             $('#preco-servico').val(response.price);
         }

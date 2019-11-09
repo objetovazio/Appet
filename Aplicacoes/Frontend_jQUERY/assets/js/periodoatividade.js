@@ -17,11 +17,11 @@ function adicionarPeriodoAtividade(){
 	}else{
 		input_date_end = "";
 	}
-	
+	ownerlist = [1];
 	var data_request = {
 		beginDate:input_date_begin,
 		endDate:input_date_end,
-		ownerId:"1",
+		ownerId:JSON.stringify(ownerlist),
 		periodoAtvidadeId:$("#idPeriodo").val()
 	};
 
@@ -68,11 +68,11 @@ function pegaPeriodoAtividade(periodoAtvidade){
 
 
 function pegaListaPeriodoAtividade(){
-
+	var onwer_list = [1]
 	var data_request = {
 		beginDate:"",
 		endDate:"",
-		ownerId:"1",
+		ownerId:JSON.stringify(onwer_list),
 		periodoAtvidadeId:""
 	};
 	
@@ -203,11 +203,11 @@ function atualizaLinha(elementoAtualiza){
 // gambiarra pro horario.html
 
 function pegaPeriodos (){
-
+	var owner_list = [1]
 	var data_request = {
 		beginDate:"",
 		endDate:"",
-		ownerId:"1",
+		ownerId:JSON.stringify(owner_list),
 		periodoAtvidadeId:""
 	};
 	

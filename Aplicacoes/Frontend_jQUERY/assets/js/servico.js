@@ -1,10 +1,11 @@
 function adicionaServico (){
 
+	var owner_list = [1];
 	var data_request = {
 		title:$("#titulo").val(),
 		about:$("#descricao").val(),
 		price:$("#valor").val(),
-		ownerId:'1',
+		ownerId:JSON.stringify(owner_list),
 		typeService: $("#tiposervico").val(),
 		hourService: []
 	};
@@ -58,12 +59,12 @@ function validaServico(servico){
 }
 
 function pegaListaServico (){
-
+	var owner_list =[1];
 	var data_request = {
 		title:"",
 		about:"",
 		price:"",
-		ownerId:'1',
+		ownerId:JSON.stringify(owner_list),
 		typeService: "",
 		hourService: ""
 	};
