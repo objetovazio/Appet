@@ -31,10 +31,9 @@ class Usuario {
 
 		$.get(rota_user, data_request, function () {
 		}).done(function (dados) {
-
 			// convert a strgin em objeto e ao mesmo tempo
 			// acessa a chave data no indice 0
-			var usuario = JSON.parse(dados).data[0];
+			var usuario = JSON.parse(dados).data;
 
 			$("#id").val(usuario["user_id"]);
 			$("#nome").val(usuario["name"]);

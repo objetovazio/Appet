@@ -569,30 +569,9 @@ def postUser(current_user):
 
 # Rota para busca de usuario
 @app.route('/user', methods=['GET'])
-def getUser():    
-	is_name_empty =  is_parameter_empty(request.args.get('nomeUser'))
-	name_user = request.args.get('nomeUser') if not is_name_empty else None    
-
-	is_email_empty = is_parameter_empty(request.args.get('emailUser'))
-	email_user = request.args.get('emailUser') if not is_email_empty else None
-
-	is_about_empty = is_parameter_empty(request.args.get('sobre'))
-	about_user = request.args.get('sobre') if not is_about_empty else None
-
-	is_id_empty = is_parameter_empty(request.args.get('userId'))
-	user_id = request.args.get('userId') if not is_id_empty else None
-
-	if( is_name_empty and is_email_empty and is_about_empty and is_id_empty):
-		print('empty')
-		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
-	else:
-		user_query = {
-			'user_name': name_user,
-			'email_user': email_user,
-			'about_user': about_user,
-			'user_id': user_id
-		}
-		data_result = b_user.findUsers(user_query)
+@token_required
+def getUser(current_user):
+		data_result = current_user #b_user.findUsers(user_query)
 		return json.dumps({'success': True,
 		'data':data_result}), 200, {'ContentType': 'application/json'}
 
