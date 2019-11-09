@@ -72,7 +72,7 @@ function pegaListaPeriodoAtividade(){
 	var data_request = {
 		beginDate:"",
 		endDate:"",
-		ownerId:owner,
+		ownerId:onwer,
 		periodoAtvidadeId:""
 	};
 	
