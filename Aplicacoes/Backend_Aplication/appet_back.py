@@ -65,7 +65,7 @@ def hello_world():
 
 @app.route('/Rate', methods=['POST'])
 @token_required
-def postRate():
+def postRate(current_user):
 	try:
 		is_author_empty = is_parameter_empty(request.form['author'])
 		is_service_empty = is_parameter_empty(request.form['service'])
@@ -91,7 +91,7 @@ def postRate():
 
 @app.route('/Rate',methods=['GET'])
 @token_required
-def getRate():
+def getRate(current_user):
 	try:
 		is_author_empty		=	is_parameter_empty(request.args.get('author'))
 		is_service_empty	=	is_parameter_empty(request.args.get('service'))
@@ -115,19 +115,19 @@ def getRate():
 
 @app.route('/CrediCard', methods=['POST'])
 @token_required
-def postCrediCard():
+def postCrediCard(current_user):
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 @app.route('/CrediCard', methods=['GET'])
 @token_required
-def getCrediCard():
+def getCrediCard(current_user):
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Comment', methods=['POST'])
 @token_required
-def postComment():
+def postComment(current_user):
 	try:
 		is_rateId_empty		=	is_parameter_empty(request.form['avaliacaoId'])
 		is_comment_empty	=	is_parameter_empty(request.form['comentario'])
@@ -155,7 +155,7 @@ def postComment():
 
 @app.route('/Comment', methods=['GET'])
 @token_required
-def getComment():
+def getComment(current_user):
 	try:
 		is_rateId_empty		=	is_parameter_empty(request.args.get['avaliacaoId'])
 		is_comment_empty	=	is_parameter_empty(request.args.get['comentario'])
@@ -177,7 +177,7 @@ def getComment():
 
 @app.route('/Contact', methods=['POST'])
 @token_required
-def postContact():
+def postContact(current_user):
 	try:
 		is_owner_empty = is_parameter_empty(request.form['ownerId'])
 		is_type_empty = is_parameter_empty(request.form['type'])
@@ -206,7 +206,7 @@ def postContact():
 
 @app.route('/Contact', methods=['GET'])
 @token_required
-def getContact():
+def getContact(current_user):
 	try:
 		is_owner_empty = is_parameter_empty(request.args.get('ownerId'))
 		is_type_empty = is_parameter_empty(request.args.get('type'))
@@ -229,7 +229,7 @@ def getContact():
 
 @app.route('/Address', methods=['POST'])
 @token_required
-def postAddress():
+def postAddress(current_user):
 	try:
 		is_user_empty = is_parameter_empty(request.form['userId'])
 		is_cep_empty = is_parameter_empty(request.form['cep'])
@@ -262,7 +262,7 @@ def postAddress():
 
 @app.route('/Address', methods=['GET'])
 @token_required
-def getAddress():
+def getAddress(current_user):
 	is_user_empty	=	is_parameter_empty(request.args.get('userId'))
 	is_cep_empty	=	is_parameter_empty(request.args.get('cep'))
 	is_bairro_empty	=	is_parameter_empty(request.args.get('bairro'))
@@ -287,7 +287,7 @@ def getAddress():
 
 @app.route('/ServiceSchedule', methods=['POST'])
 @token_required
-def postServiceSchedule():
+def postServiceSchedule(current_user):
 	try:
 		is_period_empty = is_parameter_empty(request.form['periodoId'])
 		period_id = int(request.form['periodoId']) if not is_period_empty else None
@@ -324,7 +324,7 @@ def postServiceSchedule():
 
 @app.route('/ServiceSchedule', methods=['GET'])
 @token_required
-def getServiceSchedule():
+def getServiceSchedule(current_user):
 	is_schedule_empty = is_parameter_empty(request.args.get('id'))
 	print()
 	schedule = request.args.get('id') if not is_schedule_empty else None
@@ -354,7 +354,7 @@ def getServiceSchedule():
 #datas sao recebidas no formado yyyyMMdd
 @app.route('/AtivityTime', methods=['POST'])
 @token_required
-def postAtivityTime():
+def postAtivityTime(current_user):
 	try:
 		is_begin_empty = is_parameter_empty(request.form['beginDate'])
 		begin_date = request.form['beginDate'] if not is_begin_empty else None
@@ -396,7 +396,7 @@ def postAtivityTime():
 
 @app.route('/AtivityTime', methods=['GET'])
 @token_required
-def getAtivityTime():
+def getAtivityTime(current_user):
 	is_begin_empty = is_parameter_empty(request.args.get('beginDate'))
 	begin_date = request.args.get('beginDate') if not is_begin_empty else None
 
@@ -427,7 +427,7 @@ def getAtivityTime():
 
 @app.route('/Service', methods=['POST'])
 @token_required
-def postService():
+def postService(current_user):
 	try:
 		is_title_empty = is_parameter_empty(request.form['title'])
 		title_service = request.form['title'] if not is_title_empty else None
@@ -473,7 +473,7 @@ def postService():
 
 @app.route('/Service', methods=['GET'])
 @token_required
-def getService():
+def getService(current_user):
 	is_title_empty	=	is_parameter_empty(request.args.get('title'))
 	title_service	=	request.args.get('title') if not is_title_empty else None
 
@@ -510,7 +510,7 @@ def getService():
 # Rota para criacao e atualizacao de Tipo de Serviço
 @app.route('/TypeService', methods=['POST'])
 @token_required
-def postTypeService():
+def postTypeService(current_user):
 	name_service_type = request.form('nomeTipoServico')
 	print(name_service_type)
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
@@ -519,7 +519,7 @@ def postTypeService():
 # Rota para busca de Tipo de Serviço
 @app.route('/TypeService', methods=['GET'])
 @token_required
-def getTypeService():
+def getTypeService(current_user):
 	service_query = {}
 	have_name = not is_parameter_empty(request.args.get('nomeTipoServico'))
 	if(have_name):
@@ -534,7 +534,7 @@ def getTypeService():
 # Rota para criacao e atualizacao de usuario
 @app.route('/user', methods=['POST'])
 @token_required
-def postUser():
+def postUser(current_user):
 	try:
 		is_name_empty = is_parameter_empty(request.form['nomeUser'])
 		name_user = request.form['nomeUser'] if not is_name_empty else None
@@ -638,7 +638,7 @@ def getSession(current_user):
 
 @app.route('/contratacao', methods=['GET'])
 @token_required
-def getContratacao():
+def getContratacao(current_user):
 	try:
 		is_id_empty			=	is_parameter_empty(request.args.get('id'))
 		is_token_empty		=	is_parameter_empty(request.args.get('token'))
@@ -665,7 +665,7 @@ def getContratacao():
 
 @app.route('/contratacao', methods=['POST'])
 @token_required
-def postContratacao():
+def postContratacao(current_user):
 	try:
 		is_token_empty		=	is_parameter_empty(request.form['token'])
 		is_buyer_empty		=	is_parameter_empty(request.form['comprador'])
