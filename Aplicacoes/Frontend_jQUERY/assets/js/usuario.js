@@ -123,8 +123,11 @@ class Usuario {
 			var result = JSON.parse(data);
 			if (result['success']) {
 				var texto = "Login efeturado com sucesso!";
-
 				mensagem(texto, "Sucesso", 5000);
+
+				var token =  result['token']
+				$.cookie('token', token)
+
 				setTimeout(function () {
 					window.location = './index.html';
 				}, 2000);

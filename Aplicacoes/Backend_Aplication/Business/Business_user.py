@@ -92,11 +92,16 @@ def userLogin(user_query):
         if(len(user) == 1 and isCorretPassword):
             dic_user = _makeResultDic(user[0])
             dic_user['password'] = ''
+            print(dic_user)
             return dic_user
         #end-if
-
     return None
 # end
+
+def verifyToken(user_id, user_email):
+    user = User.Usuario.get(User.Usuario.email == user_email, User.Usuario.usuario_id == user_id)
+    return _makeResultDic(user)
+#end
 
 def _makeResultDic(user_obj):
     user_dic = {

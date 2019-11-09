@@ -5,6 +5,7 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask import session
+from flask import make_response
 # used to resolve the path problem
 import sys
 from os.path import dirname, abspath
@@ -23,16 +24,47 @@ import Business.Business_Comentario as b_comentario
 import Business.Business_Contratacao as b_contrato
 import logging
 
+import jwt
+import datetime
+from functools import wraps
+
 app = Flask(__name__)
 app.secret_key = b'\xc2\xbf\xbf\xe8\x82LA\xd3\xe8\xdd\x84U\xeb\xec\x825uq\xee\x96\x19#i\xe2' #os.urandom(24)
 #app.run(debug=True)
 CORS(app)
+
+def token_required(f):
+	@wraps(f)
+	def decorated(*args, **kwargs):
+		token = None
+
+		if 'x-access-token' in request.headers:
+			token = request.headers['x-access-token']
+		#
+
+		if not token:
+			return  jsonify({'message': 'Token inexistente. O usuário deve fazer login.'}), 401
+		#
+
+		try:
+			dataToken = jwt.decode(token, app.secret_key)
+			current_user = b_user.verifyToken(dataToken['user_id'], dataToken['email_user'])
+		except Exception as e:
+			print(str(e))
+			return jsonify({'message': 'Token inválido.'}), 401
+
+		return f(current_user, *args, **kwargs)
+	#end-decorated
+
+	return decorated
+#end-token_required
 
 @app.route('/')
 def hello_world():
 	return 'Hello, World!'
 
 @app.route('/Rate', methods=['POST'])
+@token_required
 def postRate():
 	try:
 		is_author_empty = is_parameter_empty(request.form['author'])
@@ -58,6 +90,7 @@ def postRate():
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Rate',methods=['GET'])
+@token_required
 def getRate():
 	try:
 		is_author_empty		=	is_parameter_empty(request.args.get('author'))
@@ -81,16 +114,19 @@ def getRate():
 	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/CrediCard', methods=['POST'])
+@token_required
 def postCrediCard():
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 @app.route('/CrediCard', methods=['GET'])
+@token_required
 def getCrediCard():
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
 	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Comment', methods=['POST'])
+@token_required
 def postComment():
 	try:
 		is_rateId_empty		=	is_parameter_empty(request.form['avaliacaoId'])
@@ -118,6 +154,7 @@ def postComment():
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Comment', methods=['GET'])
+@token_required
 def getComment():
 	try:
 		is_rateId_empty		=	is_parameter_empty(request.args.get['avaliacaoId'])
@@ -139,6 +176,7 @@ def getComment():
 	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Contact', methods=['POST'])
+@token_required
 def postContact():
 	try:
 		is_owner_empty = is_parameter_empty(request.form['ownerId'])
@@ -167,6 +205,7 @@ def postContact():
 	
 
 @app.route('/Contact', methods=['GET'])
+@token_required
 def getContact():
 	try:
 		is_owner_empty = is_parameter_empty(request.args.get('ownerId'))
@@ -189,6 +228,7 @@ def getContact():
 	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Address', methods=['POST'])
+@token_required
 def postAddress():
 	try:
 		is_user_empty = is_parameter_empty(request.form['userId'])
@@ -221,6 +261,7 @@ def postAddress():
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Address', methods=['GET'])
+@token_required
 def getAddress():
 	is_user_empty	=	is_parameter_empty(request.args.get('userId'))
 	is_cep_empty	=	is_parameter_empty(request.args.get('cep'))
@@ -245,6 +286,7 @@ def getAddress():
 	'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/ServiceSchedule', methods=['POST'])
+@token_required
 def postServiceSchedule():
 	try:
 		is_period_empty = is_parameter_empty(request.form['periodoId'])
@@ -281,6 +323,7 @@ def postServiceSchedule():
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/ServiceSchedule', methods=['GET'])
+@token_required
 def getServiceSchedule():
 	is_schedule_empty = is_parameter_empty(request.args.get('id'))
 	print()
@@ -310,6 +353,7 @@ def getServiceSchedule():
 
 #datas sao recebidas no formado yyyyMMdd
 @app.route('/AtivityTime', methods=['POST'])
+@token_required
 def postAtivityTime():
 	try:
 		is_begin_empty = is_parameter_empty(request.form['beginDate'])
@@ -351,6 +395,7 @@ def postAtivityTime():
 
 
 @app.route('/AtivityTime', methods=['GET'])
+@token_required
 def getAtivityTime():
 	is_begin_empty = is_parameter_empty(request.args.get('beginDate'))
 	begin_date = request.args.get('beginDate') if not is_begin_empty else None
@@ -381,6 +426,7 @@ def getAtivityTime():
 
 
 @app.route('/Service', methods=['POST'])
+@token_required
 def postService():
 	try:
 		is_title_empty = is_parameter_empty(request.form['title'])
@@ -426,6 +472,7 @@ def postService():
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/Service', methods=['GET'])
+@token_required
 def getService():
 	is_title_empty	=	is_parameter_empty(request.args.get('title'))
 	title_service	=	request.args.get('title') if not is_title_empty else None
@@ -462,6 +509,7 @@ def getService():
 
 # Rota para criacao e atualizacao de Tipo de Serviço
 @app.route('/TypeService', methods=['POST'])
+@token_required
 def postTypeService():
 	name_service_type = request.form('nomeTipoServico')
 	print(name_service_type)
@@ -470,6 +518,7 @@ def postTypeService():
 
 # Rota para busca de Tipo de Serviço
 @app.route('/TypeService', methods=['GET'])
+@token_required
 def getTypeService():
 	service_query = {}
 	have_name = not is_parameter_empty(request.args.get('nomeTipoServico'))
@@ -484,6 +533,7 @@ def getTypeService():
 
 # Rota para criacao e atualizacao de usuario
 @app.route('/user', methods=['POST'])
+@token_required
 def postUser():
 	try:
 		is_name_empty = is_parameter_empty(request.form['nomeUser'])
@@ -569,33 +619,25 @@ def loginUser():
 		}
 		data_result = b_user.userLogin(user_query)
 
-		if(data_result != None):
-			session['logger_user'] = data_result
-			return json.dumps({'success': True, 'data':data_result}), 200, {'ContentType': 'application/json'}
+		if data_result:
+			#the token is valid per 10 minutes
+			token = jwt.encode({'user_id': data_result['user_id'], 'email_user' : data_result['email'], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=10)}, app.secret_key)		
+			return json.dumps({'success': True, 'token': token.decode('UTF-8')}), 200, {'ContentType': 'application/json'}
 		else:
 			return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 #end-loginuser
 
 @app.route('/getsession', methods=['GET'])
-def getSession():
-	if('logger_user' in session):
-		print(session['logger_user'])
-		return json.dumps({'success': True, 'data':session['logger_user']}), 200, {'ContentType': 'application/json'}
-	#end-if
+@token_required
+def getSession(current_user):
+	if current_user:
+		return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
-	print(session.keys())
-
-	return json.dumps({'success': False, 'data': 'Not Logged!'}), 200, {'ContentType': 'application/json'}
+	return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 #end-getrSession
 
-@app.route('/logoff', methods=['POST'])
-def logOff():
-	session.pop('logger_user', None)
-	print(json.dumps({'success': True}), 200, {'ContentType': 'application/json'})
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
-#end-logoff
-
 @app.route('/contratacao', methods=['GET'])
+@token_required
 def getContratacao():
 	try:
 		is_id_empty			=	is_parameter_empty(request.args.get('id'))
@@ -622,6 +664,7 @@ def getContratacao():
 		'data':data_result}), 200, {'ContentType': 'application/json'}
 
 @app.route('/contratacao', methods=['POST'])
+@token_required
 def postContratacao():
 	try:
 		is_token_empty		=	is_parameter_empty(request.form['token'])
