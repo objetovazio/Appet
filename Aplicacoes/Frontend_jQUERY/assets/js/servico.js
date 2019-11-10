@@ -129,13 +129,23 @@ function pegaHorarioServico() {
 
 			// convert a strgin em objeto 
 			var horarios = JSON.parse(dados).data;
-
+			var i = 0;
+			var idbox = "";
+			var texto = "";
 			$(horarios).each(function(key, item) {
 				var ini = item.begin_time;
 				var fim = item.end_time;
-				var intervalo =' '+ini.substring(0,2) +":"+ ini.substring(2,4) +":"+ ini.substring(4,6) + " - "+ fim.substring(0,2) +":"+ fim.substring(2,4) +":"+ fim.substring(4,6);
-				$("#horaservico").append('<input type="checkbox" value=' +item.schedule_id+ '>' + intervalo +'<br>');
-		});
+				var intervalo =' '+ini.substring(0,2) +":"+ ini.substring(2,4)  + " - "+ fim.substring(0,2) +":"+ fim.substring(2,4);
+				idbox = 'cbox'+i
+			
+				texto  = texto + '<input type="checkbox" id="'+idbox+'" value=' +item.schedule_id+ '> <label for="'+idbox+'"> ' +intervalo+ ' </ label> <br>';
+			
+				i = i + 1
+
+			});
+
+		$("#horaservico").html(texto );
+
 
 		//console.log(horarios);
 
