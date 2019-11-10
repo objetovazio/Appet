@@ -57,7 +57,7 @@ def token_required(f):
 		except Exception as e:
 			print(" >>>>>> token_required() = Token Inválido!! Tire o comentário na função para ver detalhes da exception")
 			#print(str(e))
-			return json.dumps({'token_required': true}), 200, {'ContentType': 'application/json'}
+			return json.dumps({'token_required': True, 'Exception': str(e)}), 200, {'ContentType': 'application/json'}
 			# return jsonify({'message': 'Token inválido.'}), 401
 
 		return f(current_user, *args, **kwargs)
@@ -535,8 +535,7 @@ def getTypeService(current_user):
 
 # Rota para criacao e atualizacao de usuario
 @app.route('/user', methods=['POST'])
-@token_required
-def postUser(current_user):
+def postUser():
 	try:
 		is_name_empty = is_parameter_empty(request.form['nomeUser'])
 		name_user = request.form['nomeUser'] if not is_name_empty else None

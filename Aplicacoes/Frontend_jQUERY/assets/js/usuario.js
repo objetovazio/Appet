@@ -7,9 +7,9 @@ class Usuario {
 				var texto = "Cadastro realizado!";
 				mensagem(texto, "Sucesso", 2000);
 
-				$("#nome").val("");
-				$("#email").val("");
-				$("#senha").val("");
+				setTimeout(function(){
+					window.location = './login.html'
+				}, 2000);
 
 			}).fail(function (msg) {
 

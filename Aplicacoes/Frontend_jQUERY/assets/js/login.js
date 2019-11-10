@@ -7,7 +7,7 @@ function verificarRotaLogado() {
     var rotaAtual = rotaAberta[0];
 
     if ($.cookie('login_error') === 'true') {
-        mensagem("Usuário deve estar logado para acessar página atual.", "Erro", 5000);
+        mensagem("Usuário deve estar logado para acessar.", "Erro", 5000);
         
         setTimeout(function () {
             $.cookie('login_error', "false");
@@ -27,7 +27,7 @@ function verificarRotaLogado() {
             if (data['token_required'] == true) {
                 if (!rotas_unlogged.includes(rotaAtual)) {
                     $.cookie('login_error', "true");
-                    window.location = './index.html';
+                    window.location = './login.html';
                 }
             }
         }).fail(function (msg) {
