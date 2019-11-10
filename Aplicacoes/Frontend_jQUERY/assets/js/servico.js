@@ -159,13 +159,14 @@ function mostrar(elemento){
 
 function listaPeriodo(  ){
 
-
 	  var data_request = {
         beginDate:"",
         endDate:"",
-        ownerId: 1,
+        ownerId: $("#id").val(),
         periodoAtvidadeId:""
       };
+
+
 	
 	$("#periodoatividade").append("<option value='' id='msgEsperaPeriodoAtividade'> Aguarde carregando... </option>");
 
@@ -186,6 +187,13 @@ function listaPeriodo(  ){
 			texto = item.begin +" - "+ item.end;
 			$("#periodoatividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
 		});
+
+		if( $("#periodoatividade").children('option').length == 1){
+			$("#periodoatividade").append("<option value=''>Não há periodos de atividades</option>");
+			// console.log($("#periodoatividade option").first().text("Não há periodos de atividades") );
+		} 
+
+
 
 		
 

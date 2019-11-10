@@ -13,6 +13,7 @@
   <script type="text/javascript" src="assets/js/rotas.js"></script>
     <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/login.js"></script>
+    <script type="text/javascript" src="assets/js/usuario.js"></script>
   <script type="text/javascript" src="assets/js/servico.js"></script>
   <script type="text/javascript" src="assets/js/tiposervico.js"></script>
   <script type="text/javascript" src="assets/js/periodoatividade.js"></script>
@@ -60,7 +61,7 @@
           <div class="form-group">
           	<div class="form-group">
 
-              <input id="id" type="text" style="display: none;">
+              <input id="id" type="text" style="display: none">
 
               <label class="mt-2" contenteditable="true">Título do Serviço<br></label><input type="text" class="form-control" id="titulo" required="required" placeholder="Título"></div>
             <div class="form-group"><label>Tipo de Serviço</label><select class="form-control border-0" id="tiposervico">
@@ -154,6 +155,7 @@
     pegaServico();
     // pegaHorarioServico();
 
+    setTimeout(function(){listaPeriodo();}, 2000);
 	 
     $('#salvar').click( function (){ 
 	     $('#salvar').prop('disabled', true);
@@ -165,7 +167,7 @@
 
 
 
-      listaPeriodo();
+      
 
 
 
