@@ -117,8 +117,10 @@ function mostrar(elemento){
 
 
 function pegaHorarioServico() {
+			var owner_list =[1];
 			var data_request = {
-			id: "1",
+			id:"",
+			periodId:JSON.stringify(owner_list),
 			beginTime: "",
 			endTime: "",
 			weekDay: ""
@@ -138,7 +140,7 @@ function pegaHorarioServico() {
 				var intervalo =' '+ini.substring(0,2) +":"+ ini.substring(2,4)  + " - "+ fim.substring(0,2) +":"+ fim.substring(2,4);
 				idbox = 'cbox'+i
 			
-				texto  = texto + '<input type="checkbox" id="'+idbox+'" value=' +item.schedule_id+ '> <label for="'+idbox+'"> ' +intervalo+ ' </ label> <br>';
+				texto  += '<label for="'+idbox+'">  <input type="checkbox" id="'+idbox+'" value=' +item.schedule_id+ '> ' +intervalo+ ' </label> </br>';
 			
 				i = i + 1
 
