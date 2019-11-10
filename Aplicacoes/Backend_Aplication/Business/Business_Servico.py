@@ -303,7 +303,7 @@ def typeRegistredMetrics():
 					)
 	data_result = {}
 	for row in query_build:
-		data_result[row.id_tipo.nome_tipo] = row.total
+		data_result[row.id_tipo.nome_tipo] = [row.id_tipo, row.total]
 	return data_result
 
 

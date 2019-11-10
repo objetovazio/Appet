@@ -173,7 +173,7 @@ def weekdayMetrics():
 	)
 	data_result = {}
 	for row in query_build:
-		data_result[Day(row.dia_semana).name] = [row.dia_semana,row.total]
+		data_result[Day(row.dia_semana).name] = row.total
 	return data_result
 
 #recieve day name
