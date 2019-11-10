@@ -131,6 +131,9 @@ function pegaHorarioServico() {
 
 			// convert a strgin em objeto 
 			var horarios = JSON.parse(dados).data;
+
+			console.log(horarios);
+			
 			var i = 0;
 			var idbox = "";
 			var texto = "";
@@ -157,3 +160,44 @@ function pegaHorarioServico() {
 			mensagem(texto, "Erro", 5000);
 		});
 }
+
+
+
+// Código para Cadastro de Serviço
+
+
+function listaPeriodo( data_request ){
+	
+	$("#periodoatividade").append("<option id='msgEsperaPeriodoAtividade'> Aguarde carregando... </option>");
+
+	$.get(rota_periodo_atividade, data_request, function(){
+	}).done( function (dados){
+		
+		
+		$("#msgEsperaPeriodoAtividade").remove();
+
+		var periodo = JSON.parse(dados).data;
+		console.log(periodo);
+
+		var texto;
+
+		// key é chave do JSON, item é o dado do JSON
+		// #tipeservico é o elemento select do html
+		$(periodo).each(function(key, item) {
+			texto = item.begin +" - "+ item.end;
+			$("#periodoatividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
+		});
+
+		
+
+
+	}).fail( function (msg) {
+
+		$("#msgEsperaPeriodoAtividade").remove();
+
+		var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		mensagem(texto, "Erro",5000);
+	});
+	
+}
+

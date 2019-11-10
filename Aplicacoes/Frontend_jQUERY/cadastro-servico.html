@@ -15,6 +15,7 @@
   <script type="text/javascript" src="assets/js/login.js"></script>
   <script type="text/javascript" src="assets/js/servico.js"></script>
   <script type="text/javascript" src="assets/js/tiposervico.js"></script>
+  <script type="text/javascript" src="assets/js/periodoatividade.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
@@ -64,8 +65,41 @@
             <div class="form-group"><label class="mt-2">Descrição do Serviço<br></label>
               <div class="form-group"><textarea class="form-control" id="descricao" rows="3" placeholder="Descrição do serviço"></textarea>
                 <div class="form-group"><label class="mt-2" contenteditable="true">Valor do Serviço (R$)<br></label><input type="text" class="form-control" id="valor" required="required" placeholder="20.00"></div>
-              </div>Horários disponíveis <br>
-              <p id="horaservico"> </p>
+              
+              </div> Quando o Serviço será ofertado? <br><br>
+                
+                <div> <label>Periodo de Atividade</label>
+                    <select class="form-control border-0" id="periodoatividade">
+                       <option value="">Periodo &#60;inicio&#62;   &#60;final&#62; </option>
+                    </select> 
+
+                    <br><br>
+
+                      <div class="table-responsive">
+                        <table style="max-width: 500px; margin: auto; text-align: center;" id="tabelaPeriodo"
+                          class="table table-bordered table-all">
+                          <thead class="thead-dark">
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">seg</th>
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">ter</th>
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">qua</th>
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">qui</th>
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">sex</th>
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">sab</th>
+                            <th style="min-width: 100px; max-width: 100px;" class="text-center">dom</th>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+
+
+
+
+
+
+                    <p id="horaservico"> </p> 
+
+                </div>
             </div>
           </div>
         </div>
@@ -109,14 +143,28 @@
     
 	$(document).ready( function (){ 
 
-	$('#salvar').click( function (){ 
 
-	  $('#salvar').prop('disabled', true);
-	  adicionaServico(); 
-	  setTimeout(function(){  $('#salvar').prop('disabled', false); }, 2000);
-	});
     pegaServico();
     pegaHorarioServico();
+
+	 
+    $('#salvar').click( function (){ 
+	     $('#salvar').prop('disabled', true);
+	     adicionaServico(); 
+	     setTimeout(function(){  $('#salvar').prop('disabled', false); }, 2000);
+	 });
+
+      
+      var data_request = {
+        beginDate:"",
+        endDate:"",
+        ownerId: 1,
+        periodoAtvidadeId:""
+      };
+
+      listaPeriodo(data_request);
+
+  
 	});
 
 	</script>
