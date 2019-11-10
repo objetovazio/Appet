@@ -46,8 +46,15 @@
                 <div class="col-md-4" style=""><img class="img-fluid d-block rounded-circle mx-auto"
                     src="assets/image/icone_padrao.png" width="100" height="100">
                 </div>
+
                 <div class="col-md-8" style="">
+
+                      <!--  -->
+                    <input id="id" type="text" style="display: none;"> 
                   <div class="card" id="cardMeuPerfil">
+
+
+
                     <div class="card-body">
 
                       <a id="botaoEditar" class="ocultar" href="editar-perfil.html" title="Editar Informação"><i
@@ -165,7 +172,10 @@
       // Preencher dados do usuario
       Usuario.pegaUsuario();
       // Preenche dados do servico
-      pegaListaServico();
+      setTimeout(function () {
+           pegaListaServico();
+        }, 2000);
+     
 
 
       $("#cardMeuPerfil").mousemove(function () {

@@ -7,7 +7,7 @@ function adicionaServico (){
 
 
 
-	var owner_list = [1];
+	var owner_list = [$("#id").val()];
 	var data_request = {
 		title:$("#titulo").val(),
 		about:$("#descricao").val(),
@@ -66,7 +66,8 @@ function validaServico(servico){
 }
 
 function pegaListaServico (){
-	var owner_list =[1];
+	var owner_list =[$("#id").val()];
+
 	var data_request = {
 		title:"",
 		about:"",
@@ -112,6 +113,11 @@ function pegaListaServico (){
 				"<span class='display-none' style='font-size:15px;'>&nbsp;&nbsp;&nbsp;tipo: "+ String(nome_tipo_servico).toLowerCase() + "<br>&nbsp;&nbsp;&nbsp;sobre: " +String(elemento.about).toLowerCase()+ "<br>"+"</span></p>";
 			});
 
+			if(texto.length == 0){
+
+				texto = "Você ainda não possui serviços cadastrados.";
+			}
+
 			$("#cardServicoConteudo").html( texto);
 
 		})
@@ -151,7 +157,15 @@ function mostrar(elemento){
 // Código para Cadastro de Serviço
 
 
-function listaPeriodo( data_request ){
+function listaPeriodo(  ){
+
+
+	  var data_request = {
+        beginDate:"",
+        endDate:"",
+        ownerId: 1,
+        periodoAtvidadeId:""
+      };
 	
 	$("#periodoatividade").append("<option value='' id='msgEsperaPeriodoAtividade'> Aguarde carregando... </option>");
 
