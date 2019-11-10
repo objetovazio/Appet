@@ -330,13 +330,13 @@ def postServiceSchedule(current_user):
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
 @app.route('/ServiceSchedule', methods=['GET'])
-@token_required
-def getServiceSchedule(current_user):
+#@token_required
+def getServiceSchedule():
 	is_schedule_empty = is_parameter_empty(request.args.get('id'))
 	schedule = request.args.get('id') if not is_schedule_empty else None
 
 	is_periodo_empty = is_parameter_empty(request.args.get('periodId'))
-	period_id = request.args.get('periodId') if not is_period_empty else None
+	period_id = request.args.get('periodId') if not is_periodo_empty else None
 
 	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
 	begin_time = request.args.get('beginTime') if not is_begin_empty else None
@@ -347,7 +347,7 @@ def getServiceSchedule(current_user):
 	is_day_empty = is_parameter_empty(request.args.get('weekDay'))
 	week_day = request.args.get('weekDay') if not is_day_empty else None
 
-	if(is_schedule_empty and is_begin_empty and is_end_empty and is_day_empty):
+	if(is_schedule_empty and is_begin_empty and is_end_empty and is_day_empty and is_periodo_empty):
 		print('empty request')
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 	schedule_query = {

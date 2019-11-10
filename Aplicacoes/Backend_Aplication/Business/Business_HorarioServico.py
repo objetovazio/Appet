@@ -4,6 +4,7 @@ import sys
 from os.path import dirname, abspath
 diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
+import json
 import Model.PeriodoAtividade as PA
 import Model.HorarioServico as HS
 from peewee import fn
@@ -77,12 +78,34 @@ def findSchedule(query_param: dict):
 	have_begin = query_param['begin_hour'] != None
 	have_end = query_param['end_hour'] != None
 	have_day = query_param['week_day'] != None
+	have_periodo = query_param['period'] != None
+	if(have_periodo):
+		query_param['period'] = json.loads(query_param['period'])
 	if(have_begin):
-		if(have_end and have_day):
+		if(have_end and have_day and have_periodo):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
+				(HS.HorarioServico.dia_semana == query_param['week_day']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
+			)
+		elif(have_end and have_day):
 			query_result = HS.HorarioServico.select().where(
 				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
 				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
 				(HS.HorarioServico.dia_semana == query_param['week_day'])
+			)
+		elif(have_end and have_periodo):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
+			)
+		elif(have_periodo and have_day):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.dia_semana == query_param['week_day']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
 			)
 		elif(have_end):
 			query_result = HS.HorarioServico.select().where(
@@ -94,19 +117,45 @@ def findSchedule(query_param: dict):
 				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
 				(HS.HorarioServico.dia_semana == query_param['week_day'])
 			)
+		elif(have_periodo):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_inicio == query_param['begin_hour']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
+			)
 		else:
 			query_result = HS.HorarioServico.select().where(
 				(HS.HorarioServico.horario_inicio == query_param['begin_hour'])
 			)
 	elif(have_end):
-		if(have_day):
+		if(have_day and have_periodo):
 			query_result = HS.HorarioServico.select().where(
 				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
-				(HS.HorarioServico.dia_semana == query_param['week_day'])
+				(HS.HorarioServico.dia_semana == query_param['week_day']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
+			)
+		elif(have_day):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
+			)
+		elif (have_periodo):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.horario_fim == query_param['end_hour']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
 			)
 		else:
 			query_result = HS.HorarioServico.select().where(
 				(HS.HorarioServico.horario_fim == query_param['end_hour'])
+			)
+	elif(have_periodo):
+		if(have_day):
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.dia_semana == query_param['week_day']) &
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
+			)
+		else:
+			query_result = HS.HorarioServico.select().where(
+				(HS.HorarioServico.id_periodo.in_(query_param['period']))
 			)
 	else:
 		query_result = HS.HorarioServico.select().where(
@@ -124,7 +173,7 @@ def weekdayMetrics():
 	)
 	data_result = {}
 	for row in query_build:
-		data_result[Day(row.dia_semana).name] = row.total
+		data_result[Day(row.dia_semana).name] = [row.dia_semana,row.total]
 	return data_result
 
 #recieve day name
