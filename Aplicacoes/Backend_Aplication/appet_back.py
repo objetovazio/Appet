@@ -335,6 +335,9 @@ def getServiceSchedule(current_user):
 	is_schedule_empty = is_parameter_empty(request.args.get('id'))
 	schedule = request.args.get('id') if not is_schedule_empty else None
 
+	is_periodo_empty = is_parameter_empty(request.args.get('periodId'))
+	period_id = request.args.get('periodId') if not is_period_empty else None
+
 	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
 	begin_time = request.args.get('beginTime') if not is_begin_empty else None
 
@@ -348,10 +351,11 @@ def getServiceSchedule(current_user):
 		print('empty request')
 		return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 	schedule_query = {
-		'id':schedule if not is_schedule_empty else None,
-		'begin_hour':begin_time if not is_begin_empty else None,
-		'end_hour':end_time if not is_end_empty else None,
-		'week_day':week_day if not is_day_empty else None
+		'id':schedule,
+		'begin_hour':begin_time ,
+		'end_hour':end_time,
+		'week_day':week_day,
+		'period':period_id
 	}
 	data_result = b_horarioServico.findSchedule(schedule_query)
 	return json.dumps({'success': True,
