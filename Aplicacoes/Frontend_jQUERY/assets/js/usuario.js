@@ -26,7 +26,6 @@ class Usuario {
 			// convert a strgin em objeto e ao mesmo tempo
 			// acessa a chave data no indice 0
 			var usuario = JSON.parse(dados).data;
-
 			$("#id").val(usuario["user_id"]);
 			$("#nome").val(usuario["name"]);
 			$("#email").val(usuario["email"]);
@@ -113,14 +112,14 @@ class Usuario {
 		}).done(function (data) {
 			var result = JSON.parse(data);
 			if (result['success']) {
-				var texto = "Login efeturado com sucesso!";
+				var texto = "Login efetuado com sucesso!";
 				mensagem(texto, "Sucesso", 5000);
 
 				var token =  result['token']
 				$.cookie('token', token)
 
 				setTimeout(function () {
-					window.location = './index.html';
+					window.location = './meu-perfil.html';
 				}, 2000);
 			}
 			else {
