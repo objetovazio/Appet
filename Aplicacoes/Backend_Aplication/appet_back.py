@@ -339,7 +339,7 @@ def getServiceSchedule():
 
 	is_periodo_empty = is_parameter_empty(request.args.get('periodId'))
 	period_id = request.args.get('periodId') if not is_periodo_empty else None
-
+	
 	is_begin_empty = is_parameter_empty(request.args.get('beginTime'))
 	begin_time = request.args.get('beginTime') if not is_begin_empty else None
 
@@ -348,6 +348,9 @@ def getServiceSchedule():
 
 	is_day_empty = is_parameter_empty(request.args.get('weekDay'))
 	week_day = request.args.get('weekDay') if not is_day_empty else None
+
+	print(request.args.get)
+
 
 	if(is_schedule_empty and is_begin_empty and is_end_empty and is_day_empty and is_periodo_empty):
 		print('empty request')

@@ -46,27 +46,29 @@ function adicionaHorario(){
 function pegaHorarioServico(){
 
 
-        $("#periodoatividade option").each(function() {
-             alert( $(this).val() );
-        }); 
+ 
+       
 
+        var lista = [59]
         var data_request = {
-        periodoId: "",
+        id:"",
+        periodId: JSON.stringify(lista),
         beginTime:"",
         endTime:"",
-        weekDay: "",
-        horarioId:"",
-        id:""
+        weekDay: ""
+       
     }
 
-
+    console.log(data_request);
     
     $.get(rota_horario_Servico, data_request, function(){
     }).done( function (dados){
 
         var horario_servico = JSON.parse(dados);
 
+        console.log("recebeu");
         console.log(horario_servico);
+
         adicionaLinhaH(horario_servico);
 
 
