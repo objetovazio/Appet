@@ -1,5 +1,7 @@
 function adicionaEndereco (){
 
+
+
 	var data_request = {
 		userId:$("#id").val(),
 		cep:$("#cep").val(),
@@ -15,14 +17,12 @@ function adicionaEndereco (){
 		$.post(rota_endereco, data_request, function(){
 		}).done( function (){
 
-		$("#cep").val("");
-		$("#bairro").val("");
-		$("#cidade").val("");
-		$("#estado").val("");
-		$("#numero").val("");	
+			$("#cep").val("");
+			$("#bairro").val("");
+			$("#cidade").val("");
+			$("#estado").val("");
+			$("#numero").val("");	
 
-		var texto = "Cadastro Endereço realizado!";
-		mensagem(texto, "Sucesso", 2000);
 
 		}).fail( function (msg) {
 
@@ -79,17 +79,48 @@ function pegaEndereco(){
 	}).done( function (dados){
 
 
-			var endereco = JSON.parse(dados).data[0];
-
+			var endereco = JSON.parse(dados).data;
 			console.log(endereco);
-			
-			$("#idEndreco").val(endereco.address_id);
-			$("#cep").val(endereco.cep);
-			$("#bairro").val(endereco.bairro);
-			$("#cidade").val(endereco.city);
-			$("#estado").val(endereco.state);
-			$("#numero").val(endereco.num);	
+			if(endereco.length){
+				$("#idEndreco").val(endereco[0].id_address);
+				$("#cep").val(endereco[0].cep);
+				$("#bairro").val(endereco[0].bairro);
+				$("#cidade").val(endereco[0].city);
+				$("#estado").val(endereco[0].state);
+				$("#numero").val(endereco[0].num);
+			}	
 
+		}).fail( function (msg) {
+
+			var texto = "Falha ao realizar cadastro do endereço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+			mensagem(texto, "Erro",5000);
+		});
+	
+}
+
+
+
+function atualizaEndereco(){
+
+
+
+
+	var data_request = {
+		userId:$("#id").val(),
+		cep:$("#cep").val(),
+		bairro:$("#bairro").val(),
+		cidade:$("#cidade").val(),
+		estado:$("#estado").val(),
+		numero:$("#numero").val(),
+		address_id:$("#idEndreco").val()
+	};
+
+
+	console.log("enviou");
+	console.log(data_request);
+
+	$.post(rota_endereco, data_request, function(){
+	}).done( function (){
 
 		}).fail( function (msg) {
 

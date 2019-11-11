@@ -159,7 +159,16 @@
       $("#salvar").click(function () {
 
         Usuario.atualizaUsuario();
-        adicionaEndereco();
+
+        if ( $("#idEndreco").val() == "") {
+          
+            adicionaEndereco();
+        }else{
+           atualizaEndereco();
+        }
+
+      
+        
 
       });
 

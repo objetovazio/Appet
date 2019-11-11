@@ -258,9 +258,11 @@ def postAddress(current_user):
 		'num':request.form['numero']
 	}
 
+	print(request.form)
+	
 	response_request = None
 	try:
-		address_data['id'] = request.form['id']
+		address_data['address_id'] = request.form['address_id']
 		response_request = b_address.updateUserAddress(address_data)
 	except Exception as err:
 		if(response_request == None):
