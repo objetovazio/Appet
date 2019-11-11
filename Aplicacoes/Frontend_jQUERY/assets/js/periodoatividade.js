@@ -221,31 +221,25 @@ function atualizaLinha(elementoAtualiza){
 
 
 
+function listaPeriodo( ){
+
+	  var data_request = {
+        beginDate:"",
+        endDate:"",
+        ownerId: $("#id").val(),
+        periodoAtvidadeId:""
+      };
 
 
-
-
-
-
-
-
-// nao apagar isso obg
-// gambiarra pro horario.html
-
-function pegaPeriodos (){
-	var owner = 1
-	var data_request = {
-		beginDate:"",
-		endDate:"",
-		ownerId:owner,
-		periodoAtvidadeId:""
-	};
 	
+	$("#periodoatividade").append("<option value='' id='msgEsperaPeriodoAtividade'> Aguarde carregando... </option>");
+
 	$.get(rota_periodo_atividade, data_request, function(){
 	}).done( function (dados){
+		
+		
+		$("#msgEsperaPeriodoAtividade").remove();
 
-		// convert a string em objeto e ao mesmo tempo
-		// acessa a chave data no indice 0
 		var periodo = JSON.parse(dados).data;
 		console.log(periodo);
 
@@ -254,17 +248,34 @@ function pegaPeriodos (){
 		// key é chave do JSON, item é o dado do JSON
 		// #tipeservico é o elemento select do html
 		$(periodo).each(function(key, item) {
-			texto = item.end;
-			$("#periodoAtividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
+			texto = item.begin +" :: "+ item.end;
+			$("#periodoatividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
 		});
-	
+
+		if( $("#periodoatividade").children('option').length == 1){
+
+			$("#periodoatividade").append("<option value=''>Não há periodos de atividades</option>");
+			// console.log($("#periodoatividade option").first().text("Não há periodos de atividades") );
+		} 
+
+
+
+		
+
+
 	}).fail( function (msg) {
 
-		var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+		$("#msgEsperaPeriodoAtividade").remove();
+
+		var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
 		mensagem(texto, "Erro",5000);
 	});
-
+	
 }
+
+
+
+
 
 
 

@@ -12,6 +12,7 @@
   <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
     <script type="text/javascript" src="assets/js/util.js"></script>
+        <script type="text/javascript" src="assets/js/usuario.js"></script>
   <script type="text/javascript" src="assets/js/login.js"></script>
   <script type="text/javascript" src="assets/js/horarioservico.js"></script>
   <script type="text/javascript" src="assets/js/periodoatividade.js"></script>
@@ -43,6 +44,9 @@
       <div class="row">
         <div class="col-md-3">
           <h4 class="" contenteditable="true"><b>Horários de Atuação</b><br></h4>
+
+          <input id="id" type="text" style="display: none">
+
           <a href="meu-perfil.html" class="btn mt-2 text-dark btn-secondary" style="margin-left: 3px;">Voltar</a>
         </div>
         <div class="col-md-3"></div>
@@ -108,7 +112,7 @@
         <div class="col-md-12">
           <div class="col-md-12 my-2"></div>
           <div class="row">
-            <div class="col-md-4"><a class="btn btn-secondary my-2" href="#" id="salvar">Salvar</a> <br><br></div>
+            <div class="col-md-4"><button class="btn btn-secondary my-2" id="salvar">Salvar</button> <br><br></div>
             <div class="col-md-4"></div>
             <div class="col-md-2"></div>
             <div class="col-md-2"></div>
@@ -116,35 +120,37 @@
           <div class="form-group">
             <input id="idHorario" type="text" style="display: none;">
             <label>Periodo de Atividade</label>
-            <select class="form-control border-0 my-2" type="date" class="form-control border-0" id="periodoAtividade">
-              <option value="">Periodo de Atividade</option>
+            <select class="form-control border-0 my-2" type="date" data-ids='' class="form-control border-0" id="periodoatividade">
+              <option value="">Periodo &#60;inicio&#62;   &#60;final&#62; </option>
             </select>
 
             <label>Dia da Semana</label>
 
             <select class="form-control border-0 my-2" id="diaSemana">
-              <option>Segunda</option>
-              <option>Terça</option>
-              <option>Quarta</option>
-              <option>Quinta</option>
-              <option>Sexta</option>
-              <option>Sábado</option>
-              <option>Domingo</option>
+              <option value="1">Domingo</option>
+              <option value="2">Segunda</option>
+              <option value="3">Terça</option>
+              <option value="4">Quarta</option>
+              <option value="5">Quinta</option>
+              <option value="6">Sexta</option>
+              <option value="7">Sábado</option>
+              
             </select>
 
             <div class="row">
               <div class="col-md-4">
-                <div class="form-group"><label>Horário Inicial</label><input class="form-control border-0 my-2"
-                    type="time" id="horarioInicial">
+                <div class="form-group"><label>Horário Inicial</label>
 
-                  </input></div>
+                  <input class="form-control border-0 my-2" type="time" id="horarioInicial"></input>
+
+                </div>
               </div>
               <div class="col-md-1"></div>
               <div class="col-md-4">
-                <div class="form-group"><label>Horário Final</label><input class="form-control border-0 my-2"
-                    type="time" id="horarioFinal">
+                <div class="form-group"><label>Horário Final</label>
+                  <input class="form-control border-0 my-2" type="time" id="horarioFinal"></input>
 
-                  </input></div>
+                </div>
               </div>
             </div>
           </div>
@@ -166,14 +172,18 @@
 
     $(document).ready(function () {
 
+
+    Usuario.pegaUsuarioCurrent();
+
+    setTimeout(function(){ listaPeriodo(); pegaHorarioServico();}, 3000);
+
       $('#salvar').click(function () {
-        alert("wdopsdfopsdjf");
+        
         $('#salvar').prop('disabled', true);
-        adicionaHorarioDisp();
+        adicionaHorario();
         setTimeout(function () { $('#salvar').prop('disabled', false); }, 2000);
       });
 
-      pegaPeriodos();
 
     });
   </script>
