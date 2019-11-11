@@ -243,12 +243,14 @@ function listaPeriodo( ){
 		var periodo = JSON.parse(dados).data;
 		console.log(periodo);
 
+		var ids = '';
 		var texto;
 
 		// key é chave do JSON, item é o dado do JSON
 		// #tipeservico é o elemento select do html
 		$(periodo).each(function(key, item) {
 			texto = item.begin +" :: "+ item.end;
+			ids = ids + item.id_pa;
 			$("#periodoatividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
 		});
 
@@ -258,6 +260,10 @@ function listaPeriodo( ){
 			// console.log($("#periodoatividade option").first().text("Não há periodos de atividades") );
 		} 
 
+
+		$("#periodoatividade").setAttribute('data-ids','ids');
+
+		
 
 
 		

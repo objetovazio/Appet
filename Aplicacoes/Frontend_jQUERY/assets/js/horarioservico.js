@@ -46,8 +46,7 @@ function adicionaHorario(){
 function pegaHorarioServico(){
 
 
- 
-       
+        $("#periodoatividade").getAttribute('data-ids');
 
         var lista = [59]
         var data_request = {
