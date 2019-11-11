@@ -20,7 +20,7 @@ function mountPageData() {
 function setInformationPage(serviceData) {
     serviceData.forEach((currentService) => {
         addHtmlResult(currentService.id_service)
-        if (String(currentService.price)..split('.')[1].length > 1) {
+        if (String(currentService.price).split('.')[1].length > 1) {
             $('#value' + currentService.id_service).val(currentService.price);
             $('#value' + currentService.id_service).text(currentService.price);
         }
