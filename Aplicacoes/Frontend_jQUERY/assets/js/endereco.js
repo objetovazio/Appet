@@ -1,9 +1,7 @@
 function adicionaEndereco (){
 
-	var owner_list = [1];
-
 	var data_request = {
-		userId:"1",
+		userId:$("#id").val(),
 		cep:$("#cep").val(),
 		bairro:$("#bairro").val(),
 		cidade:$("#cidade").val(),
@@ -26,7 +24,6 @@ function adicionaEndereco (){
 		var texto = "Cadastro Endereço realizado!";
 		mensagem(texto, "Sucesso", 2000);
 
-		conlose.log(data_request);
 		}).fail( function (msg) {
 
 		var texto = "Falha ao realizar cadastro do endereço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
@@ -62,3 +59,42 @@ function adicionaEndereco (){
 		    return false;
 		}
 	}
+
+
+function pegaEndereco(){
+
+	var data_request = {
+		userId:$("#id").val(),
+		cep:"",
+		bairro:"",
+		cidade:"",
+		estado:"",
+		numero:""
+	};
+
+	console.log(data_request);
+
+	
+	$.get(rota_endereco, data_request, function(){
+	}).done( function (dados){
+
+
+			var endereco = JSON.parse(dados).data[0];
+
+			console.log(endereco);
+			
+			$("#idEndreco").val(endereco.address_id);
+			$("#cep").val(endereco.cep);
+			$("#bairro").val(endereco.bairro);
+			$("#cidade").val(endereco.city);
+			$("#estado").val(endereco.state);
+			$("#numero").val(endereco.num);	
+
+
+		}).fail( function (msg) {
+
+			var texto = "Falha ao realizar cadastro do endereço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+			mensagem(texto, "Erro",5000);
+		});
+	
+}
