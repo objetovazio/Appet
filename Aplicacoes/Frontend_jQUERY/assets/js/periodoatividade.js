@@ -76,12 +76,19 @@ function pegaListaPeriodoAtividade(){
 		periodoAtvidadeId:""
 	};
 	
-	alert(data_request);
+	console.log(data_request);
 	
 	$.get(rota_periodo_atividade, data_request, function(){
 	}).done( function (dados){
 
 		var periodo = JSON.parse(dados).data;
+
+		if (periodo.length == 0){
+
+			var texto = "Ainda não há Periodos de Atividade cadastrados! ";
+			mensagem(texto, "Atencao",5000);
+
+		}
 
 		$(periodo).each(function(index, elemento) {
 			adicionaLinha(elemento);

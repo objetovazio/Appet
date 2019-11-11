@@ -179,6 +179,16 @@ function listaPeriodo(  ){
 		var periodo = JSON.parse(dados).data;
 		console.log(periodo);
 
+
+		if (periodo.length == 0){
+
+			var texto = "Ainda não há Periodos de Atividade Cadastrado! " ;
+			mensagem(texto, "Atencao",5000);
+
+
+		}
+
+
 		var texto;
 
 		// key é chave do JSON, item é o dado do JSON
@@ -189,6 +199,7 @@ function listaPeriodo(  ){
 		});
 
 		if( $("#periodoatividade").children('option').length == 1){
+
 			$("#periodoatividade").append("<option value=''>Não há periodos de atividades</option>");
 			// console.log($("#periodoatividade option").first().text("Não há periodos de atividades") );
 		} 

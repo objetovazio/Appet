@@ -19,6 +19,29 @@ class Usuario {
 		}
 	}
 
+
+	static pegaUsuarioCurrent(){
+
+		$.get(rota_current_user, function () {
+		}).done(function (dados) {
+			
+			var usuario = JSON.parse(dados).data;
+			$("#id").val(usuario["user_id"]);
+			$("#nome").val(usuario["name"]);
+			$("#email").val(usuario["email"]);
+			$("#senha").val(usuario["password"]);
+			$("#sobre").val(usuario["about"]);
+
+		}).fail(function (msg) {
+
+			var texto = "Falha ao tentar recuperar os dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText;
+			mensagem(texto, "Erro", 5000);
+		});
+
+
+	}
+
+
 	static pegaUsuario() {
 
 		$.get(rota_user, function () {
