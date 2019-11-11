@@ -47,15 +47,14 @@
         <div class="col-md-12">
           <div class="list-group">
             <a id="titleRelat" href="#" class="list-group-item list-group-item-action active" style="pointer-events: none;">
-              Informações: Usuários cadastrados no Tipo
+              Informações: Usuários Cadastrados no Tipo
             </a>
 
             <!-- relatorio -->
             <a class="list-group-item">
 
-              <div id="relatorio" class="list-group-item" style="display:none;">
+              <div id="relatorio" class="list-group-item">
                     <!-- tabela -->
-
               </div>
 
             </a>
@@ -94,16 +93,20 @@
 
   <script>
     function JSONtoTable(data){
+      const headers = Object.keys(data[0]);
 
       return `
           <table>
             <tr>
-              ${Object.keys(data).map(Service => `<th>${Service}</th>`).join('')}
+              ${headers.map(title => `<th>${title}</th>`).join('')}
             </tr>
 
-            <tr>
-              ${Object.keys(data).map(Service => `<td>${data[Service]}</td>`).join('')}
-            </tr>
+             ${[...Array(data.length)].map((curr, line) => (
+                `<tr>
+                  ${headers.map((header) => `<td>${data[line][header]}</td>`).join('')}
+                 </tr>`
+              )).join('')}
+           
           </table>`
     }
 
@@ -124,10 +127,12 @@
       titleServico.append(csstype);
 
       const res = await getDataTypeService(param1);
-      console.log(res);
+      console.warn(JSONtoTable(res.data), res.data)
+      
+      if (res.data.length) {
+        $('#relatorio').replaceWith(JSONtoTable(res.data));
+      }
 
-      if (res) $('#relatorio').add(JSONtoTable(res.data));
-      //add or append
     });
 
   </script>
