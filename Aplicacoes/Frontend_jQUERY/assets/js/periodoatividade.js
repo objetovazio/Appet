@@ -17,32 +17,45 @@ function adicionarPeriodoAtividade(){
 	}else{
 		input_date_end = "";
 	}
-	owner = $("#id").val();
-	var data_request = {
-		beginDate:input_date_begin,
-		endDate:input_date_end,
-		ownerId:owner,
-		periodoAtvidadeId:$("#idPeriodo").val()
-	};
 
 
-	if (validaPeriodoAtividade(data_request) == true) {
-		
-		$.post(rota_periodo_atividade, data_request, function(){
-		}).done( function (){
+	if (  ( Number(raw_date_bagin[0]) <= Number(raw_date_end[0]) && Number(raw_date_bagin[1]) <= Number(raw_date_end[1]) && Number(raw_date_bagin[2]) <= Number(raw_date_end[2])) ){
 
-			var texto = "Cadastro do periodo de atividade realizado!";
-			mensagem(texto, "Sucesso", 2000);
+		owner = $("#id").val();
+		var data_request = {
+			beginDate:input_date_begin,
+			endDate:input_date_end,
+			ownerId:owner,
+			periodoAtvidadeId:$("#idPeriodo").val()
+		};
 
-			$("#idPeriodo").val("");
 
-			 pegaPeriodoAtividade(data_request);
+		if (validaPeriodoAtividade(data_request) == true) {
+			
+			$.post(rota_periodo_atividade, data_request, function(){
+			}).done( function (){
 
-		}).fail( function (msg) {
+				var texto = "Cadastro do periodo de atividade realizado!";
+				mensagem(texto, "Sucesso", 2000);
 
-			var texto = "Falha ao realizar cadastro do periodo de atividade! Status: " + msg.status + " | Motivo: " + msg.responseText ;
-			mensagem(texto, "Erro",5000);
-		});
+				$("#idPeriodo").val("");
+
+				 pegaPeriodoAtividade(data_request);
+
+			}).fail( function (msg) {
+
+				var texto = "Falha ao realizar cadastro do periodo de atividade! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+				mensagem(texto, "Erro",5000);
+			});
+		}
+
+
+
+	}else{
+
+		var texto = "O intervalo de datas não é válido!" ;
+		mensagem(texto, "Atencao",5000);
+
 	}
 
 }
