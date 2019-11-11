@@ -11,7 +11,7 @@ function mountPageData() {
             setInformationPage(simpleData);
         });
     } else {
-        getAdvancedServicePromise().then((advancedData)=>{
+        getAdvancedServicePromise().then((advancedData) => {
             setInformationPage(advancedData);
         });
     }
@@ -20,13 +20,19 @@ function mountPageData() {
 function setInformationPage(serviceData) {
     serviceData.forEach((currentService) => {
         addHtmlResult(currentService.id_service)
-        if (String(currentService.price).split('.')[1].length > 1) {
-            $('#value' + currentService.id_service).val(currentService.price);
-            $('#value' + currentService.id_service).text(currentService.price);
-        }
-        else {
-            $('#value' + currentService.id_service).val(String(currentService.price) + '0');
-            $('#value' + currentService.id_service).text(String(currentService.price) + '0');
+        isBrokenValue = String(currentService.price).split('.').length > 1;
+        if (isBrokenValue) {
+            if (String(currentService.price).split('.')[1].length > 1) {
+                $('#value' + currentService.id_service).val(currentService.price);
+                $('#value' + currentService.id_service).text(currentService.price);
+            }
+            else {
+                $('#value' + currentService.id_service).val(String(currentService.price) + '0');
+                $('#value' + currentService.id_service).text(String(currentService.price) + '0');
+            }
+        } else {
+            $('#value' + currentService.id_service).val(String(currentService.price) + '.00');
+            $('#value' + currentService.id_service).text(String(currentService.price) + '.00');
         }
         userOwner = getUserPromise(currentService.id_user).then((currentOwner) => {
             $('#owner' + currentService.id_service).val(currentOwner.name);
@@ -91,15 +97,12 @@ function getAdvancedServicePromise() {
             if (responsePromise != null) {
                 dataSend = {
                     'typeService': busca_data.serv != 'none' ? busca_data.serv : '',
-                    'ownerId':JSON.stringify(responsePromise)
-                }
+                    'ownerId': JSON.stringify(responsePromise)
+                };
             } else {
-                if(!(busca_data.serv != 'none')){
-                    window.location.replace('./pagamento-reprovado.html');
-                }
                 dataSend = {
-                    'typeService': busca_data.serv != 'none' ? busca_data.serv : '',
-                }
+                    'typeService': busca_data.serv !='none' ? busca_data.serv : ''
+                };
             }
             console.log(dataSend);
             $.get(rota_servico, dataSend, function () {
@@ -143,7 +146,7 @@ function getOwnerByAddress() {
         have_value = busca_data.bairro != 'none' || busca_data.cidade != 'none' || busca_data.estado != 'none'
         if (have_value) {
             dataSend = {
-                'bairro': busca_data.bairro != 'none' ? busca_data.bairro.replate(/_/g, ' ') : '',
+                'bairro': busca_data.bairro != 'none' ? busca_data.bairro.replace(/_/g, ' ') : '',
                 'cidade': busca_data.cidade != 'none' ? busca_data.cidade.replace(/_/g, ' ') : '',
                 'estado': busca_data.estado != 'none' ? busca_data.estado.replace(/_/g, ' ') : ''
             }
@@ -153,8 +156,8 @@ function getOwnerByAddress() {
             }).done((responseGet) => {
                 jsonResponse = JSON.parse(responseGet).data;
                 users_id = [];
-                jsonResponse.forEach((currentData)=>{
-                    if(!users_id.includes(currentData.id_user)){
+                jsonResponse.forEach((currentData) => {
+                    if (!users_id.includes(currentData.id_user)) {
                         users_id.push(currentData.id_user);
                     }
                 })
