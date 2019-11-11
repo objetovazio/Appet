@@ -5,7 +5,7 @@ $(document).ready(function () {
         var bairroText = $('#Bairro').val();
         var cidadeText = $('#Cidade').val();
         var estatoText = $('#Estado').val();
-        typeServiceQuery = typeService != 0 ? ('serv='+typeService) : 'serv=none&';
+        typeServiceQuery = typeService != 0 ? ('serv='+typeService+'&') : 'serv=none&';
         bairroQuery = bairroText != ''? ('bairro='+bairroText.replace(/ /g,'_')) : 'bairro=none&';
         cidadeQuery = cidadeText != ''? ('cidade='+cidadeText.replace(/ /g,'_')) : 'cidade=none&'; 
         estadoQuery = estatoText != ''? ('estado='+estatoText.replace(/ /g,'_')) : 'estado=none';
