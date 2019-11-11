@@ -43,3 +43,35 @@ async function getTypeServices(){
     //     mensagem(texto, "Erro",5000);
     // })
 }
+
+
+
+function getDataTypeService(){
+
+    var data_request = {
+        id_ts: "",
+        nome_ts:""
+    };
+
+    try {
+        const res = $.get(rota_tipo_servico, data_request);
+
+        const dados = JSON.parse(res);
+        return (dados);
+    
+    } catch (error) {
+        var texto = "Falha ao tentar recuperar dados do servidor! Status: " + error.status + " | Motivo: " + error.responseText ;
+        mensagem(texto, "Erro",5000);
+    }
+
+    // $.get(rota_relatorio_typeServices, function(){}).done( function(dados) {
+        
+    //     var rel2 = JSON.parse(dados);
+
+
+    // }).fail(function(msg){
+    //     var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+    //     mensagem(texto, "Erro",5000);
+    // })
+}
+

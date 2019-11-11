@@ -14,6 +14,8 @@
     <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/login.js"></script>
   <script type="text/javascript" src="assets/js/usuario.js"></script>
+  <script type="text/javascript" src="assets/js/endereco.js"></script>
+
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -86,29 +88,29 @@
                   placeholder="Descrição sobre você."></textarea></div>
               <div class="form-group"><label class="mt-2">Contato</label>
                 <div class="form-group">
-                  <select class="form-control border-0" id="contato">
+                  <select class="form-control border-0" id="tipo">
                     <option>Telefone Celular</option>
                     <option>Telefone Fixo</option>
                     <option>E-mail</option>
                   </select>
                 </div>
-                <input type="text" class="form-control mb-2" id="form17" placeholder="Digite aqui...">
+                <input type="text" class="form-control mb-2" id="contato" placeholder="Digite aqui...">
                 <a class="btn btn-light" href="#"><i class="fa fa-plus"></i>&nbsp;Adicionar outro Contato&nbsp;</a>
                 <div class="form-group" style=""><label></label></div>
               </div>
               <div class="form-group"><label class="mt-2">Endereço<br></label><input type="text"
-                  class="form-control mb-2" id="form17" placeholder="Rua Barnabé" required="required">
-                <div class="form-group"><input type="text" class="form-control mb-2" id="form17" placeholder="Bairro"
+                  class="form-control mb-2" id="cep" placeholder="CEP" required="required">
+                <div class="form-group"><input type="text" class="form-control mb-2" id="bairro" placeholder="Bairro"
                     required="required">
-                  <div class="form-group"><input type="text" class="form-control mb-2" id="form17" placeholder="Cidade"
+                  <div class="form-group"><input type="text" class="form-control mb-2" id="cidade" placeholder="Cidade"
                       required="required">
-                    <div class="form-group"><input type="text" class="form-control mb-2" id="form17"
+                    <div class="form-group"><input type="text" class="form-control mb-2" id="estado"
                         placeholder="Estado" required="required">
-                      <div class="form-group"><input type="text" class="form-control" id="form17" placeholder="CEP"
+                      <div class="form-group"><input type="text" class="form-control" id="numero" placeholder="Numero"
                           required="required"></div>
                     </div>
                   </div>
-                </div><a class="btn btn-light" href="#"><i class="fa fa-plus"></i>&nbsp;Adicionar outro Endereço</a>
+                </div><a class="btn btn-light" href="#" id="salvaEndereco"><i class="fa fa-plus"></i>&nbsp;Adicionar outro Endereço</a>
               </div>
             </div>
           </div>
@@ -146,6 +148,10 @@
         Usuario.atualizaUsuario();
 
       });
+
+      $('#salvaEndereco').click( function (){ 
+        adicionaEndereco(); 
+     });
 
       // Botao ver senha
       $("#versenha").click(function () {

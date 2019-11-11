@@ -41,8 +41,8 @@ function adicionaEndereco (){
 			if (endereco.cep.length == 0){
 			msg = "Preencha o campo CEP";
 			throw msg;}
-			if (endereco.cep.length != 9){
-			msg = "Campo CEP deve ter 9 digitos";
+			if (endereco.cep.length != 8){
+			msg = "Campo CEP deve ter 8 digitos";
 			throw msg;}
 			if (endereco.bairro.length == 0){
 			msg = "Preencha o campo bairro";

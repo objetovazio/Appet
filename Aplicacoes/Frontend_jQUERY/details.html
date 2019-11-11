@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
-  <title> Appet - Relatórios</title>
+  <title> Appet - Details</title>
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet">
@@ -14,9 +14,11 @@
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
-    <script type="text/javascript" src="assets/js/util.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/login.js"></script>
   <script type='text/javascript' src="assets/js/relatorios.js"></script>
+
+
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -34,7 +36,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="">Relatórios<br></h1>
+          <h1 class="">Relatórios - Detalhes<br></h1>
         </div>
       </div>
     </div>
@@ -56,18 +58,6 @@
               <span></span>
 
             </div>
-
-
-            <!-- relatorio 2 -->
-            <a id="opt2" href="#" class="list-group-item list-group-item-action">Contabilização entre Horários de
-              Serviços Cadastrados e Dias da Semana</a>
-            <div id="relatorio2" class="list-group-item" style="display:none; transition: all 1s;">
-
-              <span></span>
-
-            </div>
-
-
 
           </div>
         </div>
@@ -102,70 +92,29 @@
   </style>
 
   <script>
-    const daysOfWeek = ['DOMINGO', 'SEGUNDA', 'TERCA', 'QUARTA', 'QUINTA', 'SEXTA', 'SABADO'];
-
-    function JSONtoTableWeek(data) {
-
-      return `
-          <table>
-            <tr>
-              ${daysOfWeek.map(day => `<th>${day}</th>`).join('')}
-            </tr>
-
-            <tr>
-              ${daysOfWeek.map(day => `<td>${data[day] || 0}</td>`).join('')}
-            </tr>
-          </table>`
-    }
-
     function JSONtoTableTypeServ(data){
 
       return `
           <table>
             <tr>
-              ${Object.keys(data).map(Service => `<th><a href="details.html?typeService=${data[Service][0]}">${Service}</a></th>`).join('')}
+              ${Object.keys(data).map(Service => `<th><a href="/Details?typeService=${data[Service][0]}">${Service}</a></th>`).join('')}
             </tr>
 
             <tr>
               ${Object.keys(data).map(Service => `<td>${data[Service][1]}</td>`).join('')}
             </tr>
           </table>`
-
-
     }
+
 
 
     $(document).ready(() => {
       // hide/show relatorios
-      let relatorio1Selected = false;
-      let relatorio2Selected = false;
 
-      $('#opt1').click(async () => {
-        $('#relatorio1').css({ 'display': relatorio1Selected ? 'none' : 'block' });
+      const res = await getTypeServices();
+      console.log(res);
+      if (res) $('#relatorio1').children().replaceWith(JSONtoTableTypeServ(res.data))
 
-        if (!relatorio1Selected) {
-          const res = await getTypeServices();
-          console.log(res);
-          if (res) $('#relatorio1').children().replaceWith(JSONtoTableTypeServ(res.data))
-        }
-
-        relatorio1Selected = !relatorio1Selected;
-
-      });
-
-      $('#opt2').click(async () => {
-        $('#relatorio2').css({ 'display': relatorio2Selected ? 'none' : 'block' });
-
-        if (!relatorio2Selected) {
-          const res = await getWeekDayServices();
-          console.log(res);
-          if (res) $('#relatorio2').children().replaceWith(JSONtoTableWeek(res.data))
-        }
-
-        relatorio2Selected = !relatorio2Selected;
-
-
-      });
     });
   </script>
 
