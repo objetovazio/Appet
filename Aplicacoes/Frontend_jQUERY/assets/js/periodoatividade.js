@@ -18,8 +18,16 @@ function adicionarPeriodoAtividade(){
 		input_date_end = "";
 	}
 
+	var anoI = Number(raw_date_bagin[0])
+	var mesI = Number(raw_date_bagin[1])
+	var diaI = Number(raw_date_bagin[2])
 
-	if (  ( Number(raw_date_bagin[0]) <= Number(raw_date_end[0]) && Number(raw_date_bagin[1]) <= Number(raw_date_end[1]) && Number(raw_date_bagin[2]) <= Number(raw_date_end[2])) ){
+	var anoF = Number(raw_date_end[0])	
+	var mesF = Number(raw_date_end[1])
+	var diaF = Number(raw_date_end[2])
+
+
+	if (  (anoI<anoF) ||  (  (anoI==anoF) && (  (mesI<mesF)  || ( ( mesI == mesF ) && ( diaI < diaF ) ) ) )  ){
 
 		owner = $("#id").val();
 		var data_request = {
