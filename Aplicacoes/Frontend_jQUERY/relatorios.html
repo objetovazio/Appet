@@ -123,7 +123,7 @@
       return `
           <table>
             <tr>
-              ${Object.keys(data).map(Service => `<th><a href="details.html?typeService=${data[Service][0]}">${Service}</a></th>`).join('')}
+              ${Object.keys(data).map(Service => `<th><a href="details.html?typeService=${data[Service][0]}&service=${Service}">${Service}</a></th>`).join('')}
             </tr>
 
             <tr>
