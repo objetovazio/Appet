@@ -11,8 +11,9 @@
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
-    <script type="text/javascript" src="assets/js/util.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/login.js"></script>
+  <script type="text/javascript" src="assets/js/usuario.js"></script>
   <script type="text/javascript" src="assets/js/periodoatividade.js"></script>
 
   <!-- Bootstrap -->
@@ -40,7 +41,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-3">
-          <h4 class="" contenteditable="true"><b>Periodos de Atuação</b><br></h4>
+          <h4 class="" contenteditable="true"><b>Periodos de Atividade</b><br></h4>
           <button class="btn mt-2 text-dark btn-secondary" id="salvar">Salvar</button>
           <a class="btn mt-2 text-dark btn-secondary" style="margin-left: 10px;" href="meu-perfil.html" id="voltar">
             Voltar</a>
@@ -54,6 +55,8 @@
 
       <div class="row">
         <div class="col-md-4">
+
+          <input id="id" type="text" style="display: none">
 
           <input id="idPeriodo" type="text" style="display: none;">
 
@@ -119,7 +122,13 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
-      pegaListaPeriodoAtividade();
+
+
+      Usuario.pegaUsuario();
+
+      setTimeout(function(){pegaListaPeriodoAtividade();}, 2000);
+
+      
 
       $('#salvar').click(function () {
         $('#salvar').prop('disabled', true);

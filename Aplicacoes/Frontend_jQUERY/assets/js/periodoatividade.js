@@ -17,7 +17,7 @@ function adicionarPeriodoAtividade(){
 	}else{
 		input_date_end = "";
 	}
-	owner = 1;
+	owner = $("#id").val();
 	var data_request = {
 		beginDate:input_date_begin,
 		endDate:input_date_end,
@@ -68,13 +68,15 @@ function pegaPeriodoAtividade(periodoAtvidade){
 
 
 function pegaListaPeriodoAtividade(){
-	var onwer = 1
+	var onwer = $("#id").val()
 	var data_request = {
 		beginDate:"",
 		endDate:"",
 		ownerId:onwer,
 		periodoAtvidadeId:""
 	};
+	
+	alert(data_request);
 	
 	$.get(rota_periodo_atividade, data_request, function(){
 	}).done( function (dados){
