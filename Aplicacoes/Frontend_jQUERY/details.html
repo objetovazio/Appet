@@ -47,17 +47,19 @@
       <div class="row">
         <div class="col-md-12">
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" style="pointer-events: none;"> Selecione
-              uma opção</a>
+            <a id="titleRelat" href="#" class="list-group-item list-group-item-action active" style="pointer-events: none;">
+              Informações: Usuários cadastrados no Tipo
+            </a>
 
-            <!-- relatorio 1 -->
-            <a id="opt1" href="#" class="list-group-item list-group-item-action">Contabilização de Serviços
-              Cadastrados</a>
-            <div id="relatorio1" class="list-group-item" style="display:none;">
+            <!-- relatorio -->
+            <a class="list-group-item">
 
-              <span></span>
+              <div id="relatorio" class="list-group-item" style="display:none;">
+                    <!-- tabela -->
 
-            </div>
+              </div>
+
+            </a>
 
           </div>
         </div>
@@ -92,30 +94,43 @@
   </style>
 
   <script>
-    function JSONtoTableTypeServ(data){
+    function JSONtoTable(data){
 
       return `
           <table>
             <tr>
-              ${Object.keys(data).map(Service => `<th><a href="/Details?typeService=${data[Service][0]}">${Service}</a></th>`).join('')}
+              ${Object.keys(data).map(Service => `<th>${Service}</th>`).join('')}
             </tr>
 
             <tr>
-              ${Object.keys(data).map(Service => `<td>${data[Service][1]}</td>`).join('')}
+              ${Object.keys(data).map(Service => `<td>${data[Service]}</td>`).join('')}
             </tr>
           </table>`
     }
 
 
 
-    $(document).ready(() => {
-      // hide/show relatorios
+    $(document).ready(async() => {
 
-      const res = await getTypeServices();
+      const url = window.location.href;
+
+      const aux = (new URL(url))
+      const param1 = aux.searchParams.get('typeService')
+      let param2 = aux.searchParams.get('service')
+    
+      // capitalize type service and add to title 
+      param2 = param2.toLowerCase();  
+      var csstype = `<span id="nameService" style="text-transform: capitalize;">${param2}</span>`
+      var titleServico = $("#titleRelat");
+      titleServico.append(csstype);
+
+      const res = await getDataTypeService(param1);
       console.log(res);
-      if (res) $('#relatorio1').children().replaceWith(JSONtoTableTypeServ(res.data))
 
+      if (res) $('#relatorio1').(JSONtoTable(res.data))
+    
     });
+
   </script>
 
 

@@ -46,17 +46,25 @@ async function getTypeServices(){
 
 
 
-function getDataTypeService(){
-
+async function getDataTypeService(idType){
+    console.log(idType)
     var data_request = {
-        id_ts: "",
-        nome_ts:""
+        // title: "",
+        // about: "",
+        // price: "",
+        // owner: "",
+        // type: "",
+        // id_user: "",
+        id_type: idType,
+        //id_service: ""
     };
 
     try {
-        const res = $.get(rota_tipo_servico, data_request);
 
+        const res = await $.get(rota_servico, data_request);
+      
         const dados = JSON.parse(res);
+        
         return (dados);
     
     } catch (error) {
