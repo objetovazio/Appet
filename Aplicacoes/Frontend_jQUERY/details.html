@@ -19,7 +19,6 @@
   <script type='text/javascript' src="assets/js/relatorios.js"></script>
 
 
-
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
@@ -110,7 +109,7 @@
 
 
 
-    $(document).ready(async() => {
+    $(document).ready( async() => {
 
       const url = window.location.href;
 
@@ -127,8 +126,8 @@
       const res = await getDataTypeService(param1);
       console.log(res);
 
-      if (res) $('#relatorio1').(JSONtoTable(res.data))
-    
+      if (res) $('#relatorio').add(JSONtoTable(res.data));
+      //add or append
     });
 
   </script>
