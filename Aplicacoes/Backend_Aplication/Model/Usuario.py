@@ -16,5 +16,5 @@ class Usuario(BaseCon):
     email       = CharField(unique = True)
     senha       = CharField()
     sobre       = CharField(null = True)
-    is_adm      = IntegerField(defaut=0)
-    is_deleted  = IntegerField(defaut=0)
+    is_adm      = IntegerField(default=0)
+    is_deleted  = IntegerField(default=0)

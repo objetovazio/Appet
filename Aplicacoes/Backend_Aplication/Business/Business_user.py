@@ -54,29 +54,38 @@ def findUsers(user_query):
     if(user_query['user_name'] != None):
         if(user_query['email_user'] != None and user_query['about_user'] != None):
             query_result = User.Usuario.select().where((User.Usuario.nome.contains(user_query['user_name'])) &
-                                                       (User.Usuario.email == user_query['email_user']) & 
+                                                       (User.Usuario.email == user_query['email_user']) &
+                                                       (User.Usuario.is_deleted == 0)  &
                                                        (User.Usuario.sobre.contains(user_query['about_user'])) )
         else:
             
             if (user_query['email_user'] != None):
                 query_result = User.Usuario.select().where((User.Usuario.nome.contains(user_query['user_name'])) &
+                                                           (User.Usuario.is_deleted == 0)  &
                                                            (User.Usuario.email == user_query['email_user']))
             elif( user_query['about_user'] != None ):
                 query_result = User.Usuario.select().where((User.Usuario.nome.contains(user_query['user_name'])) &
+                                                           (User.Usuario.is_deleted == 0)  &
                                                            (User.Usuario.sobre.contains(user_query['about_user'])) )
             else:
-                query_result = User.Usuario.select().where((User.Usuario.email == user_query['email_user']) )
+                query_result = User.Usuario.select().where((User.Usuario.is_deleted == 0)  &
+                                                            (User.Usuario.email == user_query['email_user']) )
             
     elif (user_query['email_user'] != None):
         if (user_query['about_user'] != None):
             query_result = User.Usuario.select().where((User.Usuario.email == user_query['email_user']) &
+                                                       (User.Usuario.is_deleted == 0)  &
                                                        (User.Usuario.sobre.contains(user_query['about_user'])) )
         else:
             query_result =User.Usuario.select().where(
-                (User.Usuario.email == user_query['email_user']))
+                (User.Usuario.is_deleted == 0)  &
+                (User.Usuario.email == user_query['email_user'])
+                )
     else:
         query_result = User.Usuario.select().where(
-            (User.Usuario.sobre.contains(user_query['about_user'])) )
+            (User.Usuario.is_deleted == 0)  &
+            (User.Usuario.sobre.contains(user_query['about_user'])) 
+            )
     
     for find_user in query_result:
         final_result.append(_makeResultDic(find_user))
@@ -109,7 +118,8 @@ def _makeResultDic(user_obj):
         'name':user_obj.nome,
         'email':user_obj.email,
         'password':user_obj.senha,
-        'about':user_obj.sobre
+        'about':user_obj.sobre,
+        'admin':user_obj.is_adm
     }
     return user_dic
 #END ZONE
