@@ -555,9 +555,17 @@ def removeService(current_user):
 @app.route('/TypeService', methods=['POST'])
 @token_required
 def postTypeService(current_user):
-	name_service_type = request.form('nomeTipoServico')
+	#Apenas admin pode adicionar novos tipos de serivo.
+	if(current_user['admin'] == 1):
+		name_service_type = request.form('nomeTipoServico')
+		result_request =  b_tipoServ.createTypeService(name_service_type)
+		return json.dumps({'success': result_request}), 200, {'ContentType': 'application/json'}
+	else:
+		response = jsonify(str('[USER - REMOVE] INVALID REQUEST '))
+		response.status = 401
+		return response
 	# ADICIONAR CHAMADA DA CAMADA DE NEGOCIO PARA PROCESSAMENTO
-	return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+	
 
 # Rota para busca de Tipo de Serviço
 @app.route('/TypeService', methods=['GET'])
