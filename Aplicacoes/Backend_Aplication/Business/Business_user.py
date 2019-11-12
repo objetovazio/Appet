@@ -5,6 +5,7 @@ diretorio = dirname(dirname(abspath(__file__)))
 sys.path.append(diretorio)
 # ---------------------------------
 import Model.Usuario as User
+import json
 from passlib.hash import pbkdf2_sha256
 
 #POST METHOD ZONE
@@ -90,6 +91,15 @@ def findUsers(user_query):
     for find_user in query_result:
         final_result.append(_makeResultDic(find_user))
     return final_result
+
+def deleteUser(user_ids):
+    convert_ids = json.loads(user_ids)
+    query_data = User.Usuario.update(is_deleted = 1).where(User.Usuario.usuario_id.in_(convert_ids))
+    row_modified = query_data.execute()
+    if(row_modified > 0):
+        return True
+    else:
+        False
 
 def userLogin(user_query):
     email = user_query['email_user']

@@ -582,6 +582,24 @@ def postUser():
 	except Exception as err:
 		return erro_interno(err)
 
+#Apagar um usuario nao significa remover da base e sim desativar
+@app.route('/remove/user', methods=['POST'])
+@token_required
+def deleteUser(current_user):
+	try:
+		is_user_empty = is_parameter_empty(request.form['userId'])
+		if (is_user_empty):
+			raise Exception('[CONTRATACAO - GET] INVALID REQUEST ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	request_result = b_user.deleteUser(request.form['userId'])
+	if(request_result):
+		return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
+	else:
+		return json.dumps({'success': request_result}), 500, {'ContentType': 'application/json'}
+
+
 # Rota para busca de usuario
 @app.route('/user', methods=['GET'])
 @token_required
