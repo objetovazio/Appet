@@ -13,7 +13,8 @@ A aplicação faz uso das seguintes tecnologias:
 * Flask - Framework Python utlizado no back-end.
 * Peewee - ORM Python.
 * ElephantSQL - Servidor em nuvem PostgreSQL.
-* Angular 7 - Framework JavaScript utilizado no front-end.
+* ~~Angular 7 - Framework JavaScript utilizado no front-end.~~
+* Live-Server - Servidor de desenvolvimento para aplicação front-end
 
 ### Descrição
 Tendo em mente a crescente do mercado voltado para pet,  o sistema tem como objetivo facilitar o acesso de serviços relacionado à esse nicho, tanto do lado prestador de serviço quanto do contratante. Para facilitar a busca dos donos de animais por serviços voltados para pets, seria interessante ter um sistema que dispõe e organiza informações sobre empresas ou pessoas prestadoras desse tipo de serviço.
