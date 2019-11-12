@@ -17,3 +17,4 @@ class HorarioServico(BaseCon):
     dia_semana = IntegerField()
     horario_inicio = TimeField()
     horario_fim = TimeField()
+    is_deleted = IntegerField(default=0)

@@ -331,6 +331,22 @@ def postServiceSchedule(current_user):
 			response_request = b_horarioServico.createSchedule(schedule_data)
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
+@app.rout('/remove/ServiceSchedule', methods=['POST'])
+@token_required
+def removeHorario(current_user):
+	try:
+		is_service_empty = is_parameter_empty(request.form['horarioId'])
+		if (is_service_empty):
+			raise Exception('[Horario - REMOVE] INVALID REQUEST ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	request_result = b_horarioServico.deleteHorario(request.form['horarioId'])
+	if(request_result):
+		return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
+	else:
+		return json.dumps({'success': request_result}), 500, {'ContentType': 'application/json'}
+
 @app.route('/ServiceSchedule', methods=['GET'])
 #@token_required
 def getServiceSchedule():
@@ -519,6 +535,22 @@ def getService(current_user):
 	return json.dumps({'success': True,
 	'data':data_result}), 200, {'ContentType': 'application/json'}
 
+@app.rout('/remove/Service', methods=['POST'])
+@token_required
+def removeService(current_user):
+	try:
+		is_service_empty = is_parameter_empty(request.form['serviceId'])
+		if (is_service_empty):
+			raise Exception('[SERVICE - REMOVE] INVALID REQUEST ')
+	except Exception as err:
+		print(err)
+		handle_invalid(err)
+	request_result = b_servico.deleteService(request.form['serviceId'])
+	if(request_result):
+		return json.dumps({'success': request_result}), 200, {'ContentType': 'application/json'}
+	else:
+		return json.dumps({'success': request_result}), 500, {'ContentType': 'application/json'}
+
 # Rota para criacao e atualizacao de Tipo de Serviço
 @app.route('/TypeService', methods=['POST'])
 @token_required
@@ -589,7 +621,7 @@ def deleteUser(current_user):
 	try:
 		is_user_empty = is_parameter_empty(request.form['userId'])
 		if (is_user_empty):
-			raise Exception('[CONTRATACAO - GET] INVALID REQUEST ')
+			raise Exception('[USER - REMOVE] INVALID REQUEST ')
 	except Exception as err:
 		print(err)
 		handle_invalid(err)

@@ -21,3 +21,4 @@ class Servico(BaseCon):
     id_usuario = ForeignKeyField(Usuario)
     ## FK relacional com o usuario dono de tal contato
     id_tipo = ForeignKeyField(TipoServico)
+    is_deleted = IntegerField(default=0)
