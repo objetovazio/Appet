@@ -84,7 +84,7 @@
 
 
       <div class="table-responsive">
-        <table id="tabelaHorario" class="table table-bordered ">
+        <table id="tabelaHorario" class="table table-bordered table-all">
           <thead class="thead-dark">
             <th style="min-width: 100px; max-width: 100px;" class="text-center">Periodo Atividade</th>
             <th style="min-width: 100px; max-width: 100px;" class="text-center">Dia da Semana</th>
@@ -93,13 +93,13 @@
             <th style="min-width: 100px; max-width: 100px;" class="text-center">Ação</th>
           </thead>
           <tbody>
-            <tr>
+<!--             <tr>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
@@ -176,7 +176,7 @@
     Usuario.pegaUsuarioCurrent();
 
     setTimeout(function(){ listaPeriodo(); }, 2000);
-    setTimeout(function(){ pegaHorarioServico(); }, 5000);
+    setTimeout(function(){ pegalistaHorarioServico(); }, 5000);
 
       $('#salvar').click(function () {
         
