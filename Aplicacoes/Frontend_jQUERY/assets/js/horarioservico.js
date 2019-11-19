@@ -25,7 +25,7 @@ function adicionaHorario(){
                 $("#horarioFinal").val("");
 
 
-                pegaHorarioServico();
+                pegaHorarioServico( );
 
                 var texto = "Cadastro de Horário de Serviço realizado!";
                 mensagem(texto, "Sucesso", 2000);
@@ -41,34 +41,40 @@ function adicionaHorario(){
 };
 
 
+function pegaHorarioServico( ){
 
 
-function pegaHorarioServico(){
+        var ids = $("#periodoatividade").attr('data-ids').split(" ");
+        //remove  o ultimo elemento e retorna ele
+        ids.pop();
 
+        // alert(ids);
+        console.log(ids);
 
-        $("#periodoatividade").getAttribute('data-ids');
-
-        var lista = [59]
         var data_request = {
         id:"",
-        periodId: JSON.stringify(lista),
+        periodId: JSON.stringify(ids),
         beginTime:"",
         endTime:"",
         weekDay: ""
        
     }
-
+    console.log("enviou");
+     
     console.log(data_request);
     
     $.get(rota_horario_Servico, data_request, function(){
     }).done( function (dados){
 
-        var horario_servico = JSON.parse(dados);
+        var horario_servico = JSON.parse(dados).data;
 
         console.log("recebeu");
         console.log(horario_servico);
 
-        adicionaLinhaH(horario_servico);
+        $(horario_servico).each(function(index, elemento) {
+            adicionaLinhaH(elemento);
+        });
+      
 
 
     }).fail( function (msg) {
@@ -113,36 +119,38 @@ function validarHorarioServico(horario_servico) {
 
 function adicionaLinhaH(horario_servico) {
 
-    var linha = "<tr data-id='"+ horario_servico.id +"'>" +
-                    "<td data-pAtividade = '"+ horario_servico.period +"'>"+ 
-                        horario_servico.period +
+    console.log(horario_servico);
+    var linha = "<tr data-id='"+ horario_servico.schedule_id +"'>" +
+                    "<td data-pAtividade = '"+ horario_servico.period_id +"'>"+ 
+                       periodo_formato( horario_servico.period_id ) +
                     "</td>" +
                     "<td data-week = '"+ horario_servico.week_day +"'>"+ 
-                        horario_servico.week_day +
+                        semana(horario_servico.week_day) +
                     "</td>" + 
-                    "<td data-tInicio = '"+ horario_servico.begin_hour +"'>"+ 
-                        horario_servico.begin_hour +
+                    "<td data-tInicio = '"+ horario_servico.begin_time +"'>"+ 
+                        hora_formato ( horario_servico.begin_time ) +
                     "</td>" +
                     "<td data-tFinal = '"+ horario_servico.end_time +"'>"+ 
-                        horario_servico.end_time +
+                       hora_formato ( horario_servico.end_time ) +
                     "</td>" +
                     "<td>" + 
-                        "<a onclick='atualizaLinha(this);'  style='cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
-                        "<a onclick='removeLinha(this);'  style='margin-left: 10px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
+                        "<a onclick='atualizaLinhaH(this);'  style='cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
+                        "<a onclick='removeLinhaH(this);'  style='margin-left: 10px; padding-left:10px;cursor:pointer;' title='Excluir'><i class='fa fa-times'></i></a>" + 
                     "</td>" +
                 "</tr>";
 
 
     // remove a linha
     // $("#tabelaPeriodo  tr[data-id='" + periodoAtvidade.id_periodo_atividade + "']").remove();
-    if ($("#tabelaPeriodo  tr[data-id='" + horario_servico.id + "']").length){
+    if ($("#tabelaHorario  tr[data-id='" + horario_servico.schedule_id + "']").length){
 
-         $("#tabelaPeriodo  tr[data-id='" + horario_servico.id + "']").remove();
+         $("#tabelaHorario  tr[data-id='" + horario_servico.schedule_id + "']").remove();
 
     }
     // preoend adiciona a primeira linha
     // append adiciona no final
-    $("#tabelaPeriodo").prepend(linha );
+    console.log(linha);
+    $("#tabelaHorario").prepend( linha );
     
 
 
@@ -159,12 +167,49 @@ function removeLinhaH(elementoExcluir){
 
 function atualizaLinhaH(elementoAtualiza){
 
-    // var id = $(elementoAtualiza).parents("tr").data("id");
+    var idhorarioservico = $(elementoAtualiza).parents("tr").data("id");
+    var idperiodo = $(elementoAtualiza).parents("td").data("pAtividade");
     // var dInicial = $(elementoAtualiza).parents("tr").children()[0].attributes[0].value;
     // var dFinal = $(elementoAtualiza).parents("tr").children()[1].attributes[0].value;
-
+    alert(idhorarioservico);
+    alert(idperiodo);
     // $("#idPeriodo").val(id);
     // $("#dataInicial").val(dInicial);
     // $("#dataFinal").val(dFinal);
 
+}
+
+
+
+function semana ( numero ){
+
+    if (numero == "1") return "Domingo";
+    if (numero == "2") return "Segunda";
+    if (numero == "3") return "Terça";
+    if (numero == "4") return "Quarta";
+    if (numero == "5") return "Quinta";
+    if (numero == "6") return "Sexta";
+    if (numero == "7") return "Sábado";
+
+}
+
+
+function hora_formato( numero ){
+
+    return numero.slice(0, 2) + ":" + numero.slice(2, 4);
+
+}
+
+
+function periodo_formato( numero ){
+
+    var texto = "";
+    $("#periodoatividade option").each(function () {
+        if ($(this).val() != "" && $(this).val() == numero){
+             texto =  $(this).text();
+
+        }
+     });
+
+    return texto;
 }

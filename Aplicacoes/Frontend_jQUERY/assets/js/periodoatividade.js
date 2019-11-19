@@ -250,7 +250,7 @@ function listaPeriodo( ){
 		// #tipeservico é o elemento select do html
 		$(periodo).each(function(key, item) {
 			texto = item.begin +" :: "+ item.end;
-			ids = ids + item.id_pa;
+			ids = ids + item.id_periodo_atividade + " ";
 			$("#periodoatividade").append($("<option>").attr('value',item.id_periodo_atividade).text(texto));
 		});
 
@@ -261,7 +261,9 @@ function listaPeriodo( ){
 		} 
 
 
-		$("#periodoatividade").setAttribute('data-ids','ids');
+
+		$("#periodoatividade").attr('data-ids',ids);
+		   $("#periodoatividade").attr('data-ids');
 
 		
 
