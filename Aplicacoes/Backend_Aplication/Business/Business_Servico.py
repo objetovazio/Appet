@@ -103,7 +103,7 @@ def searchService(serv_query):
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.id_tipo == serv_query['type'])&
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 		elif(have_about):
@@ -113,7 +113,7 @@ def searchService(serv_query):
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 			elif(have_price and have_type):
@@ -122,7 +122,7 @@ def searchService(serv_query):
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_tipo == serv_query['type']) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 			elif(have_type and have_owner):
@@ -130,7 +130,7 @@ def searchService(serv_query):
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 			elif (have_price):
@@ -138,34 +138,34 @@ def searchService(serv_query):
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 			elif(have_owner):
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) 
 			)
 			elif(have_type):
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 			else:
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.descricao.contains(serv_query['about']))
 			)
 		elif(have_price):
 			if(have_owner and have_type):
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.id_tipo == serv_query['type']) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
@@ -176,14 +176,14 @@ def searchService(serv_query):
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 			elif(have_type):
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.id_tipo == serv_query['type']) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
@@ -191,27 +191,27 @@ def searchService(serv_query):
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 		elif(have_owner):
 			if(have_type):
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 			else:
 				result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) 
 			)
 		else:
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.titulo.contains(serv_query['titulo']))&
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 	
@@ -221,7 +221,7 @@ def searchService(serv_query):
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.id_tipo == serv_query['type']) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
@@ -229,7 +229,7 @@ def searchService(serv_query):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
@@ -237,7 +237,7 @@ def searchService(serv_query):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_tipo == serv_query['type']) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
@@ -245,31 +245,31 @@ def searchService(serv_query):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 		elif (have_price):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 		elif(have_owner):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) 
 			)
 		elif (have_type):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.descricao.contains(serv_query['about'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 		else:
 			result_query = Serv.Servico.select().where(
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.descricao.contains(serv_query['about']))
 			)
 	
@@ -278,28 +278,28 @@ def searchService(serv_query):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
 			(Serv.Servico.id_tipo == serv_query['type'])&
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 		elif(have_owner):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 		elif(have_type):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.id_tipo == serv_query['type']) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 		else:
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.preco < (0.5)+float(serv_query['price'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
             (Serv.Servico.preco > (-0.5)+float(serv_query['price']))
 			)
 	
@@ -307,17 +307,17 @@ def searchService(serv_query):
 		if(have_type):
 			result_query = Serv.Servico.select().where(
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) &
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type'])
 			)
 		else:
 			result_query = Serv.Servico.select().where(
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_usuario.in_(serv_query['owner'])) 
 			)
 	else:
 		result_query = Serv.Servico.select().where(
-			(Serv.Servico.is_deleted = 0) &
+			(Serv.Servico.is_deleted == 0) &
 			(Serv.Servico.id_tipo == serv_query['type']) 
 			)
 	for ser_find in result_query:

@@ -331,7 +331,7 @@ def postServiceSchedule(current_user):
 			response_request = b_horarioServico.createSchedule(schedule_data)
 	return json.dumps({'success': response_request}), 200, {'ContentType': 'application/json'}
 
-@app.rout('/remove/ServiceSchedule', methods=['POST'])
+@app.route('/remove/ServiceSchedule', methods=['POST'])
 @token_required
 def removeHorario(current_user):
 	try:
@@ -535,7 +535,7 @@ def getService(current_user):
 	return json.dumps({'success': True,
 	'data':data_result}), 200, {'ContentType': 'application/json'}
 
-@app.rout('/remove/Service', methods=['POST'])
+@app.route('/remove/Service', methods=['POST'])
 @token_required
 def removeService(current_user):
 	try:
