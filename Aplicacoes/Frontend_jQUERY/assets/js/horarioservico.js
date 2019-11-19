@@ -14,34 +14,35 @@ function adicionaHorario(){
 		horarioId:$("#idHorario").val()
     }
 
+     console.log("enviadoooo");
      console.log(data_request);
-    if (validarHorarioServico(data_request)){
+    // if (validarHorarioServico(data_request)){
 
 
-            $.post(rota_horario_Servico, data_request, function(){
-            }).done( function (){
+    //         $.post(rota_horario_Servico, data_request, function(){
+    //         }).done( function (){
 
-                $("#horarioInicial").val("");
-                $("#horarioFinal").val("");
+    //             $("#horarioInicial").val("");
+    //             $("#horarioFinal").val("");
 
 
-                pegaHorarioServico( );
+    //             pegaHorarioServico( data_request );
 
-                var texto = "Cadastro de Horário de Serviço realizado!";
-                mensagem(texto, "Sucesso", 2000);
+    //             var texto = "Cadastro de Horário de Serviço realizado!";
+    //             mensagem(texto, "Sucesso", 2000);
 
-            }).fail( function (msg) {
+    //         }).fail( function (msg) {
 
-                var texto = "Falha ao realizar cadastro do Horário de Serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
-                mensagem(texto, "Erro",5000);
-            });
-    }
+    //             var texto = "Falha ao realizar cadastro do Horário de Serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+    //             mensagem(texto, "Erro",5000);
+    //         });
+    // }
    
 
 };
 
 
-function pegaHorarioServico( ){
+function pegalistaHorarioServico( ){
 
 
         var ids = $("#periodoatividade").attr('data-ids').split(" ");
@@ -62,6 +63,32 @@ function pegaHorarioServico( ){
     console.log("enviou");
      
     console.log(data_request);
+    
+    $.get(rota_horario_Servico, data_request, function(){
+    }).done( function (dados){
+
+        var horario_servico = JSON.parse(dados).data;
+
+        console.log("recebeu");
+        console.log(horario_servico);
+
+        $(horario_servico).each(function(index, elemento) {
+            adicionaLinhaH(elemento);
+        });
+      
+
+
+    }).fail( function (msg) {
+
+        var texto = "Falha ao tentar recuperar dados do servidor! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+        mensagem(texto, "Erro",5000);
+    });
+    
+}
+
+
+
+function pegaHorarioServico( data_request ){
     
     $.get(rota_horario_Servico, data_request, function(){
     }).done( function (dados){
@@ -119,7 +146,7 @@ function validarHorarioServico(horario_servico) {
 
 function adicionaLinhaH(horario_servico) {
 
-    console.log(horario_servico);
+    // console.log(horario_servico);
     var linha = "<tr data-id='"+ horario_servico.schedule_id +"'>" +
                     "<td data-pAtividade = '"+ horario_servico.period_id +"'>"+ 
                        periodo_formato( horario_servico.period_id ) +
@@ -149,7 +176,7 @@ function adicionaLinhaH(horario_servico) {
     }
     // preoend adiciona a primeira linha
     // append adiciona no final
-    console.log(linha);
+    // console.log(linha);
     $("#tabelaHorario").prepend( linha );
     
 
@@ -168,14 +195,16 @@ function removeLinhaH(elementoExcluir){
 function atualizaLinhaH(elementoAtualiza){
 
     var idhorarioservico = $(elementoAtualiza).parents("tr").data("id");
-    var idperiodo = $(elementoAtualiza).parents("td").data("pAtividade");
-    // var dInicial = $(elementoAtualiza).parents("tr").children()[0].attributes[0].value;
-    // var dFinal = $(elementoAtualiza).parents("tr").children()[1].attributes[0].value;
-    alert(idhorarioservico);
-    alert(idperiodo);
-    // $("#idPeriodo").val(id);
-    // $("#dataInicial").val(dInicial);
-    // $("#dataFinal").val(dFinal);
+    var idperiodo = $(elementoAtualiza).parents("tr").children()[0].attributes[0].value;
+    var diasemana = $(elementoAtualiza).parents("tr").children()[1].attributes[0].value;
+    var horainicial = $(elementoAtualiza).parents("tr").children()[2].attributes[0].value;
+    var horafinal = $(elementoAtualiza).parents("tr").children()[3].attributes[0].value;
+
+    $("#horarioInicial").val(horainicial.slice(0, 2)+":"+horainicial.slice(2, 4)+":00");
+    $("#horarioFinal").val(horafinal.slice(0, 2)+":"+horafinal.slice(2, 4)+":00");
+    $("#periodoatividade").val(idperiodo).change();
+    $("#diaSemana").val(diasemana).change();
+    $("#idHorario").val(idhorarioservico);
 
 }
 
