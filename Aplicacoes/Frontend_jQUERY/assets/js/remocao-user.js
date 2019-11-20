@@ -15,7 +15,7 @@ function addButtonsEvent() {
         sendRequest();
     });
 
-    $('#services').delegate('.remove-item', 'click', (evt) => {
+    $('#users').delegate('.remove-item', 'click', (evt) => {
         id_linha = evt.target.dataset.line;
         $('#linha_' + id_linha).remove();
     })
@@ -23,17 +23,16 @@ function addButtonsEvent() {
 }
 
 function addInfoTable() {
-    $.get(rota_servico, { service_id: $('#service-input').val() }, () => {
+    $.get(rota_user, { userId: $('#user-input').val() }, () => {
 
     }).done((response) => {
         obj_result = JSON.parse(response).data[0]
-        new_row = '<tr id="linha_' + obj_result.id_service + '" data-line=' + obj_result.id_service + '>' +
-            '<td>' + obj_result.id_service + '</td>' +
-            '<td>' + obj_result.title + '</td>' +
-            '<td>' + obj_result.id_user + '</td>' +
-            '<td> <button class="btn remove-item" type="button" data-line=' + obj_result.id_service + '><i  class="fa fa-trash" aria-hidden="true"></i> </button></td>' +
+        new_row = '<tr id="linha_' + obj_result.user_id + '" data-line=' + obj_result.user_id + '>' +
+            '<td>' + obj_result.user_id + '</td>' +
+            '<td>' + obj_result.name + '</td>' +
+            '<td> <button class="btn remove-item" type="button" data-line=' + obj_result.user_id + '><i  class="fa fa-trash" aria-hidden="true"></i> </button></td>' +
             '</tr>';
-        $('#services tbody').append(new_row);
+        $('#users tbody').append(new_row);
     })
 }
 function removeItemList() {
@@ -42,14 +41,14 @@ function removeItemList() {
 
 function sendRequest() {
     requestIds = [];
-    linesRequest = $('#services tbody')[0].children;
+    linesRequest = $('#users tbody')[0].children;
     if (linesRequest.length > 0) {
         for (i = 0; i < linesRequest.length; i++) {
             if (!requestIds.includes(linesRequest[i].dataset.line)) {
                 requestIds.push(linesRequest[i].dataset.line);
             }
         }
-        $.post(rota_remove_service, { serviceId: JSON.stringify(requestIds) }, () => {
+        $.post(rota_remove_user, { serviceId: JSON.stringify(requestIds) }, () => {
 
         }).done((response) => {
             var response_success = JSON.parse(response)
