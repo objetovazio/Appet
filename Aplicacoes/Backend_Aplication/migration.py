@@ -6,8 +6,7 @@ data_base = PostgresqlDatabase('eqvhegcr',
                                       host='motty.db.elephantsql.com', port=5432)
 migrator = PostgresqlMigrator(data_base)
 
-is_deleted = IntegerField(default=0)
+is_deleted = CharField(null = True)
 migrate(
-    migrator.add_column('servico','is_deleted',is_deleted),
-    migrator.add_column('horarioservico','is_deleted',is_deleted),
+    migrator.add_column('usuario','google_id',is_deleted),
 )

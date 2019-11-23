@@ -23,6 +23,16 @@ def createUser(user_data):
         return False
     return True
 
+def createGoogleUser(google_user):
+    fakeHash = pbkdf2_sha256.hash(google_user['googleid'][0:5])
+    new_user = User.Usuario(nome=google_user['name'],email=google_user['email'],
+    google_id=google_user['googleid'], senha=fakeHash)
+    try:
+        new_user.save()
+    except Exception as err:
+        print(err)
+        return False
+    return _makeResultDic(new_user)
 
 # user_data = (DIC) novas informacoes sobre o usuario
 # user_id = (STR) id do usuario a ser atualizado
@@ -51,7 +61,11 @@ def findUsers(user_query):
         query_result = User.Usuario.get_by_id(user_query['user_id'])
         final_result.append(_makeResultDic(query_result))
         return final_result
-
+    if(user_query['googleid']!=None):
+        query_result = User.Usuario.select().where(User.Usuario.google_id == user_query['googleid'])
+        for result in query_result:
+            final_result.append(_makeResultDic(result))
+        return final_result
     if(user_query['user_name'] != None):
         if(user_query['email_user'] != None and user_query['about_user'] != None):
             query_result = User.Usuario.select().where((User.Usuario.nome.contains(user_query['user_name'])) &
@@ -129,7 +143,8 @@ def _makeResultDic(user_obj):
         'email':user_obj.email,
         'password':user_obj.senha,
         'about':user_obj.sobre,
-        'admin':user_obj.is_adm
+        'admin':user_obj.is_adm,
+        'google_id':user_obj.google_id
     }
     return user_dic
 #END ZONE

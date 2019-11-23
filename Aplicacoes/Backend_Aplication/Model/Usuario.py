@@ -18,3 +18,4 @@ class Usuario(BaseCon):
     sobre       = CharField(null = True)
     is_adm      = IntegerField(default=0)
     is_deleted  = IntegerField(default=0)
+    google_id   = CharField(null = True)
