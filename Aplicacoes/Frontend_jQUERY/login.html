@@ -2,6 +2,8 @@
 <html>
 
 <head>
+  <meta name="google-signin-client_id"
+    content="395714837629-f1hj6ll2g5e5hc86s8jphsuj11fhi9mm.apps.googleusercontent.com">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
@@ -11,9 +13,10 @@
   <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
   <script type="text/javascript" src="assets/js/rotas.js"></script>
-    <script type="text/javascript" src="assets/js/util.js"></script>
+  <script type="text/javascript" src="assets/js/util.js"></script>
   <script type="text/javascript" src="assets/js/login.js"></script>
   <script type="text/javascript" src="assets/js/usuario.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -59,8 +62,7 @@
               class="form-control" placeholder="******" required="required" name="senha"> </div><a
             class="btn btn-link ml-0 mt-0 pl-0" href="#" style="">Esqueci minha senha<br></a>
           <button id="login" type="submit" class="btn btn-block btn-outline-light p-2 pt-0 mt-2">Entrar<br></button>
-          <a class="btn text-left w-100 py-2 btn-dark border mt-4" href="#"><u><i
-                class="fa fa-fw fa-google">&nbsp;</i>Entrar com o Google</u><br></a>
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
         </div>
       </div>
     </div>
@@ -73,7 +75,6 @@
   <!--  Rodape -->
   <div id="footer"></div>
   <!--  Rodape -->
-
   <script type="text/javascript">
     $(document).ready(function () {
 
@@ -89,8 +90,49 @@
         Usuario.efetuarLogin(data_request);
         setTimeout(function () { $('#login').prop('disabled', false); }, 2000);
       });
-
     });
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      var data_request = {
+        nomeUser: profile.getName(),
+        emailUser: profile.getEmail(),
+        g_id: profile.getId()
+
+      };
+      $.get(rota_user, { g_id: profile.getId() }, () => {
+
+      }).done((userResponse) => {
+        jsonResponse = JSON.parse(userResponse).data;
+        if (jsonResponse.length == 0) {
+          $.post(rota_googleuser, data_request, () => {
+
+          }).done((createResult) => {
+            var result = JSON.parse(createResult);
+            if (result['success']) {
+              var texto = "Login efetuado com sucesso!";
+              mensagem(texto, "Sucesso", 5000);
+
+              var token = result['token']
+              $.cookie('token', token)
+
+              setTimeout(function () {
+                window.location = './meu-perfil.html';
+              }, 2000);
+            }
+            else {
+              mensagem("Usuário ou senha incorretos.", "Erro", 5000);
+            }
+          })
+        }
+        else{
+          var login_request = {
+            emailUser: jsonResponse[0].email,
+            senha: jsonResponse[0].google_id.slice(0,5)
+          }
+          Usuario.efetuarLogin(login_request);
+        }
+      })
+    };
   </script>
 </body>
 

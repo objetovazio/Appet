@@ -125,11 +125,12 @@ class Usuario {
 			mensagem("O campo email é obrigatório.", "Atencao", 5000);
 			return;
 		}
-
+		if(usuario['g_id']==''){
 		if (usuario['senha'] == '') {
 			mensagem("O campo senha é obrigatório.", "Atencao", 5000);
 			return;
-		}
+		}}
+
 
 		$.post(rota_login, usuario, function () {
 		}).done(function (data) {
