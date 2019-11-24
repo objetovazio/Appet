@@ -5,38 +5,58 @@ function adicionaHorario(){
 
     var horaInicio = raw_time_begin.split(":")[0]  + raw_time_begin.split(":")[1] + "00";
     var horaFinal = raw_time_end.split(":")[0]  + raw_time_end.split(":")[1] + "00";
-   
-	var data_request = {
-		periodoId: $("#periodoatividade").children("option:selected").val(),
+    
+
+
+    var data_request = {
+        periodoId: $("#periodoatividade").children("option:selected").val(),
         beginTime:horaInicio,
         endTime:horaFinal,
         weekDay: $("#diaSemana").val(),
-		horarioId:$("#idHorario").val()
+       
     }
+    //adicionar no array
+    //obj.key3 = "value3";
+    //obj["key3"] = "value3";
 
-     console.log("enviadoooo");
-     console.log(data_request);
-    // if (validarHorarioServico(data_request)){
+   if( $("#idHorario").val().length != 0){
+        data_request.serviceSchedule = $("#idHorario").val();
+   }
+
+    console.log("enviadoooo");
+    console.log(data_request);
+    if (validarHorarioServico(data_request)){
 
 
-    //         $.post(rota_horario_Servico, data_request, function(){
-    //         }).done( function (){
+            $.post(rota_horario_Servico, data_request, function(){
+            }).done( function (){
 
-    //             $("#horarioInicial").val("");
-    //             $("#horarioFinal").val("");
+                $("#horarioInicial").val("");
+                $("#horarioFinal").val("");
+                $("#idHorario").val("");
 
+                pegaHorarioServico( data_request );
 
-    //             pegaHorarioServico( data_request );
+                var texto = "";
+                if( "serviceSchedule" in data_request){
+                    texto = "Atualização de Horário de Serviço realizado!";
+                }else{
+                    texto = "Cadastro de Horário de Serviço realizado!";
+                }
+                
+                mensagem(texto, "Sucesso", 2000);
 
-    //             var texto = "Cadastro de Horário de Serviço realizado!";
-    //             mensagem(texto, "Sucesso", 2000);
-
-    //         }).fail( function (msg) {
-
-    //             var texto = "Falha ao realizar cadastro do Horário de Serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
-    //             mensagem(texto, "Erro",5000);
-    //         });
-    // }
+            }).fail( function (msg) {
+                var texto = "";
+                if(data_request.serviceSchedule.length == 0){
+                    texto = "Falha ao realizar cadastro do Horário de Serviço!";
+                }else{
+                    texto = "Falha ao realizar atualização do Horário de Serviço!";
+                }
+                texto = texto + "Status: " + msg.status + " | Motivo: " + msg.responseText ;
+                mensagem(texto, "Erro",5000);
+            });
+    }
    
 
 };
@@ -154,11 +174,8 @@ function adicionaLinhaH(horario_servico) {
                     "<td data-week = '"+ horario_servico.week_day +"'>"+ 
                         semana(horario_servico.week_day) +
                     "</td>" + 
-                    "<td data-tInicio = '"+ horario_servico.begin_time +"'>"+ 
-                        hora_formato ( horario_servico.begin_time ) +
-                    "</td>" +
-                    "<td data-tFinal = '"+ horario_servico.end_time +"'>"+ 
-                       hora_formato ( horario_servico.end_time ) +
+                    "<td data-tInicio = '"+ horario_servico.begin_time +"' data-tFinal = '"+ horario_servico.end_time +"' >"+ 
+                        hora_formato ( horario_servico.begin_time ) + " - "  + hora_formato ( horario_servico.end_time ) +
                     "</td>" +
                     "<td>" + 
                         "<a onclick='atualizaLinhaH(this);'  style='cursor:pointer;' title='Editar'><i class='fa fa-pencil'></i></a>" + 
@@ -187,18 +204,26 @@ function adicionaLinhaH(horario_servico) {
 
 function removeLinhaH(elementoExcluir){
     var id = $(elementoExcluir).parents("tr").data("id");
-    $(elementoExcluir).parents("tr").remove();
-    alert("será apagado id = " + id);
+    $.post(rota_remove_horario_Servico, {horarioId: id}, function(){
+    }).done( function (){
+            $(elementoExcluir).parents("tr").remove();
+            var texto = "Remoção de Horário de Serviço realizado!";
+            mensagem(texto, "Sucesso", 2000);
+    }).fail( function (msg) {
+        var texto = "Falha ao realizar remoção do Horário de Serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+        mensagem(texto, "Erro",5000);
+    });
 }
 
 
 function atualizaLinhaH(elementoAtualiza){
 
     var idhorarioservico = $(elementoAtualiza).parents("tr").data("id");
+
     var idperiodo = $(elementoAtualiza).parents("tr").children()[0].attributes[0].value;
     var diasemana = $(elementoAtualiza).parents("tr").children()[1].attributes[0].value;
     var horainicial = $(elementoAtualiza).parents("tr").children()[2].attributes[0].value;
-    var horafinal = $(elementoAtualiza).parents("tr").children()[3].attributes[0].value;
+    var horafinal = $(elementoAtualiza).parents("tr").children()[2].attributes[1].value;
 
     $("#horarioInicial").val(horainicial.slice(0, 2)+":"+horainicial.slice(2, 4)+":00");
     $("#horarioFinal").val(horafinal.slice(0, 2)+":"+horafinal.slice(2, 4)+":00");

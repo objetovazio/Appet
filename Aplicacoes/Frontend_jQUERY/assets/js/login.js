@@ -35,12 +35,22 @@ function verificarRotaLogado() {
             mensagem(texto, "Erro", 5000);
         });;
     }
+
+    
 }
 
 $(function () {
     verificarRotaLogado();
 })
 
+
+function logout(){
+
+    $.removeCookie("token");
+    document.location.reload();
+
+    
+}
 // $(document).ajaxComplete(function (event, xhr, options) {
 //     try {
 //         var data = JSON.parse(xhr.responseText);

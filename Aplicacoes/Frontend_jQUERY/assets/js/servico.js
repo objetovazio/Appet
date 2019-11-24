@@ -5,8 +5,6 @@ function adicionaServico (){
 	var lista = horario_servico.split(" ") 
 	console.log ( lista );
 
-
-
 	var owner_list = [$("#id").val()];
 	var data_request = {
 		title:$("#titulo").val(),
@@ -109,8 +107,9 @@ function pegaListaServico (){
 			      .ToArray();
 				
 				texto += "<p onclick='mostrar(this)'> 	&bull; <em style='cursor:pointer; font-style: oblique; text-shadow'>"+elemento.title.toUpperCase()+"</em> <em style='font-size:14px; margin-left:4px;  cursor:pointer'>  &#8212; R$ "+
-				 elemento.price +" </em> <i style='float:right; cursor:pointer; color: gray  ' class='fa fa-chevron-down'></i> <br>"+
-				"<span class='display-none' style='font-size:15px;'>&nbsp;&nbsp;&nbsp;tipo: "+ String(nome_tipo_servico).toLowerCase() + "<br>&nbsp;&nbsp;&nbsp;sobre: " +String(elemento.about).toLowerCase()+ "<br>"+"</span></p>";
+				 formataPreco(String(elemento.price)) +" </em> <i style='float:right; cursor:pointer; color: gray ' class='fa fa-chevron-down'></i> <br>"+
+				"<span data-idServico='"+ elemento.id_service +"'class='display-none' style='font-size:15px;'>&nbsp;&nbsp;&nbsp;tipo: "+ String(nome_tipo_servico).toLowerCase() + "<i  style='float:right; color: gray; margin-left:10px;cursor:pointer;' class='fa fa-pencil'  title='Editar'></i> <i onclick='removeServico(this)' style='float:right; cursor:pointer; color: gray;' class='fa fa-times'  title='Excluir'></i>" +
+				" <br>&nbsp;&nbsp;&nbsp;sobre: " +String(elemento.about).toLowerCase()+ "<br>"+"</span></p>";
 			});
 
 			if(texto.length == 0){
@@ -133,24 +132,6 @@ function pegaListaServico (){
 }
 
 
-function mostrar(elemento){
-
-	// var elemento = $(elemento).children();
-	// var atributo = elemento.css("display");
-	if ($(elemento).children('span').hasClass('display-none')){
-
-		
-		$(elemento).children('span').removeClass('display-none');
-		$(elemento).children('i').removeClass('fa-chevron-down');
-		$(elemento).children('i').addClass('fa-chevron-up');
-
-	}else {
-
-		$(elemento).children('span').addClass('display-none');
-		$(elemento).children('i').addClass('fa-chevron-down');
-		$(elemento).children('i').removeClass('fa-chevron-up');
-	}
-}
 
 
 
@@ -246,6 +227,32 @@ function preencheTabelaHorario( id_periodo ) {
 		});
 }
 
+
+
+function removeServico(elemento){
+
+	var id = $(elemento).parents("span")[0].attributes[0].value;
+	$.post(rota_remove_service, {serviceId: id}, function(){
+    }).done( function (){
+        $(elemento).parents("p").remove();
+        var texto = "Remoção do Serviço realizada!";
+        mensagem(texto, "Sucesso", 2000);
+    }).fail( function (msg) {
+        var texto = "Falha ao realizar remoção do Serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+        mensagem(texto, "Erro",5000);
+    });
+
+    pegaListaServico();
+
+}
+
+
+
+function formataPreco (preco){
+	if( ! preco.includes('.')){
+		preco = preco + ".00";}
+	return preco;
+}
 
 // function pegaHorarioServico() {
 // 			var owner_list =[1];

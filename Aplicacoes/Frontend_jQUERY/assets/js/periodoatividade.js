@@ -43,10 +43,18 @@ function adicionarPeriodoAtividade(){
 			$.post(rota_periodo_atividade, data_request, function(){
 			}).done( function (){
 
-				var texto = "Cadastro do periodo de atividade realizado!";
-				mensagem(texto, "Sucesso", 2000);
+				var texto = "";
 
+				if( $("#idPeriodo").val().length == 0 ){
+
+					texto = "Cadastro do periodo de atividade realizado!";
+				}else{
+
+					texto = "Atualização do periodo de atividade realizada!";
+				}
+				
 				$("#idPeriodo").val("");
+				mensagem(texto, "Sucesso", 2000);
 
 				 pegaPeriodoAtividade(data_request);
 
@@ -196,6 +204,17 @@ function removeLinha(elementoExcluir){
 	var id = $(elementoExcluir).parents("tr").data("id");
 	$(elementoExcluir).parents("tr").remove();
 	alert("será apagado id = " + id);
+
+
+	$.post(rota_remove_periodo_atividade, {horarioId: id}, function(){
+    }).done( function (){
+            $(elementoExcluir).parents("tr").remove();
+            var texto = "Remoção de Horário de Serviço realizado!";
+            mensagem(texto, "Sucesso", 2000);
+    }).fail( function (msg) {
+        var texto = "Falha ao realizar remoção do Horário de Serviço! Status: " + msg.status + " | Motivo: " + msg.responseText ;
+        mensagem(texto, "Erro",5000);
+    });
 }
 
 

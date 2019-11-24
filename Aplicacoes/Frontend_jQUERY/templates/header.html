@@ -11,7 +11,8 @@ logo.png" style="" width="100" height="100"><b></b>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"> <a class="nav-link" href="busca-simples.html">Serviços</a> </li>
         <li class="nav-item"> <a class="nav-link" href="meu-perfil.html">Meu Perfil</a> </li>
-      </ul> <a href="login.html" class="btn navbar-btn ml-md-2 btn-light text-dark">Entrar</a>
+        <li class="nav-item"> <a class="nav-link" href="ajuda.html"> Ajuda <i style="font-size: 15px;" class="fa fa-question-circle"></i></a>    </li>
+      </ul> <a id="loginout" href="" class="btn navbar-btn ml-md-2 btn-light text-dark"> </a>
     </div>
   </div>
 </nav>
@@ -22,3 +23,24 @@ logo.png" style="" width="100" height="100"><b></b>
   <span id="msg-notificacao"> </span>
 </div>
 <script type="text/javascript" src="assets/js/login.js"></script>
+<script type="text/javascript">
+
+ if ( $.cookie('token') == undefined){
+    console.log('Usuário Deslogado');
+    $("#loginout").text("Entrar");
+    $("#loginout").attr("href","login.html");
+    $("#loginout").removeAttr("onclick");
+
+ }else{
+    console.log('Usuário Logado');
+    $("#loginout").text("Sair");
+    $("#loginout").removeAttr("href");
+    $("#loginout").attr("onclick","logout()");
+
+ }
+     
+
+
+</script>
+
+

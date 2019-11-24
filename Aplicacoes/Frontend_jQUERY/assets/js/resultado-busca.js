@@ -2,7 +2,13 @@ const busca_data = {}
 location.search.substr(1).split("&").forEach(function (item) { busca_data[item.split("=")[0]] = item.split("=")[1] });
 $(document).ready(function () {
     console.log(busca_data);
+
+
+    $('#resultArea').html("<div id='spinnerloading' class='d-flex justify-content-center'><div class='spinner-grow' role='status'><span style='margin: auto;' class='sr-only'>Loading...</span></div></div>");
+  
+    
     mountPageData();
+
 });
 
 function mountPageData() {
@@ -18,7 +24,12 @@ function mountPageData() {
 }
 
 function setInformationPage(serviceData) {
-    serviceData.forEach((currentService) => {
+
+    if (serviceData != undefined){
+
+           serviceData.forEach((currentService) => {
+
+        contaQuantidade();
         addHtmlResult(currentService.id_service)
         isBrokenValue = String(currentService.price).split('.').length > 1;
         if (isBrokenValue) {
@@ -61,6 +72,11 @@ function setInformationPage(serviceData) {
         })
     });
     redirectLogic();
+    
+    }
+ 
+
+    $('#spinnerloading').remove();
 }
 
 function redirectLogic() {
@@ -205,4 +221,11 @@ function addHtmlResult(currentServId) {
     $('#resultArea').append(
         infoServHtml.replace(/_IDSERV/g, currentServId)
     );
+}
+
+
+function contaQuantidade(){
+
+   var quant =  Number( $("#quantResultado").text() );
+   $("#quantResultado").text(quant + 1);
 }

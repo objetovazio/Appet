@@ -50,3 +50,23 @@ $(function () {
   $("#header").load("./templates/header.html");
   $("#footer").load("./templates/footer.html");
 })
+
+
+function mostrar(elemento){
+
+  // var elemento = $(elemento).children();
+  // var atributo = elemento.css("display");
+  if ($(elemento).children('span').hasClass('display-none')){
+
+    
+    $(elemento).children('span').removeClass('display-none');
+    $(elemento).children('i').removeClass('fa-chevron-down');
+    $(elemento).children('i').addClass('fa-chevron-up');
+
+  }else {
+
+    $(elemento).children('span').addClass('display-none');
+    $(elemento).children('i').addClass('fa-chevron-down');
+    $(elemento).children('i').removeClass('fa-chevron-up');
+  }
+}
