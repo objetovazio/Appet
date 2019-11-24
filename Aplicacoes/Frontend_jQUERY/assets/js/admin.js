@@ -1,5 +1,5 @@
 function verificarRotaLogado() {
-    var rotas_unlogged = ['index.html', 'login.html', 'novo-usuario.html'];
+    var rotas_unlogged = ['admin-home.html', 'relatorios.html', 'remocao-user.html', 'remocao-servico.html'];
     var rotaAberta = document.location.href.match(/[^\/]+$/);
 
     if (rotaAberta == null) return;
@@ -15,20 +15,20 @@ function verificarRotaLogado() {
         }, 1000);
     }
 
-    if (!rotas_unlogged.includes(rotaAtual)) {
+    if (rotas_unlogged.includes(rotaAtual)) {
         $.ajaxSetup({
             headers: {
                 'x-access-token': $.cookie('token')
             }
         });
 
-        $.get(rota_sessao, function (logged_user) {
+        $.get(rota_sessao_admin, function (logged_user) {
             var data = JSON.parse(logged_user);
 
             if (data['token_required'] == true) {
-                if (!rotas_unlogged.includes(rotaAtual)) {
+                if (rotas_unlogged.includes(rotaAtual)) {
                     $.cookie('login_error', "true");
-                    $.cookie('error_message', "Usuário deve estar logado para acessar.");
+                    $.cookie('error_message', "Usuário deve estar logado como administrador para acessar.");
 
                     window.location = './login.html';
                 }

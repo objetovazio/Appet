@@ -34,6 +34,47 @@ app.secret_key = b'\xc2\xbf\xbf\xe8\x82LA\xd3\xe8\xdd\x84U\xeb\xec\x825uq\xee\x9
 CORS(app)
 session_time_minute = 60
 
+def admin_required(AdminOnly = False):
+	def admin_decorator(f):
+		@wraps(f)
+		def wrapper(*args, **kwargs):
+			token = None
+
+			if 'x-access-token' in request.headers:
+				token = request.headers['x-access-token']
+			#
+
+			if not token:
+				print(" >>>>>> admin_required() = Nenhum Usuário Logado!!")
+				return json.dumps({'token_required': True}), 200, {'ContentType': 'application/json'}
+				# return  jsonify({'message': 'Token inexistente. O usuário deve fazer login.'}), 401
+			#
+
+			try:
+				dataToken = jwt.decode(token, app.secret_key)
+				current_user = b_user.verifyToken(dataToken['user_id'], dataToken['email_user'])
+
+				if not current_user['admin']:
+					print(" >>>>>> admin_required() = Usuario não é admin. : " + current_user['email'])	
+					return json.dumps({'token_required': True}), 200, {'ContentType': 'application/json'}
+
+				print(" >>>>>> admin_required() = Usuário Logado: " + current_user['email'])	
+
+			except Exception as e:
+				print(" >>>>>> admin_required() = Token Inválido!! Tire o comentário na função para ver detalhes da exception")
+				#print(str(e))
+				return json.dumps({'token_required': True, 'Exception': str(e)}), 200, {'ContentType': 'application/json'}
+				# return jsonify({'message': 'Token inválido.'}), 401
+
+			return f(current_user, *args, **kwargs)
+		#end wrapper
+
+		return wrapper
+	#end admin_decorator
+
+	return admin_decorator
+#end admin_required
+
 def token_required(f):
 	@wraps(f)
 	def decorated(*args, **kwargs):
@@ -553,7 +594,7 @@ def removeService(current_user):
 
 # Rota para criacao e atualizacao de Tipo de Serviço
 @app.route('/TypeService', methods=['POST'])
-@token_required
+@admin_required(True)
 def postTypeService(current_user):
 	#Apenas admin pode adicionar novos tipos de serivo.
 	if(current_user['admin'] == 1):
@@ -746,6 +787,15 @@ def loginUser():
 @app.route('/getsession', methods=['GET'])
 @token_required
 def getSession(current_user):
+	if current_user:
+		return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+	return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+#end-getrSession
+
+@app.route('/getsessionadmin', methods=['GET'])
+@admin_required(True)
+def getsessionadmin(current_user):
 	if current_user:
 		return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
