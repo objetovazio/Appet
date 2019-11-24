@@ -325,7 +325,7 @@ def searchService(serv_query):
 	return final_result
 
 def deleteService(service_ids):
-	converted_id = json.loads(service_ids)
+	converted_id = (json.loads(service_ids),)
 	query = Serv.Servico.update(is_deleted = 1).where(Serv.Servico.id_servico.in_(converted_id))
 	row_modified = query.execute()
 	if(row_modified>0):

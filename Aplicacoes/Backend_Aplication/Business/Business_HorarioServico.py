@@ -180,8 +180,8 @@ def findSchedule(query_param: dict):
 		final_result.append(_makeResultDic(schedule_find))
 	return final_result
 
-def deteleHorario(horario_ids):
-	convert_ids = json.loads(horario_ids)
+def deleteHorario(horario_ids):
+	convert_ids = (json.loads(horario_ids),)
 	query = HS.HorarioServico.update(is_deleted = 1).where(HS.HorarioServico.id_horario_servico.in_(convert_ids))
 	row_modified = query.execute()
 	if(row_modified > 0):

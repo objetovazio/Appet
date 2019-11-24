@@ -297,6 +297,7 @@ def getAddress(current_user):
 @app.route('/ServiceSchedule', methods=['POST'])
 @token_required
 def postServiceSchedule(current_user):
+
 	try:
 		is_period_empty = is_parameter_empty(request.form['periodoId'])
 		period_id = int(request.form['periodoId']) if not is_period_empty else None
@@ -322,6 +323,8 @@ def postServiceSchedule(current_user):
 		'week_day':week_day
 	}
 	response_request = None
+
+	print(request.form)
 	try:
 		schedule_data['schedule_id'] = request.form['serviceSchedule'] 
 		response_request = b_horarioServico.updateSchedule(schedule_data)
@@ -364,9 +367,6 @@ def getServiceSchedule():
 
 	is_day_empty = is_parameter_empty(request.args.get('weekDay'))
 	week_day = request.args.get('weekDay') if not is_day_empty else None
-
-	print(request.args.get)
-
 
 	if(is_schedule_empty and is_begin_empty and is_end_empty and is_day_empty and is_periodo_empty):
 		print('empty request')
