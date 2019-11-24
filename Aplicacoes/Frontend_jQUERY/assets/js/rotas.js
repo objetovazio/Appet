@@ -23,5 +23,3 @@ const rota_remove_user = rota_raiz + "/remove/user";
 
 const rota_relatorio_weekDayServices = rota_raiz + "/relatorio/weekDayServices";
 const rota_relatorio_typeServices = rota_raiz + "/relatorio/typeServices";
-
-const rota_arquivo_json = rota_raiz + "/assets/js";

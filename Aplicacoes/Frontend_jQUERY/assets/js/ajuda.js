@@ -4,7 +4,7 @@
 async function ler() {
 
 	return new Promise( (resolve, reject) => {
-		$.getJSON( rota_arquivo_json + "/ajuda.json", function(){})
+		$.getJSON("../assets/js/data/ajuda.json", function(){})
 			.done( function(data){  resolve(data.ajuda);
 								    $("#carregando").html("");})
 			.fail( function(msg){reject("Erro ao tentar ler arquivo Json " + msg);
