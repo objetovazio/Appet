@@ -1,10 +1,12 @@
-//const rota_raiz = "http://127.0.0.1:5000";
+// const rota_raiz = "http://127.0.0.1:5000";
 const rota_raiz = 'https://appet-back.herokuapp.com';
 const rota_user = rota_raiz+"/user";
 const rota_googleuser = rota_raiz+"/guser";
 const rota_current_user = rota_raiz+"/currentUser";
 const rota_periodo_atividade = rota_raiz+"/AtivityTime";
 const rota_horario_Servico = rota_raiz+"/ServiceSchedule";
+const rota_remove_horario_Servico = rota_raiz+"/remove/ServiceSchedule";
+
 const rota_servico = rota_raiz+"/Service";
 const rota_tipo_servico = rota_raiz+"/TypeService";
 
@@ -20,3 +22,5 @@ const rota_remove_user = rota_raiz + "/remove/user";
 
 const rota_relatorio_weekDayServices = rota_raiz + "/relatorio/weekDayServices";
 const rota_relatorio_typeServices = rota_raiz + "/relatorio/typeServices";
+
+const rota_arquivo_json = rota_raiz + "/assets/js";

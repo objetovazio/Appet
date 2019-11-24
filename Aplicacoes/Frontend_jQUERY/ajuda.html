@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="assets/image/icon.png" />
+  <title> Appet - Resultado da Busca</title>
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/ajuda.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="assets/js/rotas.js"></script>
+    <script type="text/javascript" src="assets/js/util.js"></script>
+  <script type="text/javascript" src="assets/js/login.js"></script>
+   <!-- Pego de https://cdnjs.com/libraries/linq.js/ -->
+  <script type="text/javascript" src="assets/js/linq.js"></script> 
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="assets/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/ajustes.css" type="text/css">
+</head>
+
+<body class="bg-light">
+  <div class="pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-0">
+    <div class="container">
+  
+            <h4 style="margin-top:10px; " class=""><b> Ajuda </b></h4> <br>
+            
+            <label>Filtrar por:</label>
+            </br>
+            <input id="busca" placeholder="Palavras-Chaves" type="text" style="min-width:60%">
+
+          </p>
+
+          
+          
+          
+
+
+           <p>
+                Você quer saber sobre: &nbsp; <span id="resultado"></span>
+                <br>
+                Assuntos relacionados: &nbsp; <span id="quantidade"></span>
+                <br>
+                Total de assuntos: &nbsp; <span id="total"></span>
+
+              <ul id="lista-assunto">
+                <span id="carregando"> </span>
+              </ul>
+
+            </p>
+
+          
+          </div>
+           
+
+
+          
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    
+    
+    carregarArquivo().then( json_ajuda => {
+
+
+      var resultado = Enumerable.From(json_ajuda)
+        .Select(function (texto) { return {head: texto.title, body: texto.conteudo } })
+        .ToArray();
+      adicionaLista (resultado);
+        
+      console.log(json_ajuda);
+
+      $("#total").html(json_ajuda.length);
+      var entrada = "";
+      $("#busca").on('input', function() {
+
+
+     $("#resultado").html(($(this).val().length > 0) ? "'"+ $(this).val() +"'" : "");
+        
+      entrada = $(this).val();
+
+      var resultado = Enumerable.From(json_ajuda)
+        .Where(function (texto) { return verifica(texto.chaves, entrada ) })
+        .Select(function (texto) { return {head: texto.title, body: texto.conteudo } })
+        .ToArray();
+    
+      if(entrada.length > 0 && resultado.length > 0){
+
+        $("#quantidade").html(resultado.length);
+        $("#lista-assunto").children().remove();
+        // $("#quantidade").html((resultado.length > 0) ? ""+resultado.length+"" : '');
+      }else if(entrada.length > 0){
+        $("#quantidade").html("0");
+        $("#lista-assunto").children().remove();
+      }else{
+        $("#quantidade").html("");
+        $("#lista-assunto").children().remove();
+      }
+            
+      console.log(resultado);
+      adicionaLista(resultado);
+    });
+
+
+    });
+    
+
+    function verifica(a, b){
+
+      if(String(a).toLowerCase().includes(b.toLowerCase())){
+         return true;
+      }
+      return false;
+     
+    }
+
+
+    function adicionaLista (array){
+
+      $("#lista-assunto").children().remove();
+      $(array).each(function(index, el) {
+        $("#lista-assunto").append("<li onclick='mostrar(this)' style='cursor:pointer;'><b>"+ el.head +"</b> <i style='cursor:pointer; color: #2a2a2a ' class='fa fa-chevron-down'></i><br><span class='display-none' style='max-width:70%;'>"+ el.body +"</span></li><br>");
+      });
+
+      
+
+    }
+
+  </script>
+
+
+  <!-- start header -->
+  <div id="header"></div>
+  <!-- end header -->
+  <!--  Rodape -->
+  <div id="footer"></div>
+  <!--  Rodape -->
+</body>
+
+</html>

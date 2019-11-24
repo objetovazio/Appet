@@ -1,0 +1,40 @@
+{
+    "ajuda":[
+       {
+            "title": "O que é  Período de Atividade",
+            "chaves": "periodo período atividade",
+            "conteudo": "O período de atividade é o intervalo de tempo que uma pessoa pode definir para trabalhar. O intervalo pode ser entre dias, meses ou até anos. Uma mesma pessoa pode ter vários intervalos."
+        },
+        {
+            "title": "Como Cadastrar um Período de Atividade",
+            "chaves": "cadastro criar adicionar periodo período atividade",
+            "conteudo": "Vai na página 'Meu Perfil'. Procure pelo quadro 'Minha Agenda'. Após isso clique em 'Periodo de Atividade'. Selecione a 'Data Inicial' e 'Data Final' e aperte o botão 'Salvar'."
+        },
+        {
+            "title": "Como Editar um Período de Atividade",
+            "chaves": "editar modificar alterar periodo período atividade",
+            "conteudo": "Vai na página 'Meu Perfil'. Procure pelo quadro 'Minha Agenda'. Após isso clique no ícone de pincel na última coluna da tabela referente a linha que contém o periodo que deseja alterar. Após isso modifique a 'Data Inicial' e 'Data Final' e aperte o botão 'Salvar'."
+        },
+        {
+            "title": "O que é Horário de Atuação",
+            "chaves": "horario atuacao horário atuação",
+            "conteudo": "São os horários dos dias da semana que uma pessoa define para trabalhar de acordo com cada 'Período de Atividade'.."
+        },
+        {
+            "title": "Como Cadastrar um Horário de Atuação",
+            "chaves": "cadastrar criar adicionar horario atuacao horário atuação",
+            "conteudo": "Vai na página 'Meu Perfil'. Procure pelo quadro 'Minha Agenda'. Após isso clique em 'Horário de Atuação'. Selecione o 'Período de Atividade', o 'Dia da semana' e o intervalo de 'Hora Inicial' e 'Hora Final' que deseja definir para trabalhar. Por fim aperte o botão 'Salvar'.  É importante saber que para cadastrar um 'Horário de Atuação' deve ter pelo menos um 'Período de Atividade'"
+        },
+        {
+            "title": "Como Cadastrar um Serviço",
+            "chaves": "cadastrar criar adicionar servico serviço",
+            "conteudo": "Vai na página 'Meu Perfil'. Procure pelo quadro 'Serviços Disponibilizados'. E no canto superior direito, clique em 'Cadastrar'. Na página de cadastrar, digite o 'Título do Serviços' (por exemplo: 'Banho e Tosa da Juju'), selecione o 'Tipo de Serviço' que é uma categoria já defina pelo Appet. Além disso é necessário adicionar uma 'Descrição', 'Valor do Serviço' que é o preço a ser cobrado pelo seu trabalho e, por fim, o 'Periodo de Atividade' que contém o intervalo de tempo, com os dias da semana e os horários que aquele serviço irá ficar disponível. Por fim aperte o botão 'Salvar'. É importante saber que para cadastrar o serviço é necessário ter cadastrado o 'Período de Atividade' e o 'Horário de Atuação'."
+        },
+        {
+            "title": "Como Remover um Serviço",
+            "chaves": "remover apagar deletar excluir servico serviço",
+            "conteudo": "Vai na página 'Meu Perfil'. Procure pelo quadro 'Serviços Disponibilizados'. Clique sobre o nome do serviço que deseja apagar, após isso será mostrado mais detalhes sobre o mesmo. No canto direito, clique sobre o ícone de 'x'. Após isso o serviço será removido."
+        }  
+
+    ]
+}
