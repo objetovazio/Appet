@@ -119,26 +119,12 @@
     });
     
 
-    function verifica(a, b){
-
-      if(String(a).toLowerCase().includes(b.toLowerCase())){
-         return true;
-      }
-      return false;
-     
-    }
+ 
 
 
-    function adicionaLista (array){
 
-      $("#lista-assunto").children().remove();
-      $(array).each(function(index, el) {
-        $("#lista-assunto").append("<li onclick='mostrar(this)' style='cursor:pointer;'><b>"+ el.head +"</b> <i style='cursor:pointer; color: #2a2a2a ' class='fa fa-chevron-down'></i><br><span class='display-none' style='max-width:70%;'>"+ el.body +"</span></li><br>");
-      });
 
-      
 
-    }
 
   </script>
 
