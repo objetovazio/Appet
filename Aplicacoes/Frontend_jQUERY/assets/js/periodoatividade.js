@@ -275,7 +275,7 @@ function listaPeriodo( ){
 
 		if( $("#periodoatividade").children('option').length == 1){
 
-			$("#periodoatividade").append("<option value=''>Não há periodos de atividades</option>");
+			$("#periodoatividade").append("<option value='-1'>Não há periodos de atividades</option>");
 			// console.log($("#periodoatividade option").first().text("Não há periodos de atividades") );
 		} 
 

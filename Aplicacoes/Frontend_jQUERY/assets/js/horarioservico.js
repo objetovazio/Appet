@@ -23,7 +23,7 @@ function adicionaHorario(){
         data_request.serviceSchedule = $("#idHorario").val();
    }
 
-    console.log("enviadoooo");
+    console.log("enviado");
     console.log(data_request);
     if (validarHorarioServico(data_request)){
 
@@ -137,6 +137,11 @@ function validarHorarioServico(horario_servico) {
     var msg = "";
     try {
 
+
+        if (horario_servico.periodoId.includes("-1")){
+            msg = "Selecione um período de atividade";
+            throw msg;}
+
          if (horario_servico.periodoId.length==0){
             msg = "Selecione um Periodo de Atividade";
             throw msg;}
@@ -151,6 +156,8 @@ function validarHorarioServico(horario_servico) {
         if (Number(horario_servico.beginTime) >= Number(horario_servico.endTime)){
             msg = "Intervalo de Horários Inválido";
             throw msg;}
+
+
 
         return true;
     }catch(err) {

@@ -2,8 +2,16 @@ function adicionaServico (){
 
 
 	var horario_servico = strip (String( $("#tableHorarioServico").children("tbody").children("tr").data("ids_horario_servico") ) );
-	var lista = horario_servico.split(" ") 
-	console.log ( lista );
+	horario_servico = horario_servico.replace(new RegExp('^[ ]','m'), '');
+    horario_servico = horario_servico.replace(new RegExp('[ ]$','m'), '');
+	var lista = horario_servico.split(" ")
+
+	console.log ( "horario_servico " +  horario_servico);
+	
+
+	if ( (horario_servico == "undefined") || (horario_servico.length == 0) ){
+		lista = [];
+	}
 
 	var owner_list = [$("#id").val()];
 	var data_request = {
@@ -56,6 +64,10 @@ function validaServico(servico){
 		if ($.isNumeric(servico.price) == false) {
 		msg = "Campo valor só aceita números"
 		throw msg;}
+		if ( servico.hourService.includes("[]") ) {
+		msg = "Selecione um periodo de atividade";
+		throw msg;}
+
 		return true;
 	}catch(err) {
 	mensagem(msg, "Atencao", 2000);
