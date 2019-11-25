@@ -189,7 +189,7 @@ function getOwnerByAddress() {
 
 function addHtmlResult(currentServId) {
     var infoServHtml = `
-            <div class="row" style="" id="result_IDSERV>
+            <div class="row" style="cursor:pointer" id="result_IDSERV>
             <div class="col-md-12 mb-4 bg-light" style="">
               <div class="form-group">
                 <div class="form-group">

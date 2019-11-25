@@ -50,7 +50,11 @@ $(function () {
 function logout(){
 
     $.removeCookie("token");
-    document.location.reload();
+
+    setTimeout( function () { window.location = './index.html'; }, 500);
+
+    
+
 
     
 }
