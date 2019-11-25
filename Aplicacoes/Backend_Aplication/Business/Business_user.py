@@ -39,10 +39,10 @@ def createGoogleUser(google_user):
 def updateUser(user_data, user_id):
     old_user = User.Usuario.get((User.Usuario.usuario_id == user_id))
     try:
-        old_user.nome = user_data['name']
-        old_user.email = user_data['email']
-        old_user.senha = user_data['password']
-        old_user.sobre = user_data['about']
+        old_user.nome = user_data['name'] if user_data['name'] != None else old_user.nome
+        old_user.email = user_data['email'] if user_data['email'] != None else old_user.email
+        old_user.senha = pbkdf2_sha256.hash(user_data['password']) if user_data['password'] != None else old_user.senha
+        old_user.sobre = user_data['about'] if user_data['about'] != None else old_user.sobre
         old_user.save()
     except Exception as err:
         print(err)
