@@ -60,12 +60,14 @@ function mostrar(elemento){
 
     
     $(elemento).children('span').removeClass('display-none');
+    // $(elemento).children('span').slideToggle("fast");
     $(elemento).children('i').removeClass('fa-chevron-down');
     $(elemento).children('i').addClass('fa-chevron-up');
 
   }else {
 
     $(elemento).children('span').addClass('display-none');
+    // $(elemento).children('span').slideToggle("fast");
     $(elemento).children('i').addClass('fa-chevron-down');
     $(elemento).children('i').removeClass('fa-chevron-up');
   }
