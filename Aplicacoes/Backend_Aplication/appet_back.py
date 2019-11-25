@@ -779,7 +779,7 @@ def loginUser():
 		if data_result:
 			# the token time is defined by session_time_minute variable
 			token = jwt.encode({'user_id': data_result['user_id'], 'email_user' : data_result['email'], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=session_time_minute)}, app.secret_key)		
-			return json.dumps({'success': True, 'token': token.decode('UTF-8')}), 200, {'ContentType': 'application/json'}
+			return json.dumps({'success': True, 'token': token.decode('UTF-8'), 'admin': data_result['admin']}), 200, {'ContentType': 'application/json'}
 		else:
 			return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 #end-loginuser
