@@ -9,10 +9,10 @@
 
     <!-- jQuery -->
     <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="assets/js/rotas.js"></script>
-      <script type="text/javascript" src="assets/js/util.js"></script>
-  <script type="text/javascript" src="assets/js/login.js"></script>
+    <script type="text/javascript" src="assets/js/util.js"></script>
+    <script type="text/javascript" src="assets/js/login.js"></script>
     <script type="text/javascript" src="assets/js/busca-simples.js"></script>
 
     <!-- Bootstrap -->
@@ -37,7 +37,9 @@
                 </div>
                 <div class="col-md-3 "></div>
                 <div class="col-md-3 p-0"></div>
-                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <a class="btn mt-2 text-dark btn-secondary" href="./busca-avancada.html">Busca Avançada<br></a>
+                </div>
             </div>
         </div>
     </div>
@@ -45,23 +47,19 @@
         <div class="container">
             <div class="row">
                 <div>
-                <a   class="btn btn-secondary" id="searchBtn" style="margin-right: 10px;">Buscar</a> <a class="btn btn-secondary" href="./busca-avancada.html">Mais Filtros</a>
-                
-                <br><br><br>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="spanSearchTerm">Termo de Busca</span>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="spanSearchTerm">Termo de Busca</span>
+                        </div>
+                        <input id="searchTerm" type="text" placeholder="Palavras-chave" style="width:20rem;">
                     </div>
-                    <input id="searchTerm" type="text" placeholder="Palavras-chave" style="width:20rem;">
-                </div>
-                <div>
                     <div>
+                        <div>
+                            <a class="btn btn-secondary" id="searchBtn">Buscar<br></a>
+                        </div>
 
                     </div>
-
                 </div>
-            </div>
             </div>
         </div>
     </div>

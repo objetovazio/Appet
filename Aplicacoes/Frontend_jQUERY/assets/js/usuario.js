@@ -141,10 +141,17 @@ class Usuario {
 
 				var token =  result['token']
 				$.cookie('token', token)
-
-				setTimeout(function () {
-					window.location = './meu-perfil.html';
-				}, 2000);
+				if(result.admin == 1){
+					setTimeout(function () {
+						window.location = './admin-home.html';
+					}, 2000);
+				}
+				else{
+					setTimeout(function () {
+						window.location = './meu-perfil.html';
+					}, 2000);
+				}
+				
 			}
 			else {
 				mensagem("Usuário ou senha incorretos.", "Erro", 5000);

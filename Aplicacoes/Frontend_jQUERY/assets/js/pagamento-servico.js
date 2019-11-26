@@ -20,20 +20,26 @@ function setPageValues(data) {
     $('#data-servico').text(dataContratacao);
     $('#media-avaliacao').text(pagamento_data.rateServ);
     $('#media-avaliacao').val(pagamento_data.rateServ);
-    var addressServ = String(pagamento_data.addressServ).replace(/_/g,' ').replace(/-/g,',');
+    var addressServ = decodeURI(String(pagamento_data.addressServ).replace(/_/g,' ').replace(/-/g,','));
     $('#endereco').val(addressServ);
     $('#endereco').text(addressServ);
     getUserPromise(data.usuario).then((buyerResponse) => {
         $('#nome-usuario').val(buyerResponse.name);
     });
     getServicePromise(data.servico).then((response) => {
-        if(String(response.price).split('.')[1].length > 1){
-            $('#preco-servico').text(response.price);
-            $('#preco-servico').val(response.price);
+        if(String(response.price).split('.').length > 1){
+            if(String(response.price).split('.')[1].length > 1){
+                $('#preco-servico').text(response.price);
+                $('#preco-servico').val(response.price);
+            }
+            else{
+                $('#preco-servico').text(String(response.price)+'0');
+                $('#preco-servico').val(String(response.price)+'0');
+            }
         }
         else{
-            $('#preco-servico').text(String(response.price)+'0');
-            $('#preco-servico').val(String(response.price)+'0');
+            $('#preco-servico').text(String(response.price)+'.00');
+                $('#preco-servico').val(String(response.price)+'.00');
         }
         
         getUserPromise(response.id_user).then((ownerResponse) => {
