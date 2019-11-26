@@ -54,11 +54,11 @@ function sendRequest() {
         }).done((response) => {
             var response_success = JSON.parse(response)
             if (response_success.success) {
-                alert('Serivicos Removidos');
-                window.location.href('/admin-home.html');
+                alert('Serivico(s) Removidos');
+                window.location.href = '/admin-home.html';
             }
             else {
-                alert('Erro Ao Remover Serviços');
+                alert('Erro Ao Remover Serviço(s)');
                 window.location.reload();
             }
         })

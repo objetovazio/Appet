@@ -48,16 +48,16 @@ function sendRequest() {
                 requestIds.push(linesRequest[i].dataset.line);
             }
         }
-        $.post(rota_remove_user, { serviceId: JSON.stringify(requestIds) }, () => {
+        $.post(rota_remove_user, { userId: JSON.stringify(requestIds) }, () => {
 
         }).done((response) => {
             var response_success = JSON.parse(response)
             if (response_success.success) {
-                alert('Serivicos Removidos');
-                window.location.href('/admin-home.html');
+                alert('Usuario(s) Removidos');
+                window.location.href = '/admin-home.html';
             }
             else {
-                alert('Erro Ao Remover Serviços');
+                alert('Erro Ao Remover Usuario(s)');
                 window.location.reload();
             }
         })
